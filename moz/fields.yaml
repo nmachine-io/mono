@@ -5,6 +5,36 @@ operations:
     friendly_name: "Change storage strategy"
     x: 1
 
+network:
+
+  strategy:
+    type:
+      question: "Access through Ingress, LoadBalancer, or ClusterIP"
+      before_signals:
+        - "ClusterIP -> * -> before: delete existing svc"
+        - "Ingress -> ClusterIP ensure delete NodePort"
+      after_signals: "if !ClusterIP wait until IP becomes available"
+
+app:
+  performance_profile:
+    input_type: select
+    options:
+      ultra: "Nothing held back"
+      mainstream: "Some room for spikes"
+      budget: "Strict limits, low replication"
+
+  ingress:
+    host:
+      question: "What host should the app be available at?"
+      input_type: string
+      res:
+        - "ingress:{my_ingress}"
+
+    secret:
+      question: "Secret for TLS"
+      input_type: select
+
+
 storage:
 
   strategy:
@@ -26,17 +56,18 @@ storage:
       question: "Enable automatic database backups?"
       on:
         false: "Warning, you really ought to"
+      signals: true -> false -> update the job thing, ask if delete ?
 
     create_volume:
       question: "Create a new volume, or use an existing one?"
       info: "Choose to use an existing one means that..."
+      signals: true -> false -> ask if delete existing?
       options:
         true: "Create "
         false: "Use existing"
 
     locate_volume:
       question: ""
-
 
   database_secrets:
 

@@ -1,3 +1,4 @@
+from k8_kat.res.base.k8_kat import K8Kat
 from k8_kat.res.pvc.kat_pvc import KatPvc
 from moz.mosaic_concern import MosaicConcern
 from wiz.model.part import Part
@@ -15,6 +16,13 @@ class SetPvcNameStep(Step):
 
 class Secrets(Step):
   pass
+
+class Host(Part):
+
+  def res(self):
+    return [
+      K8Kat.svcs().ns(self.ns).find(self.config.name)
+    ]
 
 class CreateVolumeStep(Step):
 
