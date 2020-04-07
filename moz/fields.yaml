@@ -1,0 +1,61 @@
+
+
+operations:
+  change_storage_strategy:
+    friendly_name: "Change storage strategy"
+    x: 1
+
+storage:
+
+  strategy:
+    create_pvc:
+      handler: change_storage_strategy
+      helm_key: storage.create_pvc
+      question: "Have Mosaic create its own PersistentVolumeClaim?"
+      info: "An PersistentVolumeClaim is a Kubernetes resource used to allocate storage."
+      input_type: boolean
+      on:
+        - false:
+            message: "You will be responsible for managing the PVC over time."
+            tone: "warning"
+
+
+  backups:
+    enabled:
+      type: boolean
+      question: "Enable automatic database backups?"
+      on:
+        false: "Warning, you really ought to"
+
+    create_volume:
+      question: "Create a new volume, or use an existing one?"
+      info: "Choose to use an existing one means that..."
+      options:
+        true: "Create "
+        false: "Use existing"
+
+    locate_volume:
+      question: ""
+
+
+  database_secrets:
+
+    user:
+      helm_key: storage.db.user
+      input_type: string
+      question: "Database username"
+      info: "You should blah blah"
+      allow_blank: true
+      on:
+        blank: "Very insecure"
+
+    password:
+      helm_key: storage.db.password
+      input_type: string
+      question: "Database password"
+      info: "You should blah blah"
+
+
+
+
+

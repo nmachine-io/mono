@@ -5,7 +5,6 @@ from wiz.model.step import Step
 
 
 class SetPvcNamePart(Part):
-
   def list_pvcs(self):
     KatPvc.q()
 
@@ -13,6 +12,17 @@ class SetPvcNameStep(Step):
 
   def commit(self):
     pass
+
+class Secrets(Step):
+  pass
+
+class CreateVolumeStep(Step):
+
+  def next_step(self, context):
+    if context['create_volume']:
+      return "database_secrets"
+    else:
+      return "locate_volume"
 
 class StorageConcern(MosaicConcern):
 

@@ -1,27 +1,47 @@
 
 concerns:
-  - key: storage
-    friendly_name: Storage Configuration
+  storage:
+    friendly_name: Primary Storage
     description: "Mosaic needs a database to run in your cluster
     alongside the application. The following steps will let you
     choose how storage is allocated and how the database is secured."
     steps:
-      - key: strategy
-        parts:
-          - key: self_created_pvc
-            question: "Let Mosaic create its own PersistentVolumeClaim?"
-            info: "An PersistentVolumeClaim is a Kubernetes resource used to allocate storage."
-            input_type: boolean
-            on:
-              - false:
-                  message: "You will be responsible for managing the PVC over time."
-                  tone: "warning"
+      create_pvc:
+        watch:
+          - 'pvc:main'
+        fields:
+          - create_volume
 
-      - key: backups
-        parts:
-          - key: "Do you want to back"
+      locate_volume:
+        fields:
+          - pvc_name
 
-  - key: rbac
+      secrets:
+        watch:
+          - 'secret:pg'
+          - 'deploy:pg'
+          - 'svc:pg'
+        parts:
+          - user
+          - password
+
+  backups:
+    friendly_name: Storage Backup
+    description: "It is highly recommended you keeps database backups.
+    The following steps let you decide if and how to perform backups."
+    steps:
+      backups:
+        watch:
+          - 'crontab:backup'
+        parts:
+          - enabled
+          - create_volume
+          - locate_volume
+          - frequency
+
+
+
+  rbac:
     friendly_name: RBAC Configuration
     description: "Mosaic needs a database to run. The following steps will let you
     choose where this database lives and how it is configured."

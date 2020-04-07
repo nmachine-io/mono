@@ -111,5 +111,4 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-/k8_kat
 .idea
