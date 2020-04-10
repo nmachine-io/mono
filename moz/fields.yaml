@@ -70,9 +70,8 @@ storage:
       question: ""
 
   database_secrets:
-
     user:
-      helm_key: storage.db.user
+      backed: false
       input_type: string
       question: "Database username"
       info: "You should blah blah"
@@ -81,7 +80,6 @@ storage:
         blank: "Very insecure"
 
     password:
-      helm_key: storage.db.password
       input_type: string
       question: "Database password"
       info: "You should blah blah"
