@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -7,17 +8,21 @@ from pathlib import Path
 import yaml
 from typing import List, Dict
 
+def mk_path(path):
+  current = Path(__file__).resolve().parent
+  return f"{current}{path}"
+
 def outfile_path():
   return mk_path('/output.yaml')
 
-def manifests_path():
-  return mk_path('/manifests')
+def cloned_helm_path():
+  return mk_path('/helm_res')
 
 def overrides_path():
-  return f"{manifests_path()}/overrides.yaml"
+  return f"{cloned_helm_path()}/overrides.yaml"
 
 def values_path():
-  return f"{manifests_path()}/values.yaml"
+  return f"{cloned_helm_path()}/values.yaml"
 
 def deep_merge(source, destination):
   for key, value in source.items():
@@ -28,14 +33,13 @@ def deep_merge(source, destination):
       destination[key] = value
     return destination
 
-def mk_path(path):
-  current = Path(__file__).resolve().parent
-  return f"{current}{path}"
-
 def init_helm(repo_name):
   fqdn = f"https://github.com/{repo_name}"
-  print(f"Running with {fqdn} -->  {manifests_path()}")
-  subprocess.run(['git', 'clone', fqdn, manifests_path()])
+  if os.path.exists(cloned_helm_path()):
+    print(f"Warn: force deleting {cloned_helm_path()}")
+    shutil.rmtree(cloned_helm_path())
+  clone_cmd = f"git clone {fqdn} {cloned_helm_path()}"
+  subprocess.check_output(clone_cmd, shell=True)
 
 def res_matches(res, identifier) -> bool:
   if res['kind'] == identifier['kind']:
@@ -45,7 +49,7 @@ def res_matches(res, identifier) -> bool:
 
 def interpolate():
   f_paths = " -f ".join([values_path(), overrides_path()])
-  command = f"helm template {manifests_path()} -f {f_paths}"
+  command = f"helm template {cloned_helm_path()} -f {f_paths}"
   output = subprocess.check_output(command, shell=True)
   output = output.decode('utf-8').replace('RELEASE-NAME-', '')
   res_iterator = yaml.load_all(output, yaml.FullLoader)
@@ -87,15 +91,15 @@ def parse_ids(ser_ids):
   to_dict = lambda x: dict(kind=x[0], name=x[1])
   return [to_dict(pair.split(':')) for pair in ser_ids]
 
-def run(ser_ids):
-  res_defs = filter_only(ser_ids)
-  write_res(res_defs)
-  apply_res()
-
 def filter_only(ser_ids):
   create_overrides_yaml()
   res_defs = interpolate()
   return filter_res(res_defs, ser_ids)
+
+def apply(ser_ids):
+  res_defs = filter_only(ser_ids)
+  write_res(res_defs)
+  apply_res()
 
 def main():
   if len(sys.argv) < 1:
@@ -103,15 +107,17 @@ def main():
   elif sys.argv[1] == 'init':
     init_helm(sys.argv[2])
   elif sys.argv[1] == 'ls':
-    print(manifests_path())
+    print(cloned_helm_path())
   elif sys.argv[1] == 'interpolate':
     print(interpolate())
+  elif sys.argv[1] == 'overrides':
+    print(read_override_values())
   elif sys.argv[1] == 'override':
     create_overrides_yaml()
   elif sys.argv[1] == 'filter':
     print(filter_only(parse_ids(sys.argv[2:])))
   elif sys.argv[1] == 'apply':
-    run(parse_ids(sys.argv[2:]))
+    apply(parse_ids(sys.argv[2:]))
 
 
 if __name__ == '__main__':
