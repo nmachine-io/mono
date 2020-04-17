@@ -1,5 +1,5 @@
-from moz.rbac_concern import RbacConcern
-from moz.storage_concern import StorageConcern
+from moz.concerns.rbac_concern import RbacConcern
+from moz.concerns.storage_concern import StorageConcern
 from wiz.model.concern import Concern
 from wiz.model.wizard import Wizard
 

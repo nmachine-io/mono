@@ -1,0 +1,55 @@
+
+
+concerns:
+
+  - key: storage
+    friendly_name: Primary Storage
+    description: "Mosaic needs a database to run in your cluster
+    alongside the application. The following steps will let you
+    choose how storage is allocated and how the database is secured."
+    steps:
+      decide_cluster_storage:
+        fields:
+          - is_cluster_storage
+        next:
+          if: 'is_cluster_storage = true'
+          then: decide_managed_pvc
+          else: locate_external_db
+
+      locate_external_db:
+        fields:
+          - host
+          - port
+          - user
+          - password
+        watch:
+          - 'secret:external_db_creds'
+        next: done
+
+      decide_managed_pvc:
+        fields:
+          - is_managed_pvc
+        watch:
+          - 'pvc:main'
+        next:
+          if: 'is_managed_pvc = true'
+          then: set_db_secrets
+          else: locate_external_pvc
+
+      locate_external_pvc:
+        fields:
+          - pvc_name
+
+      set_db_secrets:
+        watch:
+          - 'secret:db'
+          - 'deploy:db'
+          - 'svc:pg'
+        parts:
+          - user
+          - password
+
+  - key: rbac
+    friendly_name: RBAC Configuration
+    description: "Mosaic needs a database to run. The following steps will let you
+    choose where this database lives and how it is configured."

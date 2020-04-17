@@ -1,12 +1,6 @@
 
 
-operations:
-  change_storage_strategy:
-    friendly_name: "Change storage strategy"
-    x: 1
-
 network:
-
   strategy:
     type:
       question: "Access through Ingress, LoadBalancer, or ClusterIP"
@@ -49,6 +43,12 @@ storage:
             message: "You will be responsible for managing the PVC over time."
             tone: "warning"
 
+    locate_external_db:
+      info: "The database must be PostgreSQL version 9.2 or above"
+      user:
+        question: "Database Username"
+
+
 
   backups:
     enabled:
@@ -83,8 +83,4 @@ storage:
       input_type: string
       question: "Database password"
       info: "You should blah blah"
-
-
-
-
 

@@ -1,5 +1,4 @@
-from moz.mosaic_concern import MosaicConcern
-from wiz.model.concern import Concern
+from moz.concerns.mosaic_concern import MosaicConcern
 
 
 class RbacConcern(MosaicConcern):

@@ -1,0 +1,4 @@
+operations:
+  change_storage_strategy:
+    friendly_name: "Change storage strategy"
+    x: 1

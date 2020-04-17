@@ -1,6 +1,6 @@
 from k8_kat.res.base.k8_kat import K8Kat
 from k8_kat.res.pvc.kat_pvc import KatPvc
-from moz.mosaic_concern import MosaicConcern
+from moz.concerns.mosaic_concern import MosaicConcern
 from wiz.model.part import Part
 from wiz.model.step import Step
 
