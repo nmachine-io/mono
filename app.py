@@ -9,7 +9,7 @@ from wiz.core.wiz_globals import wiz_globals
 wiz_globals.package_base = moz
 wiz_globals.concerns_package = concerns
 
-wiz_globals.set_concerns_package(concerns)
+# wiz_globals.set_concerns_package(concerns)
 
 server.start(
   MosaicWizard,
