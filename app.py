@@ -1,19 +1,16 @@
-import moz
-from moz import concerns
-from moz.core.mosaic_wizard import MosaicWizard
+from typing import Dict
+import yaml
 from wiz import server
 
-from wiz.core.base_adapter import PythonBackend
 from wiz.core.wiz_globals import wiz_globals
 
-wiz_globals.package_base = moz
-wiz_globals.concerns_package = concerns
+def load_yaml_array(fname) -> [Dict]:
+  return yaml.load(open(fname, 'r').read())['data']
 
-# wiz_globals.set_concerns_package(concerns)
-
-server.start(
-  MosaicWizard,
-  PythonBackend
+wiz_globals.set_configs(
+  concerns=load_yaml_array('moz/constants/concerns.yaml'),
+  steps=load_yaml_array('moz/constants/steps.yaml'),
+  fields=load_yaml_array('moz/constants/fields.yaml'),
 )
 
-print("Exec'ed")
+server.start()

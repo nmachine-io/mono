@@ -1,86 +1,28 @@
+data:
 
-
-network:
-  strategy:
-    type:
-      question: "Access through Ingress, LoadBalancer, or ClusterIP"
-      before_signals:
-        - "ClusterIP -> * -> before: delete existing svc"
-        - "Ingress -> ClusterIP ensure delete NodePort"
-      after_signals: "if !ClusterIP wait until IP becomes available"
-
-app:
-  performance_profile:
-    input_type: select
+  - key: "storage.type"
+    title: "Storage strategy"
+    type: choice
     options:
-      ultra: "Nothing held back"
-      mainstream: "Some room for spikes"
-      budget: "Strict limits, low replication"
+      - key: internal
+        value: "Internal - Keep the database in the cluster"
+      - key: external
+        value: "External - Connect to a database outside the cluster"
 
-  ingress:
-    host:
-      question: "What host should the app be available at?"
-      input_type: string
-      res:
-        - "ingress:{my_ingress}"
+  - key: "storage.managed_pvc"
+    title: "Have Nectar manage the volume for the database?"
+    type: boolean
 
-    secret:
-      question: "Secret for TLS"
-      input_type: select
+  - key: "storage.own_pvc_name"
+    title: "Point to the the PersistentVolumeClaim you want to use"
+    type: choice
+    on:
+      - type: equals
+        check: false
+        message: "You will be responsible for managing the PVC over time."
+        tone: "warning"
 
-
-storage:
-
-  strategy:
-    create_pvc:
-      handler: change_storage_strategy
-      helm_key: storage.create_pvc
-      question: "Have Mosaic create its own PersistentVolumeClaim?"
-      info: "An PersistentVolumeClaim is a Kubernetes resource used to allocate storage."
-      input_type: boolean
-      on:
-        - false:
-            message: "You will be responsible for managing the PVC over time."
-            tone: "warning"
-
-    locate_external_db:
-      info: "The database must be PostgreSQL version 9.2 or above"
-      user:
-        question: "Database Username"
-
-
-
-  backups:
-    enabled:
-      type: boolean
-      question: "Enable automatic database backups?"
-      on:
-        false: "Warning, you really ought to"
-      signals: true -> false -> update the job thing, ask if delete ?
-
-    create_volume:
-      question: "Create a new volume, or use an existing one?"
-      info: "Choose to use an existing one means that..."
-      signals: true -> false -> ask if delete existing?
-      options:
-        true: "Create "
-        false: "Use existing"
-
-    locate_volume:
-      question: ""
-
-  database_secrets:
-    user:
-      backed: false
-      input_type: string
-      question: "Database username"
-      info: "You should blah blah"
-      allow_blank: true
-      on:
-        blank: "Very insecure"
-
-    password:
-      input_type: string
-      question: "Database password"
-      info: "You should blah blah"
-
+  - key: "storage.external_db_addr"
+    title: "Find the thing"
+    type: input
+    info: "The database must be PostgreSQL version 9.2 or above"
