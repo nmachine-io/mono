@@ -9,11 +9,9 @@ module Hub
       safe_gen do |res|
         res.yaml 'foundation'
         res.yaml 'pvc' if managed_pvc?
-        if secrets_ready?
-          res.yaml 'secrets'
-          res.yaml 'pg' if internal_storage?
-          res.hash build_deployment
-        end
+        res.yaml 'secrets' if secrets_ready?
+        res.yaml 'pg' if internal_storage?
+        res.hash build_deployment
         res.hash build_service
       end
     end
