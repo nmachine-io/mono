@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "363e6ef1c3c27a21028dd3e2800994b2498b87cbf2d4711e4127037da5d4b224"
+            "sha256": "b706c72c5a0ec8d765d321395ac1a7ee1be0345f34d530bd107d37f7790db565"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -96,6 +96,14 @@
                 "sha256:f0a4641d3cf955324a89c04f3d94663aa4d638abe8f733ecd3582848e1c37035"
             ],
             "version": "==2.11.2"
+        },
+        "k8-kat": {
+            "hashes": [
+                "sha256:63241029be3bf169463a729f3342f68d23838aaabd714396f7371609c33c4882",
+                "sha256:bd281bc04c0887e2ae1b1b189584f5a6a5ecb7c6d0c973c9cb39fd5b3be3fc94"
+            ],
+            "index": "pypi",
+            "version": "==0.0.235"
         },
         "kubernetes": {
             "hashes": [
