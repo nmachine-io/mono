@@ -1,0 +1,12 @@
+storage:
+  type: internal
+  managed_pvc: true
+  secrets:
+    user: user
+    password: password
+app:
+  image: hub
+  image_pull_pol: Never
+  service_type: ClusterIP
+  secrets:
+    key_base:
