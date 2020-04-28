@@ -1,6 +1,6 @@
 service:
   name: service
-  port: 9000
+  port: 80
 
 pod:
   name: pod
