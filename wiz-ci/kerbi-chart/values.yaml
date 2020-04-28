@@ -1,2 +1,7 @@
 service:
+  name: service
   port: 9000
+
+pod:
+  name: pod
+  image: nginx

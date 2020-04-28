@@ -4,7 +4,7 @@ class SimpleGen < Kerbi::Gen
   locate_self __dir__
   def gen
     safe_gen do |res|
-      res.yaml 'svc'
+      res.yaml 'res'
     end
   end
 end
