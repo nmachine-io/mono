@@ -1,0 +1,14 @@
+env: test
+
+storage:
+  type: internal
+  managed_pvc: true
+  secrets:
+    user: user
+    password: password
+app:
+  image: test-image
+  image_pull_pol: Never
+  service_type: ClusterIP
+  secrets:
+    key_base: 3a9cbebc77c9b390c7fec55ce90d7428a335ddddd4f08ef5c9cb862e548a9fef2c9da11000f40232146232fe5d77f1ad6703555d3fec2b2c6baafc66a1ad49f6

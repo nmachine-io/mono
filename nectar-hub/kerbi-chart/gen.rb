@@ -11,15 +11,29 @@ module Hub
         res.yaml 'pvc' if managed_pvc?
         res.yaml 'secrets' if secrets_ready?
         res.yaml 'pg' if internal_storage?
-        res.hash build_deployment
+        res.hash build_main_workload
         res.hash build_service
       end
     end
 
-    def build_deployment
+    def build_main_workload
+      self.test? ? build_hub_test_pod : build_hub_deployment
+    end
+
+    def build_hub_test_pod
+      res = self.inflate_yaml('test_pod').first
+      res[:spec] = {
+        **res[:spec],
+        initContainers: [build_container('db-init', 'rake db:init')],
+        containers: [build_container('main', 'rspec -fd')]
+      }
+      res
+    end
+
+    def build_hub_deployment
       Kerbi::DeploymentTemplate.generic(
         name: "hub",
-        ns:  'hub',
+        ns:  namespace,
         init_containers: [ build_container('db-init', 'rake db:init')],
         containers: [ build_container('main', 'rails server') ]
       )
@@ -28,7 +42,7 @@ module Hub
     def build_service
       Kerbi::ServiceTemplate.generic_service(
         name: 'hub',
-        ns: 'hub',
+        ns: namespace,
         type: values[:app][:service_type],
         ports: [ 3000 ]
       )
@@ -40,7 +54,7 @@ module Hub
         image: "gcr.io/nectar-bazaar/hub:latest",
         cmd: "bundle exec #{cmd}",
         envs: build_container_env,
-        image_pull_policy: 'Always'
+        image_pull_policy: test? ? 'IfNotPresent' : 'Always'
       )
     end
 
@@ -48,12 +62,16 @@ module Hub
       Kerbi::EnvVarTemplate.generics(
         database_host: 'postgres',
         database_port: '5432',
-        rails_env: 'production',
+        rails_env: values['env'],
         rails_log_to_stdout: 'true',
         database_user: { secret: { 'hub-pg': 'user' } },
         database_password: { secret: { 'hub-pg': 'password' } },
         secret_key_base: { secret: { 'hub-app': 'secret-key-base' } }
       )
+    end
+
+    def namespace
+      test? ? 'default' : 'hub'
     end
 
     def internal_storage?
@@ -79,6 +97,10 @@ module Hub
 
     def secrets_ready?
       pg_secret_ready? && app_secret_ready?
+    end
+
+    def test?
+      self.values[:env] == 'test'
     end
   end
 end

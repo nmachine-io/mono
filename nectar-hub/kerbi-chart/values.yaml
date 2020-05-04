@@ -1,3 +1,5 @@
+env: default
+
 storage:
   type: internal
   managed_pvc: true
@@ -6,7 +8,7 @@ storage:
     password: password
 app:
   image: hub
-  image_pull_pol: Never
+  image_pull_pol: IfNotPresent
   service_type: ClusterIP
   secrets:
     key_base:
