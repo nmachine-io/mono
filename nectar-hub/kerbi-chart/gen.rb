@@ -6,8 +6,6 @@ module Hub
     locate_self __dir__
 
     def gen
-      # puts "GIVEN"
-      # puts values
       safe_gen do |res|
         res.yaml 'foundation'
         res.yaml 'pvc' if managed_pvc?
