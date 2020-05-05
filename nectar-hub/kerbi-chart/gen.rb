@@ -13,6 +13,7 @@ module Hub
         res.yaml 'pg' if internal_storage?
         res.hash build_main_workload
         res.hash build_service unless test?
+        res.yaml 'frontend' unless test?
       end
     end
 

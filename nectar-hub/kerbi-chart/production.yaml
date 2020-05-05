@@ -4,11 +4,14 @@ storage:
   type: internal
   managed_pvc: true
   secrets:
-    user: user
+    user: postgres
     password: password
 app:
-  image: hub:latest
-  image_pull_pol: IfNotPresent
+  image: gcr.io/nectar-bazaar/hub:latest
+  image_pull_pol: Always
   service_type: ClusterIP
   secrets:
-    key_base:
+    key_base: whatever
+frontend:
+  ipp: Always
+  image: gcr.io/nectar-bazaar/hub-front:latest

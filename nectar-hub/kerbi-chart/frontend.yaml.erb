@@ -1,0 +1,40 @@
+<% root = values[:frontend] %>
+<% name = 'hub-front' %>
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: <%= namespace %>
+  name: <%= name %>
+  labels:
+    app: <%= name %>
+spec:
+  selector:
+    matchLabels:
+      app: <%= name %>
+  template:
+    metadata:
+      labels:
+        app: <%= name %>
+    spec:
+      containers:
+        - name: main
+          image: <%= root[:image] %>
+          imagePullPolicy: <%= root[:ipp] %>
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: <%= namespace %>
+  name: <%= name %>
+  labels:
+    app: <%= name %>
+spec:
+  type: LoadBalancer
+  selector:
+    app: <%= name %>
+  ports:
+    - port: 80
+      targetPort: 80

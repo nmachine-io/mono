@@ -12,3 +12,5 @@ app:
   service_type: ClusterIP
   secrets:
     key_base:
+frontend:
+  image: hub-front:latest
