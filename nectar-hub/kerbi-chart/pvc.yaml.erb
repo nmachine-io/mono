@@ -3,7 +3,9 @@ apiVersion: v1
 metadata:
   name: postgres-pvc
   namespace: <%= namespace %>
-  finalizers: <%= nil %>
+  finalizers: []
+  labels:
+    app: hub
 spec:
   accessModes:
     - ReadWriteOnce

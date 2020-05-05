@@ -6,13 +6,15 @@ module Hub
     locate_self __dir__
 
     def gen
+      # puts "GIVEN"
+      # puts values
       safe_gen do |res|
         res.yaml 'foundation'
         res.yaml 'pvc' if managed_pvc?
         res.yaml 'secrets' if secrets_ready?
         res.yaml 'pg' if internal_storage?
         res.hash build_main_workload
-        res.hash build_service
+        res.hash build_service unless test?
       end
     end
 
@@ -51,10 +53,10 @@ module Hub
     def build_container(name, cmd)
       Kerbi::DeploymentTemplate.container(
         name: name,
-        image: "gcr.io/nectar-bazaar/hub:latest",
+        image: values[:app][:image],
         cmd: "bundle exec #{cmd}",
         envs: build_container_env,
-        image_pull_policy: test? ? 'IfNotPresent' : 'Always'
+        image_pull_policy: 'Always'
       )
     end
 
@@ -62,7 +64,7 @@ module Hub
       Kerbi::EnvVarTemplate.generics(
         database_host: 'postgres',
         database_port: '5432',
-        rails_env: values['env'],
+        rails_env: values[:env],
         rails_log_to_stdout: 'true',
         database_user: { secret: { 'hub-pg': 'user' } },
         database_password: { secret: { 'hub-pg': 'password' } },
@@ -73,7 +75,7 @@ module Hub
     def namespace
       test? ? 'default' : 'hub'
     end
-
+ 
     def internal_storage?
       values[:storage][:type] == 'internal'
     end

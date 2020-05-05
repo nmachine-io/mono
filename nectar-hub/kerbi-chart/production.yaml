@@ -1,4 +1,4 @@
-env: test
+env: production
 
 storage:
   type: internal
@@ -7,8 +7,8 @@ storage:
     user: user
     password: password
 app:
-  image: gcr.io/nectar-bazaar/hub-test:latest
-  image_pull_pol: Never
+  image: hub:latest
+  image_pull_pol: IfNotPresent
   service_type: ClusterIP
   secrets:
-    key_base: whatever
+    key_base:

@@ -1,13 +1,13 @@
-env: default
+env: production
 
 storage:
   type: internal
   managed_pvc: true
   secrets:
-    user: user
-    password: password
+    user:
+    password:
 app:
-  image: hub
+  image: hub:latest
   image_pull_pol: IfNotPresent
   service_type: ClusterIP
   secrets:
