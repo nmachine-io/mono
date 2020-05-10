@@ -6,7 +6,7 @@ from wiz.core.wiz_globals import wiz_globals
 
 def load_yaml_array(fname) -> [Dict]:
   file_contents = open(fname, 'r').read()
-  return yaml.load(file_contents, Loader=yaml.FullLoader)['data']
+  return yaml.load(file_contents, Loader=yaml.FullLoader)
 
 wiz_globals.set_configs(
   concerns=load_yaml_array('wizard/constants/concerns.yaml'),
