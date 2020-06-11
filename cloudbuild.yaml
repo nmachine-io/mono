@@ -1,0 +1,12 @@
+images:
+  - "gcr.io/nectar-bazaar/wiz-ci-tedi:latest"
+
+steps:
+  - id: "Build Tedi for the Wiz CI"
+    waitFor: []
+    name: gcr.io/cloud-builders/docker
+    args:
+      - "build"
+      - "wiz-ci/kerbi-chart"
+      - "-t"
+      - "gcr.io/nectar-bazaar/wiz-ci-tedi:latest"
