@@ -10,4 +10,4 @@ RUN gem install bundler && bundle install
 
 ADD . /app
 
-ENTRYPOINT ["bundle", "exec", "ruby", "/app/main.rb"]
+ENTRYPOINT ["/app/tami"]
