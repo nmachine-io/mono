@@ -8,4 +8,5 @@ class SimpleMixer < Kerbi::Mixer
 end
 
 kerbi.generators = [ SimpleMixer ]
+
 kerbi.cli_exec
