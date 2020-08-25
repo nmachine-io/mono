@@ -1,0 +1,6 @@
+namespace: default
+deployment:
+  name: flake
+service:
+  name: flake
+  port: 49160
