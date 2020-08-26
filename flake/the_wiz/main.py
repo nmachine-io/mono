@@ -1,9 +1,9 @@
 import dotenv
 
 from overrides import app_endpoints
-from wiz import server
-from wiz.core import utils
-from wiz.core.wiz_app import wiz_app
+from nectwiz import server
+from nectwiz.core import utils
+from nectwiz.core.wiz_app import wiz_app
 
 op_yamls_base = 'sample_wiz/operation-yamls'
 
