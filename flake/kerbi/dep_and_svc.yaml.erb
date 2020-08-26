@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: <%= values[:namespace] %>
+  name: <%= values[:deployment][:name] %>
+  labels:
+    app: <%= values[:deployment][:name] %>
+spec:
+  replicas: <%= values[:deployment][:replicas] %>
+  selector:
+    matchLabels:
+      app: <%= values[:deployment][:name] %>
+  template:
+    metadata:
+      labels:
+        app: <%= values[:deployment][:name] %>
+    spec:
+      containers:
+        - name: main
+          image: <%= values[:deployment][:image] %>
+          imagePullPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: <%= values[:namespace] %>
+  name: <%= values[:service][:name] %>
+  labels:
+    app: <%= values[:service][:name] %>
+spec:
+  type: ClusterIP
+  ports:
+    - name: main
+      port: <%= values[:service][:port] %>
+      targetPort: 8080
+  selector:
+    app: <%= values[:deployment][:name] %>
