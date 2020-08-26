@@ -4,11 +4,4 @@ mode: public
 info: "Amount of replicas for backend deployment. Its recommended to
 change this variable in the Workloads page."
 default: 2
-category: performance
-resource: deploy/hub-backend
-field:
-  key: hub.backend.replicas
-  validations:
-    - type: presence
-    - type: format
-      check_against: integer
+field: hub.backend.replicas

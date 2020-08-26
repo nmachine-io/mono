@@ -9,6 +9,7 @@ prerequisites:
 
 stages:
   - key: sunshine
+    kind: Stage
     title: Sunchine & Rainbows
     info: "How much sunshine is enough on a cloud native morning?"
     steps:
