@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: <%= values[:namespace] %>
@@ -6,7 +6,7 @@ metadata:
   labels:
     app: <%= values[:deployment][:name] %>
 spec:
-  replicas: 1
+  replicas: <%= values[:deployment][:replicas] %>
   selector:
     matchLabels:
       app: <%= values[:deployment][:name] %>
