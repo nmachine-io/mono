@@ -11,4 +11,4 @@ end
 
 kerbi.generators = [ SimpleMixer ]
 
-puts kerbi.gen_yaml
+puts kerbi.cli_exec
