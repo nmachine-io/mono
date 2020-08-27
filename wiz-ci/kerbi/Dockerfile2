@@ -1,0 +1,16 @@
+FROM ruby:2.6.3
+WORKDIR /app
+ADD Gemfile Gemfile.lock ./
+RUN gem install bundler && bundle install
+ADD . /app
+
+ENV TAMI_CMD='/app/script.sh'
+RUN ls -la
+
+RUN cat /app/script.sh
+
+#ENTRYPOINT ["bundle", "exec", "ruby", "/app/main.rb"]
+
+RUN bundle exec ruby /app/main.rb values
+
+CMD ["/app/main"]
