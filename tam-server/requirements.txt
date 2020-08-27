@@ -1,0 +1,14 @@
+-i https://pypi.org/simple
+certifi==2020.6.20
+chardet==3.0.4
+click==7.1.2
+flask-cors==3.0.8
+flask==1.1.2
+idna==2.10
+itsdangerous==1.1.0
+jinja2==2.11.2
+markupsafe==1.1.1
+requests==2.24.0
+six==1.15.0
+urllib3==1.25.10
+werkzeug==1.0.1
