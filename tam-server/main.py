@@ -1,21 +1,82 @@
 import os
+import random
+import string
 import subprocess
+from typing import Dict, List
 
 import yaml
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
 
 executable = os.environ.get('TAMI_CMD', f'{os.getcwd()}/insane.sh')
 
-@app.route('/values')
+def exec_cmd(command: str) -> str:
+  split_cmd = [v for v in command.split(" ") if v]
+  return subprocess.check_output(
+    split_cmd,
+    stderr=subprocess.STDOUT
+  ).decode('utf-8')
+
+
+def exec_yaml_cmd(command: str) -> Dict:
+  return yaml.load(exec_cmd(command))
+
+
+def exec_yamls_cmd(command: str) -> List[Dict]:
+  return list(yaml.load_all(exec_cmd(command), Loader=yaml.FullLoader))
+
+
+def rand_str(string_len=10):
+  letters = string.ascii_lowercase
+  return ''.join(random.choice(letters) for i in range(string_len))
+
+
+def fmt_inlines(assignments: Dict) -> str:
+  expr_array = []
+  for assignment in list(assignments.items()):
+    key_expr, value = assignment
+    expr_array.append(f"--set {key_expr}={value}")
+  return " ".join(expr_array)
+
+
+@app.route('/simple_values')
+def simple_values():
+  values_dict = exec_yaml_cmd(f"{executable} values")
+  return jsonify(data=values_dict)
+
+
+@app.route('/values', methods=['POST'])
 def values():
-  print(executable)
-  split_cmd = f"{executable} values".split(" ")
-  yaml_out = subprocess.check_output(split_cmd, stderr=subprocess.STDOUT).decode('utf-8')
-  as_dict = yaml.load(yaml_out)
-  return jsonify(data=as_dict)
+  flags = request.json.get('flags')
+  values_dict = exec_yaml_cmd(f"{executable} values {flags}")
+  return jsonify(data=values_dict)
+
+
+@app.route('/simple_template')
+def simple_template():
+  res_dicts = exec_yamls_cmd(f"{executable} template")
+  print(res_dicts)
+  return jsonify(data=res_dicts)
+
+
+@app.route('/template', methods=['POST'])
+def template():
+  assignments = request.json.get('assignments', {})
+  inlines = request.json.get('inlines', {})
+  flags = request.json.get('flags')
+
+  tmp_file_name = f"/tmp/values-{rand_str(20)}"
+
+  with open(tmp_file_name, 'w') as file:
+    file.write(yaml.dump(assignments))
+
+  args = f"-f {tmp_file_name} {fmt_inlines(inlines)} {flags}"
+  res_dicts = exec_yamls_cmd(f"{executable} template {args}")
+  os.remove(tmp_file_name)
+
+  return jsonify(data=res_dicts)
 
 
 app.config["cmd"] = ["bash"]
