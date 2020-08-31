@@ -1,26 +1,49 @@
 kind: Operation
 key: installation
 title: Installation
-
 prerequisites: []
-
 stages:
   - key: sunshine
     kind: Stage
     title: Sunchine & Rainbows
-    info: "How much sunshine is enough on a cloud native morning?"
-    steps: []
-
-#      - key: step.global.quotas.requests
-#        kind: Step
-#        info: Maximum sum of CPU/memory limits across application
-#        title: Limit Quotas
-#        fields:
-#          - key: "hub.storage.external_db_port"
-#            kind: Field
-#            title: "External Database Port"
-#            default: "5432"
-#            validations:
-#              - type: presence
-#              - type: format
-#                check_against: "integer"
+    info: "Simple introductory stage with one step"
+    steps:
+      - key: steps.simple_assignments
+        title: "Simple Assignments"
+        kind: Step
+        info: "Ice cream and replica counts."
+        fields:
+          - key: deployment.flavor
+            kind: Field
+            title: "Ice cream flavor"
+            info: "The flavor shown on the website."
+            type: select
+            options:
+              - key: vanilla
+                value: Vanilla
+              - key: chocolate
+                value: Chocolate
+          - key: deployment.replicas
+            kind: Field
+            title: "Replicas"
+            info: "Initial pod replicas for the website"
+            type: slider
+            options:
+              min: 1
+              max: 15
+              step: 1
+      - key: steps.simple_job
+        title: "Simple Assignments"
+        kind: Step
+        info: "Ice cream and replica counts."
+        fields:
+          - key: deployment.flavor
+            kind: Field
+            title: "Ice cream flavor"
+            info: "The flavor shown on the website."
+            type: select
+            options:
+              - key: vanilla
+                value: Vanilla
+              - key: chocolate
+                value: Chocolate
