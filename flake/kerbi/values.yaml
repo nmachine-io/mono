@@ -3,6 +3,7 @@ deployment:
   name: flake
   image: gcr.io/nectar-bazaar/flake
   replicas: 1
+  flavor: honey
 service:
   name: flake
   port: 49160

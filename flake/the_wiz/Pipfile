@@ -9,12 +9,12 @@ rsa = "~=4.0"
 six = "~=1.12.0"
 inflection = "*"
 python-dotenv = "*"
-nectwiz="~=0.0.02"
 k8-kat="~=0.0.156"
 typing-extensions = "*"
 kubernetes = "*"
 coverage = "*"
 validators = "*"
+flask = "*"
 
 [requires]
 python_version = "3.6"

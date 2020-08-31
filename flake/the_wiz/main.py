@@ -15,9 +15,7 @@ wiz_app.add_configs(
 
 wiz_app.add_providers([app_endpoints.AppEndpointsProvider])
 
-wiz_app.app_name = 'flake'
-wiz_app.tami_name = 'gcr.io/nectar-bazaar/flake-tami:latest'
-wiz_app.tami_args = '-e hub-self-hosted'
+wiz_app._ns = 'flake'
 
 dotenv.load_dotenv()
 server.start()

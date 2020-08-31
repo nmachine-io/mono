@@ -19,6 +19,9 @@ spec:
         - name: main
           image: <%= values[:deployment][:image] %>
           imagePullPolicy: Always
+          env:
+            - name: "FLAVOR"
+              value: <%= values[:deployment][:flavor] %>
 
 ---
 

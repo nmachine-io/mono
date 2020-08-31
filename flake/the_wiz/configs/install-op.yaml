@@ -2,27 +2,25 @@ kind: Operation
 key: installation
 title: Installation
 
-prerequisites:
-  - move-to-own-pvc.current-pvc-is-default
-  - move-to-own-pvc.backups-enabled
-  - move-to-own-pvc.current-db-exists
+prerequisites: []
 
 stages:
   - key: sunshine
     kind: Stage
     title: Sunchine & Rainbows
     info: "How much sunshine is enough on a cloud native morning?"
-    steps:
-      - key: step.global.quotas.requests
-        kind: Step
-        info: Maximum sum of CPU/memory limits across application
-        title: Limit Quotas
-        fields:
-          - key: "hub.storage.external_db_port"
-            kind: Field
-            title: "External Database Port"
-            default: "5432"
-            validations:
-              - type: presence
-              - type: format
-                check_against: "integer"
+    steps: []
+
+#      - key: step.global.quotas.requests
+#        kind: Step
+#        info: Maximum sum of CPU/memory limits across application
+#        title: Limit Quotas
+#        fields:
+#          - key: "hub.storage.external_db_port"
+#            kind: Field
+#            title: "External Database Port"
+#            default: "5432"
+#            validations:
+#              - type: presence
+#              - type: format
+#                check_against: "integer"
