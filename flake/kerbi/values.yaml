@@ -6,4 +6,4 @@ deployment:
   flavor: honey
 service:
   name: flake
-  port: 49160
+  port: 8080
