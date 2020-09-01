@@ -3,15 +3,15 @@ key: installation
 title: Installation
 prerequisites: []
 stages:
-  - key: sunshine
+  - key: assigns_stage
     kind: Stage
-    title: Sunchine & Rainbows
-    info: "Simple introductory stage with one step"
+    title: Simple Assignments
+    info: "Chart and state assignments that end with a manifest-apply."
     steps:
-      - key: steps.simple_assignments
-        title: "Simple Assignments"
+      - key: deploy_step
+        title: "Deployment"
         kind: Step
-        info: "Ice cream and replica counts."
+        info: "Configures simple dep without applying."
         fields:
           - key: deployment.flavor
             kind: Field
@@ -32,18 +32,26 @@ stages:
               min: 1
               max: 15
               step: 1
-      - key: steps.simple_job
-        title: "Simple Assignments"
+      - key: svc_step
+        title: "Service"
         kind: Step
-        info: "Ice cream and replica counts."
+        info: "Commits simple config and applies the manifest"
+        resource_apply_filter:
+          - "Deployment:*"
+          - "Service:*"
         fields:
-          - key: deployment.flavor
+          - key: service.port
             kind: Field
-            title: "Ice cream flavor"
-            info: "The flavor shown on the website."
+            title: Service Port
+            info: "Port for service to be accessible at"
+            type: text-input
+          - key: service.type
+            kind: Field
+            title: Service Port
+            info: "Kubernetes network service type"
             type: select
             options:
-              - key: vanilla
-                value: Vanilla
-              - key: chocolate
-                value: Chocolate
+              - key: "ClusterIP"
+                value: "ClusterIP - accessible only inside the cluster"
+              - key: "LoadBalancer"
+                value: "LoadBalancer - accessible on the public internet"

@@ -7,3 +7,4 @@ deployment:
 service:
   name: flake
   port: 8080
+  type: ClusterIP

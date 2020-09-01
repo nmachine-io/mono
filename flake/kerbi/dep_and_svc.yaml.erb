@@ -33,7 +33,7 @@ metadata:
   labels:
     app: <%= values[:service][:name] %>
 spec:
-  type: ClusterIP
+  type: <%= values[:service][:type] %>
   ports:
     - name: main
       port: <%= values[:service][:port] %>
