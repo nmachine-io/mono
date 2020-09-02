@@ -17,12 +17,6 @@ wiz_app.add_configs(
 wiz_app.add_providers([app_endpoints.AppEndpointsProvider])
 
 wiz_app._ns = 'flake'
-# wiz_app._tam = TamDict(
-#   type='local_executable',
-#   uri='tam-eval',
-#   args=None,
-#   ver='latest'
-# )
 
 dotenv.load_dotenv()
 server.start()

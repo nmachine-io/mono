@@ -1,4 +1,3 @@
 #!/bin/bash
-pipenv update
-pipenv lock -r > requirements.txt
-pip3 install -r requirements.txt
+docker build . -t flake-wiz -t gcr.io/nectar-bazaar/flake-wiz
+docker push gcr.io/nectar-bazaar/flake-wiz

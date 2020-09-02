@@ -120,3 +120,5 @@ logs/
 k8_kat
 k8-kat
 .env
+
+requirements.txt

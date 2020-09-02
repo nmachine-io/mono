@@ -5,16 +5,9 @@ verify_ssl = true
 
 [packages]
 python-engineio = "*"
-rsa = "~=4.0"
-six = "~=1.12.0"
-inflection = "*"
 python-dotenv = "*"
-k8-kat="~=0.0.156"
 typing-extensions = "*"
-kubernetes = "*"
-coverage = "*"
-validators = "*"
-flask = "*"
+nectwiz="~=0.0.16"
 
 [requires]
 python_version = "3.6"
