@@ -5,9 +5,7 @@ verify_ssl = true
 
 [packages]
 python-engineio = "*"
-python-dotenv = "*"
-typing-extensions = "*"
-nectwiz="~=0.0.16"
+nectwiz="~=0.0.205"
 
 [requires]
 python_version = "3.6"
