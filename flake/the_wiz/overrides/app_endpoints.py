@@ -1,9 +1,9 @@
-from typing import List, TypeVar
+from typing import List
 
 from k8kat.res.ingress.kat_ingress import KatIngress
 from k8kat.res.svc.kat_svc import KatSvc
 
-from nectwiz.core.wiz_app import wiz_app
+from nectwiz.core.core.config_man import config_man
 from nectwiz.model.adapters.app_endpoint_adapter import AppEndpointAdapter
 from nectwiz.model.adapters.provider import Provider
 
@@ -13,7 +13,7 @@ class HomepageAdapter(AppEndpointAdapter):
     return "Homepage"
 
   def url(self):
-    ingress = KatIngress.find('hub-ingress', wiz_app.ns)
+    ingress = KatIngress.find('hub-ingress', config_man.ns())
     host, host_info = list(ingress.basic_rules().items())[0]
     info = [b for b in host_info if b['service'] == 'hub-front'][0]
     path = '' if info['path'] == '/' else info['path']
@@ -25,7 +25,7 @@ class HomepageInternalAdapter(AppEndpointAdapter):
     return "Homepage internal"
 
   def url(self):
-    svc = KatSvc.find('hub-front', wiz_app.ns)
+    svc = KatSvc.find('hub-front', config_man.ns())
     return f"{svc.internal_ip}:{svc.from_port}"
 
 

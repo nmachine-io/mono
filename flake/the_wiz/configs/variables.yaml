@@ -1,7 +1,6 @@
 kind: ChartVariable
-key: hub.backend.replicas
+id: deployment.replicas
 mode: public
 info: "Amount of replicas for backend deployment. Its recommended to
 change this variable in the Workloads page."
 default: 2
-field: hub.backend.replicas

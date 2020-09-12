@@ -1,5 +1,5 @@
 kind: Predicate
-key: move-to-own-pvc.backups-enabled
+id: move-to-own-pvc.backups-enabled
 title: Backup are enabled
 tone: warning
 message: "It is not recommended to perform database

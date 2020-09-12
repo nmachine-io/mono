@@ -8,7 +8,9 @@ title: Request Quotas
 fields:
   - hub.quotas.requests.cpu
   - hub.quotas.requests.memory
-resource_apply_filter: 'ResourceQuota:*'
+action: 
+  inherit: 'apply-resources'
+  filter: 'ResourceQuota:*'
 
 ---
 
@@ -19,7 +21,9 @@ title: Limit Quotas
 fields:
   - hub.quotas.limits.cpu
   - hub.quotas.limits.memory
-resource_apply_filter: 'ResourceQuota:*'
+action: 
+  inherit: 'apply-resources'
+  filter: 'ResourceQuota:*'
 
 
 
@@ -34,6 +38,7 @@ info: "The database may live inside your cluster, or outside of it.
 When inside, Nectar offers a fully managed service, complete with backups
 and encryption. <br/><br/> However, you may also point the application to a database
 on the cloud. If so, the next step will ask the database's URI."
+action: 'apply-resources'
 
 fields:
   - "hub.storage.type"
@@ -55,7 +60,7 @@ fields:
   - "hub.storage.external_db_port"
   - "hub.storage.external_db_user"
   - "hub.storage.external_db_password"
-resource_apply_filter: 'ResourceQuota:*'
+resource_apply_filter: '*:*'
 
 ---
 

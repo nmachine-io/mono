@@ -1,30 +1,26 @@
 kind: Operation
-key: installation
+id: installation
 title: Installation
 prerequisites: []
 stages:
-  - key: assigns_stage
-    kind: Stage
+  - id: assigns_stage
     title: Simple Assignments
     info: "Chart and state assignments that end with a manifest-apply."
     steps:
-      - key: deploy_step
+      - id: deploy_step
         title: "Deployment"
-        kind: Step
         info: "Configures simple dep without applying."
         fields:
-          - key: deployment.flavor
-            kind: Field
+          - id: deployment.flavor
             title: "Ice cream flavor"
             info: "The flavor shown on the website."
             type: select
             options:
-              - key: vanilla
+              - id: vanilla
                 value: Vanilla
-              - key: chocolate
+              - id: chocolate
                 value: Chocolate
-          - key: deployment.replicas
-            kind: Field
+          - id: deployment.replicas
             title: "Replicas"
             info: "Initial pod replicas for the website"
             type: slider
@@ -32,26 +28,20 @@ stages:
               min: 1
               max: 15
               step: 1
-      - key: svc_step
+      - id: svc_step
         title: "Service"
-        kind: Step
         info: "Commits simple config and applies the manifest"
-        resource_apply_filter:
-          - "Deployment:*"
-          - "Service:*"
+        action: StepApplyResAction
         fields:
-          - key: service.port
-            kind: Field
+          - id: service.port
             title: Service Port
             info: "Port for service to be accessible at"
-            type: text-input
-          - key: service.type
-            kind: Field
+          - id: service.type
             title: Service Port
             info: "Kubernetes network service type"
             type: select
             options:
-              - key: "ClusterIP"
+              - id: "ClusterIP"
                 value: "ClusterIP - accessible only inside the cluster"
-              - key: "LoadBalancer"
+              - id: "LoadBalancer"
                 value: "LoadBalancer - accessible on the public internet"
