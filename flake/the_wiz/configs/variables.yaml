@@ -1,6 +1,12 @@
 kind: ChartVariable
 id: deployment.replicas
 mode: public
-info: "Amount of replicas for backend deployment. Its recommended to
-change this variable in the Workloads page."
-default: 2
+info: "Amount of pod replicas for the website. More means
+more resilience to traffic spikes and application failures."
+
+---
+
+kind: ChartVariable
+id: deployment.flavor
+mode: public
+info: "The flavor of ice cream to be displayed on the website."

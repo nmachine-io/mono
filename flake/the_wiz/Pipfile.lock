@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "89134094f17604ff511089288098c4f8249b806358a0b1ffae2861cb5d8422e6"
+            "sha256": "0dd23001f5fc9f6e0bb72c25053b02464db22389d3c26514acb0e4377ae3aa14"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -102,10 +102,10 @@
         },
         "k8kat": {
             "hashes": [
-                "sha256:a73174b1c4c7480ad6ac4bd6dc5a4985844448e25855bba5d57e7897857a8638",
-                "sha256:c6f272b145d281d9831e110e5da4b3c537f40e09d36349ef3dc2364c078226ee"
+                "sha256:60e5dc7c96449cf32631db6089385d91cb12fb2b74a126aa4db69d23a15d890c",
+                "sha256:edb3af9cf8ea70970c0ed0d00404f19306536cdafc097abe7e25cd35394f2cf7"
             ],
-            "version": "==0.0.203"
+            "version": "==0.0.204"
         },
         "kubernetes": {
             "hashes": [
@@ -154,11 +154,11 @@
         },
         "nectwiz": {
             "hashes": [
-                "sha256:723cd6cd1a0647f701355eb50e31411ff2bec3b8f6d9785b1af54c5df7e28587",
-                "sha256:ee7fdad34208aa0ae1ff72bde7f8d3cd99dd19e1ac0a10af110dec37adcd9771"
+                "sha256:0af3047916ebdcc3d87116b49636d5d99ba87626b851432ac55d661144cd4fe7",
+                "sha256:3894c1a1575b3178c6c98cf20b1f2129b5a74711ba3ad3bafb5b132300dd3cd3"
             ],
             "index": "pypi",
-            "version": "==0.0.214"
+            "version": "==0.0.222"
         },
         "oauthlib": {
             "hashes": [
