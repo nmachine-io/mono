@@ -1,10 +1,10 @@
 namespace: default
 deployment:
-  name: flake
-  image: gcr.io/nectar-bazaar/flake
+  name: ice-cream
+  image: gcr.io/nectar-bazaar/ice-cream-app
   replicas: 1
   flavor: honey
 service:
-  name: flake
+  name: ice-cream
   port: 8080
   type: ClusterIP
