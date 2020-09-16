@@ -1,9 +1,0 @@
-type: nectarine
-identifier: mysql
-version: "~=1.2.3"
-
----
-
-type: helm
-identifier: "asdad"
-version: "~=1.2.3"

@@ -11,37 +11,13 @@ stages:
         title: "Deployment"
         info: "Configures simple dep without applying."
         fields:
-          - id: deployment.flavor
-            title: "Ice cream flavor"
-            info: "The flavor shown on the website."
-            type: select
-            options:
-              - id: vanilla
-                value: Vanilla
-              - id: chocolate
-                value: Chocolate
-          - id: deployment.replicas
-            title: "Replicas"
-            info: "Initial pod replicas for the website"
-            type: slider
-            options:
-              min: 1
-              max: 15
-              step: 1
+          - deployment.flavor
+          - deployment.replicas
+
       - id: svc_step
         title: "Service"
         info: "Commits simple config and applies the manifest"
         action: StepApplyResAction
         fields:
-          - id: service.port
-            title: Service Port
-            info: "Port for service to be accessible at"
-          - id: service.type
-            title: Service Port
-            info: "Kubernetes network service type"
-            type: select
-            options:
-              - id: "ClusterIP"
-                value: "ClusterIP - accessible only inside the cluster"
-              - id: "LoadBalancer"
-                value: "LoadBalancer - accessible on the public internet"
+          - service.port
+          - service.type

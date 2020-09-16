@@ -1,5 +1,9 @@
 #!/bin/bash
 
-pub_image="gcr.io/nectar-bazaar/ice-cream-tami:latest"
-docker build . -t ice-cream-wiz -t $pub_image
-docker push $pub_image
+tag=$1
+
+local_image="ice-cream-tami"
+public_image="gcr.io/nectar-bazaar/$local_image"
+
+docker build . -t $local_image:$tag -t $public_image:$tag
+docker push $public_image

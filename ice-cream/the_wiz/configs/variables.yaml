@@ -1,12 +1,56 @@
-kind: ChartVariable
-id: deployment.replicas
-mode: public
-info: "Amount of pod replicas for the website. More means
-more resilience to traffic spikes and application failures."
+kind: ManifestVariable
+id: deployment.flavor
+info: "The flavor of ice cream to be displayed on the website."
+input:
+  type: select
+  options:
+    - id: vanilla
+      value: Vanilla
+    - id: chocolate
+      value: Chocolate
 
 ---
 
-kind: ChartVariable
-id: deployment.flavor
-mode: public
-info: "The flavor of ice cream to be displayed on the website."
+kind: ManifestVariable
+id: deployment.replicas
+title: Main Replica Count
+info: "Amount of pod replicas for the website. More means
+more resilience to traffic spikes and application failures."
+input:
+  type: slider
+  options:
+    min: 1
+    max: 15
+    step: 1
+validation:
+  - operator: gteq
+    check_against: 10
+    message: "Also consider increasing each pod's memory limit."
+    tone: warning
+
+---
+
+kind: ManifestVariable
+id: service.port
+mode: internal
+info: "Port on which HTTP is directed to the application.
+Should only be changed in rare instances"
+validation:
+  - kind: ResCountComparePredicate
+    message: "Name is already taken"
+    selector:
+      namespace: $app
+      kind: PersistentVolumeClaim
+      name: $input
+
+---
+
+kind: ManifestVariable
+id: service.type
+input:
+  type: select
+  options:
+    - id: "ClusterIP"
+      value: "ClusterIP - accessible only inside the cluster"
+    - id: "LoadBalancer"
+      value: "LoadBalancer - accessible on the public internet"

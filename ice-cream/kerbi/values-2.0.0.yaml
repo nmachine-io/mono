@@ -1,9 +1,9 @@
 namespace: default
 deployment:
   name: ice-cream
-  image: gcr.io/nectar-bazaar/ice-cream-app
+  image: gcr.io/nectar-bazaar/ice-cream-app:2.0.0
   replicas: 1
-  flavor: honey
+  flavor: chocolate
 service:
   name: ice-cream
   port: 8080

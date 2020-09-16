@@ -1,7 +1,16 @@
 FROM ruby:2.6.3-alpine3.10
 WORKDIR /app
+
+# install packages and gems
 RUN apk --update add build-base libxslt-dev libxml2-dev
 ADD Gemfile Gemfile.lock ./
 RUN gem install bundler && bundle install
 ADD . /app
+
+# trickery for versions
+
+RUN rm *values.*
+ARG VERSION
+ADD
+
 ENTRYPOINT ["bundle", "exec", "ruby", "/app/main.rb"]
