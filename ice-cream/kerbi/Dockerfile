@@ -5,12 +5,11 @@ WORKDIR /app
 RUN apk --update add build-base libxslt-dev libxml2-dev
 ADD Gemfile Gemfile.lock ./
 RUN gem install bundler && bundle install
-ADD . /app
 
 # trickery for versions
-
-RUN rm *values.*
+ADD . /app
+RUN rm values*
 ARG VERSION
-ADD
+ADD values-$VERSION.yaml /app/values.yaml
 
 ENTRYPOINT ["bundle", "exec", "ruby", "/app/main.rb"]
