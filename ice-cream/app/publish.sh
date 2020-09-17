@@ -1,6 +1,6 @@
 #!/bin/bash
 
-local_image="ice-cream"
+local_image="ice-cream-app"
 public_img="gcr.io/nectar-bazaar/$local_image"
 tag=$1
 

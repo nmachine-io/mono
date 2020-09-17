@@ -1,8 +1,5 @@
 #!/bin/bash
-
-#pipenv update
-#nectwiz_version=$(awk -F== '{print $2}' <<< $(pipenv graph | grep nectwiz))
-nectwiz_version='latest'
-pub_image="gcr.io/nectar-bazaar/ice-cream-wiz:$nectwiz_version"
-docker build . -t ice-cream-wiz -t $pub_image
+tag=$1
+pub_image="gcr.io/nectar-bazaar/ice-cream-wiz"
+docker build . -t "ice-cream-wiz:$tag" -t "$pub_image:$tag"
 docker push $pub_image

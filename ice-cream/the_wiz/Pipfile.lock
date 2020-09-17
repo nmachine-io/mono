@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0dd23001f5fc9f6e0bb72c25053b02464db22389d3c26514acb0e4377ae3aa14"
+            "sha256": "de348d63868ca321321ca243909c451e0ccccfffcf228a5c0a1fced5a30fd1c5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -67,10 +67,10 @@
         },
         "google-auth": {
             "hashes": [
-                "sha256:bcbd9f970e7144fe933908aa286d7a12c44b7deb6d78a76871f0377a29d09789",
-                "sha256:f4d5093f13b1b1c0a434ab1dc851cd26a983f86a4d75c95239974e33ed406a87"
+                "sha256:7084c50c03f7a8a5696ef4500e65df0c525a0f6909f3c70b9ee65900a230c755",
+                "sha256:dcf86c5adc3a8a7659be190b12bb8912ae019cfd9ee2a571ea881e289fafbe39"
             ],
-            "version": "==1.21.1"
+            "version": "==1.21.2"
         },
         "idna": {
             "hashes": [
@@ -154,11 +154,11 @@
         },
         "nectwiz": {
             "hashes": [
-                "sha256:0af3047916ebdcc3d87116b49636d5d99ba87626b851432ac55d661144cd4fe7",
-                "sha256:3894c1a1575b3178c6c98cf20b1f2129b5a74711ba3ad3bafb5b132300dd3cd3"
+                "sha256:52e862d9ea56cd6753454e28097358ba874dfc8c53434350382163d143d60fd2",
+                "sha256:9bf9697ef941894931b60bcdb315f4b6c305dd8647fcb071f7ce351ca5c0bfc9"
             ],
             "index": "pypi",
-            "version": "==0.0.222"
+            "version": "==0.0.224"
         },
         "oauthlib": {
             "hashes": [

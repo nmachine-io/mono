@@ -5,6 +5,8 @@ metadata:
   name: <%= values[:deployment][:name] %>
   labels:
     app: <%= values[:deployment][:name] %>
+  annotations:
+    release: <%= values[:release] %>
 spec:
   replicas: <%= values[:deployment][:replicas] %>
   selector:
@@ -32,6 +34,8 @@ metadata:
   name: <%= values[:service][:name] %>
   labels:
     app: <%= values[:service][:name] %>
+  annotations:
+    release: <%= values[:release] %>
 spec:
   type: <%= values[:service][:type] %>
   ports:
