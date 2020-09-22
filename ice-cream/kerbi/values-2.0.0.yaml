@@ -1,3 +1,4 @@
+release: 0.0.0
 namespace: default
 deployment:
   name: ice-cream

@@ -1,0 +1,78 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  name: telem-redis-secret
+data:
+  password: <%= redis_secret %>
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: telem-redis-pvc
+  finalizers: []
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telem-redis
+  labels:
+    managed_by: nectar
+    app: telem-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      managed_by: nectar
+      app: telem-redis
+  template:
+    metadata:
+      labels:
+        managed_by: nectar
+        app: telem-redis
+    spec:
+      containers:
+        - name: redis
+          imagePullPolicy: Always
+          image: redis
+          args: ["--appendonly", "yes", "--save", "900", "1", "--save", "30", "1"]
+          tty: true
+          stdin: true
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: telem-redis-secret
+                  key: password
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - mountPath: /data
+              name: redis-volume
+      volumes:
+        - name: redis-volume
+          persistentVolumeClaim:
+            claimName: telem-redis-pvc
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: telem-redis-secret
+spec:
+  selector:
+    managed_by: nectar
+    app: telem-redis
+  ports:
+    - protocol: TCP
+      port: 6379

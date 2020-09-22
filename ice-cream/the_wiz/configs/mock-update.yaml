@@ -1,0 +1,14 @@
+kind: MockUpdate
+id: vendor.mock-updates.not-next
+inherit: vendor.mock-updates.partial
+injections:
+  frontend.image: 1.0.1
+
+---
+
+kind: MockUpdate
+id: vendor.mock-updates.next
+version: 2.0.0
+inherit: vendor.mock-updates.release
+tam_type: image
+tam_uri: gcr.io/nectar-bazaar/ice-cream-tami
