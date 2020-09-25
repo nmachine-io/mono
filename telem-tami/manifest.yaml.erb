@@ -1,6 +1,7 @@
 kind: Secret
 apiVersion: v1
 metadata:
+  namespace: <%= values[:namespace] %>
   name: telem-redis-secret
 data:
   password: <%= redis_secret %>
@@ -10,6 +11,7 @@ data:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
+  namespace: <%= values[:namespace] %>
   name: telem-redis-pvc
   finalizers: []
 spec:
@@ -24,6 +26,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: <%= values[:namespace] %>
   name: telem-redis
   labels:
     managed_by: nectar
@@ -68,6 +71,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
+  namespace: <%= values[:namespace] %>
   name: telem-redis-secret
 spec:
   selector:

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0499948b2f9c871075e40238906f119603f811f94ec4b1c01f1f304359250e41"
+            "sha256": "faeb7eb4b6cd8f6f3cb3f2ff4ae7108e082a2233d6b511654b65b8a82a6dbd4a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -67,10 +67,10 @@
         },
         "google-auth": {
             "hashes": [
-                "sha256:7084c50c03f7a8a5696ef4500e65df0c525a0f6909f3c70b9ee65900a230c755",
-                "sha256:dcf86c5adc3a8a7659be190b12bb8912ae019cfd9ee2a571ea881e289fafbe39"
+                "sha256:31941bf019fb242c04d0de32845da10180788bfddb0de87d78c4bdf55555dda1",
+                "sha256:873051a6317294b083795cffc467bcd05b6df483ef542bfe0069ddbfbac0a096"
             ],
-            "version": "==1.21.2"
+            "version": "==1.21.3"
         },
         "idna": {
             "hashes": [
@@ -102,10 +102,10 @@
         },
         "k8kat": {
             "hashes": [
-                "sha256:60e5dc7c96449cf32631db6089385d91cb12fb2b74a126aa4db69d23a15d890c",
-                "sha256:edb3af9cf8ea70970c0ed0d00404f19306536cdafc097abe7e25cd35394f2cf7"
+                "sha256:e4114ab67dd27cc232208f7d91b135f41d35c370f11b5fd82590389ace56cd07",
+                "sha256:ee0b4fd8057c1469f75da29f1229164ee2c5e02bc022840dd10bac64ebd7af29"
             ],
-            "version": "==0.0.204"
+            "version": "==0.0.206"
         },
         "kubernetes": {
             "hashes": [
@@ -154,11 +154,11 @@
         },
         "nectwiz": {
             "hashes": [
-                "sha256:98dadf04cb5a64949f2fb1f583f0d94d28c4dfa09d5b82be570dcbcc16979f98",
-                "sha256:fd9a913323401f193a47ca1ae13716f99f848d8c4916f2651c01bf5c427e2c6a"
+                "sha256:4b1deb06264269a1b80677d55d4424c0129a3dde543787e321716cd5ca059925",
+                "sha256:87ab099e6fb971f10af4798574f23eeeab1a6cf7a4fdbae2f38f1e86da5341da"
             ],
             "index": "pypi",
-            "version": "==0.0.226"
+            "version": "==0.0.227"
         },
         "oauthlib": {
             "hashes": [

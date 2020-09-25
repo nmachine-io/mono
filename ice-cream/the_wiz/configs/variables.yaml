@@ -1,12 +1,47 @@
-kind: ChartVariable
+kind: ManifestVariable
 id: deployment.replicas
+title: Website Pod Replicas
 mode: public
 info: "Amount of pod replicas for the website. More means
 more resilience to traffic spikes and application failures."
+input:
+  kind: SliderInput
+  min: 1
+  max: 15
+  step: 1
 
 ---
 
-kind: ChartVariable
+kind: ManifestVariable
 id: deployment.flavor
+title: Website Flavor
 mode: public
-info: "The flavor of ice cream to be displayed on the website."
+info: Ice-cream speciality for the website
+input:
+  kind: SelectInput
+  options:
+    vanilla: Vanilla
+    chocolate: Chocolate
+
+---
+
+kind: ManifestVariable
+id: service.type
+title: Service Type
+info: "Kubernetes network service type"
+input:
+  kind: SelectInput
+  options:
+    ClusterIP: ClusterIP - accessible only inside the cluster
+    LoadBalancer: LoadBalancer - accessible on the public internet
+mode: public
+
+---
+
+kind: ManifestVariable
+id: service.port
+title: Service Port
+info: "Port for service to be accessible at"
+validation:
+  - kind: FormatPredicate
+    check_against: integer
