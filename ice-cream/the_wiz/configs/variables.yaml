@@ -39,6 +39,7 @@ mode: public
 ---
 
 kind: ManifestVariable
+mode: public
 id: service.port
 title: Service Port
 info: "Port for service to be accessible at"
