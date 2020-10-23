@@ -1,4 +1,4 @@
-<% if values[:telem_storage][:strategy] == 'managed_pvc' %>
+<% if values[:telem_db][:strategy] == 'managed_pvc' %>
 
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -43,7 +43,7 @@ spec:
         - image: mongo
           name: mongodb
           ports:
-            - containerPort: 27017
+            - containerPort: <%= values[:telem_db][:port] %>
           resources:  {}
           volumeMounts:
             - mountPath: /data/db
@@ -68,8 +68,8 @@ spec:
     managed_by: nectar
     app: telem-db
   ports:
-    - name: "27017"
-      port: 27017
-      targetPort: 27017
+    - name: main
+      port: <%= values[:telem_db][:port] %>
+      targetPort: <%= values[:telem_db][:port] %>
 
 <% end %>

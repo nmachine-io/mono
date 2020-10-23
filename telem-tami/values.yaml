@@ -1,6 +1,6 @@
 release: 0.0.0
 namespace: default
-telem_storage:
+telem_db:
   strategy: disabled
   host: telem-redis
-  port: 6379
+  port: 27017
