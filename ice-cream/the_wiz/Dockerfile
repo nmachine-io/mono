@@ -12,6 +12,7 @@ RUN pipenv lock --clear -r > requirements.txt
 RUN pip3 install -r requirements.txt
 ENV KAT_ENV=production
 ENV FLASK_ENV=production
+ENV HUB_HOST=http://necthub.com.ngrok.io
 ENV CONNECT_TYPE=in
 ADD . /app/
 

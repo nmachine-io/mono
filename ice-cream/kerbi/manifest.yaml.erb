@@ -1,26 +1,54 @@
+<% if values[:quotas][:enabled] %>
+  apiVersion: v1
+  kind: ResourceQuota
+  metadata:
+    name: resource-quota
+    namespace: <%= namespace %>
+  spec:
+    hard:
+      requests.cpu: <%= values[:quotas][:requests][:cpu] %>
+      requests.memory: <%= values[:quotas][:requests][:memory] %>
+      limits.cpu: <%= values[:quotas][:limits][:cpu] %>
+      limits.memory: <%= values[:quotas][:limits][:memory] %>
+
+---
+
+<% end %>
+
+
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: <%= values[:namespace] %>
-  name: <%= values[:deployment][:name] %>
+  name: ice-cream
   labels:
-    app: <%= values[:deployment][:name] %>
+    app: ice-cream
   annotations:
     release: <%= values[:release] %>
 spec:
   replicas: <%= values[:deployment][:replicas] %>
   selector:
     matchLabels:
-      app: <%= values[:deployment][:name] %>
+      app: ice-cream
   template:
     metadata:
       labels:
-        app: <%= values[:deployment][:name] %>
+        app: ice-cream
     spec:
       containers:
         - name: main
           image: <%= values[:deployment][:image] %>
           imagePullPolicy: Always
+          <% if values[:quotas][:enabled] %>
+          resources:
+            requests:
+              memory: 25M
+              cpu: 20m
+            limits:
+              memory: 50M
+              cpu: 30m
+          <% end %>
           env:
             - name: "FLAVOR"
               value: <%= values[:deployment][:flavor] %>
@@ -31,9 +59,9 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: <%= values[:namespace] %>
-  name: <%= values[:service][:name] %>
+  name: ice-cream
   labels:
-    app: <%= values[:service][:name] %>
+    app: ice-cream
   annotations:
     release: <%= values[:release] %>
 spec:
@@ -43,4 +71,4 @@ spec:
       port: <%= values[:service][:port] %>
       targetPort: 8080
   selector:
-    app: <%= values[:deployment][:name] %>
+    app: ice-cream

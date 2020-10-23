@@ -5,7 +5,7 @@ verify_ssl = true
 
 [packages]
 python-engineio = "*"
-nectwiz="~=0.0.230"
+nectwiz="*"
 
 [requires]
 python_version = "3.6"

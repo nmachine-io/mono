@@ -1,4 +1,5 @@
 .env
 hack.sh
+nectwiz
 .gitignore
 requirements.txt

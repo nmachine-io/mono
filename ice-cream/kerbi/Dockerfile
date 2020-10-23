@@ -10,6 +10,6 @@ RUN gem install bundler && bundle install
 ADD . /app
 RUN rm values*
 ARG VERSION
-ADD values-$VERSION.yaml /app/values.yaml
+ADD "values-$VERSION.yaml" /app/values.yaml
 
 ENTRYPOINT ["bundle", "exec", "ruby", "/app/main.rb"]

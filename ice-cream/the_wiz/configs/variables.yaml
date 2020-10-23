@@ -9,6 +9,17 @@ input:
   min: 1
   max: 15
   step: 1
+validation:
+  - kind: FormatPredicate
+    check_against: integer
+  - operator: ">="
+    check_against: 0
+    tone: warning
+    reason: Zero replicas will shut down the server
+  - operator: "<"
+    check_against: 10
+    tone: warning
+    reason: Demo app won't need this level of resillience
 
 ---
 
@@ -16,12 +27,16 @@ kind: ManifestVariable
 id: deployment.flavor
 title: Website Flavor
 mode: public
-info: Ice-cream speciality for the website
+info: "Ice-cream speciality for the website. Cannnot break the application
+because of faulty value."
 input:
   kind: SelectInput
   options:
     vanilla: Vanilla
     chocolate: Chocolate
+validation:
+  - operator: in
+    check_against: [vanilla, chocolate]
 
 ---
 
@@ -46,3 +61,15 @@ info: "Port for service to be accessible at"
 validation:
   - kind: FormatPredicate
     check_against: integer
+
+---
+
+kind: ManifestVariable
+mode: internal
+id: deployment.image
+title: Main application image
+info: "Versioned application image. Should never be changed manually."
+validation:
+  - check_against: "gcr.io/nectar-bazaar/ice-cream-app:"
+    operator: contains
+    reason: Base image should never be different

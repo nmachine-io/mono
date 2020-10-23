@@ -1,11 +1,6 @@
 release: 0.0.0
 namespace: default
-deployment:
-  name: ice-cream
-  image: gcr.io/nectar-bazaar/ice-cream-app:1.0.0
-  replicas: 1
-  flavor: vanilla
-service:
-  name: ice-cream
-  port: 8080
-  type: ClusterIP
+telem_storage:
+  strategy: disabled
+  host: telem-redis
+  port: 6379

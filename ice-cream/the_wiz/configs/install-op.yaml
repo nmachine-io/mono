@@ -1,9 +1,13 @@
 kind: Operation
 id: installation
 title: Installation
-prerequisites: []
+preflight_predicates: 
+  - nectar.predicate.all-nodes-linux
+  - nectar.predicate.all-node-containers-docker
+  - nectar.predicate.metrics-server-running
+  - nectar.predicate.calico-pods-present-for-netpol
 stages:
-  - nectar.operations.telem.stage-1
+  - nectar.stages.telem-storage
   - id: installation.flavor
     title: Simple Assignments
     info: "Chart and state assignments that end with a manifest-apply."
@@ -17,7 +21,7 @@ stages:
       - id: installation.networking
         title: "Service"
         info: "Commits simple config and applies the manifest"
-        action: StepApplyResAction
+        action: ApplyManifestAction
         fields:
           - variable: service.port
           - variable: service.type

@@ -1,0 +1,20 @@
+kind: Operation
+id: ice-cream.operation.fail
+title: Fail on Purpose
+info: This operation is not meant to succeed.
+synopsis: "<p>Demo operation for demonstrating what <b>error-recovery</b>
+looks like with Nectar.</p>"
+preflight_predicates: []
+stages:
+  - id: ice-cream.stage.fail-kubectl
+    title: Kubectl apply failures
+    info: "What happens when kubectl apply -f throws an error?"
+    steps:
+      - id: ice-cream.steps.kubectl-fail-to-data-type
+        title: "Non-integer string"
+        info: "We'll give 'replicas' a non-integer value"
+        action: ApplyManifestAction
+        fields:
+          - id: deployment.replicas
+            title: "Free form input"
+            default: not-a-number

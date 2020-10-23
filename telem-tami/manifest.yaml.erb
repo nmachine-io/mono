@@ -1,18 +1,13 @@
-kind: Secret
-apiVersion: v1
-metadata:
-  namespace: <%= values[:namespace] %>
-  name: telem-redis-secret
-data:
-  password: <%= redis_secret %>
-
----
+<% if values[:telem_storage][:strategy] == 'managed_pvc' %>
 
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   namespace: <%= values[:namespace] %>
-  name: telem-redis-pvc
+  name: telem-db-pvc
+  labels:
+    managed_by: nectar
+    app: telem-db
   finalizers: []
 spec:
   accessModes:
@@ -27,44 +22,36 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: <%= values[:namespace] %>
-  name: telem-redis
+  name: telem-db
   labels:
     managed_by: nectar
-    app: telem-redis
+    app: telem-db
 spec:
   replicas: 1
   selector:
     matchLabels:
       managed_by: nectar
-      app: telem-redis
+      app: telem-db
   template:
     metadata:
       labels:
         managed_by: nectar
-        app: telem-redis
+        app: telem-db
     spec:
+      restartPolicy: Always
       containers:
-        - name: redis
-          imagePullPolicy: Always
-          image: redis
-          args: ["--appendonly", "yes", "--save", "900", "1", "--save", "30", "1"]
-          tty: true
-          stdin: true
-          env:
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: telem-redis-secret
-                  key: password
+        - image: mongo
+          name: mongodb
           ports:
-            - containerPort: 6379
+            - containerPort: 27017
+          resources:  {}
           volumeMounts:
-            - mountPath: /data
-              name: redis-volume
+            - mountPath: /data/db
+              name: telem-db-volume
       volumes:
-        - name: redis-volume
+        - name: telem-db-volume
           persistentVolumeClaim:
-            claimName: telem-redis-pvc
+            claimName: telem-db-pvc
 
 ---
 
@@ -72,11 +59,17 @@ kind: Service
 apiVersion: v1
 metadata:
   namespace: <%= values[:namespace] %>
-  name: telem-redis-secret
+  name: telem-db
+  labels:
+    managed_by: nectar
+    app: telem-db
 spec:
   selector:
     managed_by: nectar
-    app: telem-redis
+    app: telem-db
   ports:
-    - protocol: TCP
-      port: 6379
+    - name: "27017"
+      port: 27017
+      targetPort: 27017
+
+<% end %>

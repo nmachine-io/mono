@@ -10,5 +10,14 @@ kind: MockUpdate
 id: vendor.mock-updates.next
 version: 2.0.0
 inherit: vendor.mock-updates.release
-tam_type: image
-tam_uri: gcr.io/nectar-bazaar/ice-cream-tami
+tam_type: local_executable
+tam_uri: tam-eval
+
+---
+
+kind: MockUpdate
+inherit: vendor.mock-updates.wiz-update
+id: vendor.mock-updates.next3
+version: 2.0.0
+wiz_type: dev-server
+wiz_uri: http://localhost:5000
