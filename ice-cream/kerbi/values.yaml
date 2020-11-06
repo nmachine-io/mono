@@ -4,6 +4,7 @@ namespace: default
 deployment:
   image: gcr.io/nectar-bazaar/ice-cream-app:1.0.0
   replicas: 1
+  version: none
   flavor: vanilla
 
 service:

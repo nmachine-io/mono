@@ -6,10 +6,12 @@ RUN apk --update add build-base libxslt-dev libxml2-dev
 ADD Gemfile Gemfile.lock ./
 RUN gem install bundler && bundle install
 
-# trickery for versions
+# add everything else
 ADD . /app
-RUN rm values*
-ARG VERSION
-ADD "values-$VERSION.yaml" /app/values.yaml
+
+# trickery for versions
+ARG VERSION=none
+RUN sed -i -e "s/version: none"/"version: $VERSION/g" values.yaml
+RUN cat values.yaml
 
 ENTRYPOINT ["bundle", "exec", "ruby", "/app/main.rb"]
