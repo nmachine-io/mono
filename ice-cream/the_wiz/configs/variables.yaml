@@ -2,6 +2,7 @@ kind: ManifestVariable
 id: deployment.replicas
 title: Website Pod Replicas
 mode: public
+tags: ['deployment', 'app']
 info: "Amount of pod replicas for the website. More means
 more resilience to traffic spikes and application failures."
 input:
@@ -27,6 +28,7 @@ kind: ManifestVariable
 id: deployment.flavor
 title: Website Flavor
 mode: public
+tags: ['deployment', 'app']
 info: "Ice-cream speciality for the website. Cannnot break the application
 because of faulty value."
 input:
@@ -43,6 +45,7 @@ validation:
 kind: ManifestVariable
 id: service.type
 title: Service Type
+tags: ['network', 'app']
 info: "Kubernetes network service type"
 input:
   kind: SelectInput
@@ -57,6 +60,7 @@ kind: ManifestVariable
 mode: public
 id: service.port
 title: Service Port
+tags: ['network', 'app']
 info: "Port for service to be accessible at"
 validation:
   - kind: FormatPredicate
@@ -67,6 +71,7 @@ validation:
 kind: ManifestVariable
 mode: internal
 id: deployment.image
+tags: ['deployment', 'app']
 title: Main application image
 info: "Versioned application image. Should never be changed manually."
 validation:

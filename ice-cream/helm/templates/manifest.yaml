@@ -1,0 +1,69 @@
+{{- if .Values.quotas.enabled }}
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resource-quota
+  namespace: {{ .Values.namespace }}
+spec:
+  hard:
+    requests.cpu: {{ .Values.quotas.requests.cpu }}
+    requests.memory: {{ .Values.quotas.requests.memory }}
+    limits.cpu: {{ .Values.quotas.limits.cpu }}
+    limits.memory: {{ .Values.quotas.limits.memory }}
+{{- end }}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+  annotations:
+    release: none
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: main
+          image: {{ .Values.deployment.image }}
+          imagePullPolicy: Always
+          {{- if .Values.quotas.enabled }}
+          resources:
+            requests:
+              memory: 25M
+              cpu: 20m
+            limits:
+              memory: 50M
+              cpu: 30m
+          {{- end }}
+          env:
+            - name: "FLAVOR"
+              value: {{ .Values.deployment.flavor }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: main
+      port: {{ .Values.service.port }}
+      targetPort: 8080
+  selector:
+    app: {{ .Chart.Name }}

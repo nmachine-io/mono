@@ -7,7 +7,7 @@ preflight_predicates:
   - nectar.predicate.metrics-server-running
   - nectar.predicate.calico-pods-present-for-netpol
 stages:
-  - nectar.stages.telem-storage
+        #  - nectar.stages.telem-storage
   - id: installation.flavor
     title: Simple Assignments
     info: "Chart and state assignments that end with a manifest-apply."
