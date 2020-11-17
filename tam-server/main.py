@@ -10,7 +10,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
 
-executable = os.environ.get('TAMI_CMD', f'{os.getcwd()}/insane.sh')
+executable = os.environ.get('TAM_CMD', 'tam-eval')
 
 def exec_cmd(command: str) -> str:
   split_cmd = [v for v in command.split(" ") if v]
@@ -56,16 +56,19 @@ def values():
 
 @app.route('/simple_template')
 def simple_template():
-  res_dicts = exec_yamls_cmd(f"{executable} template")
+  release_name = request.args.get('release_name', '')
+  res_dicts = exec_yamls_cmd(f"{executable} template {release_name}")
   print(res_dicts)
   return jsonify(data=res_dicts)
 
 
 @app.route('/template', methods=['POST'])
 def template():
-  assignments = request.json.get('assignments', {})
-  inlines = request.json.get('inlines', {})
-  flags = request.json.get('flags')
+  attrs = request.json
+  assignments = attrs.get('assignments', {})
+  inlines = attrs.get('inlines', {})
+  flags = attrs.get('flags')
+  release_name = request.args.get('release_name', '')
 
   tmp_file_name = f"/tmp/values-{rand_str(20)}"
 
@@ -73,7 +76,7 @@ def template():
     file.write(yaml.dump(assignments))
 
   args = f"-f {tmp_file_name} {fmt_inlines(inlines)} {flags}"
-  res_dicts = exec_yamls_cmd(f"{executable} template {args}")
+  res_dicts = exec_yamls_cmd(f"{executable} template {release_name} {args}")
   os.remove(tmp_file_name)
 
   return jsonify(data=res_dicts)

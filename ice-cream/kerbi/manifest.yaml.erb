@@ -3,7 +3,7 @@
   kind: ResourceQuota
   metadata:
     name: resource-quota
-    namespace: <%= namespace %>
+    namespace: <%= values[:release_name] %>
   spec:
     hard:
       requests.cpu: <%= values[:quotas][:requests][:cpu] %>
@@ -16,16 +16,13 @@
 <% end %>
 
 
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: <%= values[:namespace] %>
+  namespace: <%= values[:release_name] %>
   name: ice-cream
   labels:
     app: ice-cream
-  annotations:
-    release: <%= values[:release] %>
 spec:
   replicas: <%= values[:deployment][:replicas] %>
   selector:
@@ -58,12 +55,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: <%= values[:namespace] %>
+  namespace: <%= values[:release_name] %>
   name: ice-cream
   labels:
     app: ice-cream
-  annotations:
-    release: <%= values[:release] %>
 spec:
   type: <%= values[:service][:type] %>
   ports:
