@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: resource-quota
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Chart.Release }}
 spec:
   hard:
     requests.cpu: {{ .Values.quotas.requests.cpu }}
