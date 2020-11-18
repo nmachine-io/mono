@@ -1,0 +1,21 @@
+FROM ruby:2.6.3
+
+WORKDIR /app
+RUN apt-get update
+RUN apt-get install -y wget libxslt-dev libxml2-dev
+
+ADD Gemfile Gemfile.lock ./
+RUN gem install bundler && bundle install
+
+RUN wget -q https://github.com/nectar-cs/tam_server/releases/download/0.0.3/tam_server.tar.gz
+RUN tar -xf tam_server.tar.gz
+RUN mv tam_server /usr/local/bin/tam_server
+RUN chmod +x /usr/local/bin/tam_server
+
+ADD . .
+
+RUN bundle exec ruby main.rb template adasd
+RUN strings libc.so.6 | grep GLIBC
+
+ENV TAM_CMD="/app/container-eval.sh"
+RUN ["tam_server"]
