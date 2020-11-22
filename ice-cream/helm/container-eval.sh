@@ -1,3 +1,3 @@
 #!/bin/sh
 cd /app
-helm "$@"
+helm ${@/values/show values}

@@ -1,6 +1,4 @@
-release: 0.0.0
-namespace: default
-telem_db:
-  strategy: disabled
-  host: telem-redis
-  port: 27017
+release_name: telem-db
+strategy: disabled
+host: telem-redis
+port: 27017
