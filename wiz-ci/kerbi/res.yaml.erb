@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: <%= values[:namespace] %>
+  namespace: <%= values[:release_name] %>
   name: <%= values[:service][:name] %>
   labels:
     app: <%= values[:service][:name] %>
@@ -19,7 +19,7 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  namespace: <%= values[:namespace] %>
+  namespace: <%= values[:release_name] %>
   name: <%= values[:pod][:name] %>
   labels:
     app: <%= values[:pod][:name] %>

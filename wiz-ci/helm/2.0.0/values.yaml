@@ -1,3 +1,5 @@
+namespace: default
+
 service:
   name: service
   port: 80

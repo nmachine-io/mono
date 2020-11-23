@@ -154,11 +154,11 @@
         },
         "nectwiz": {
             "hashes": [
-                "sha256:09729882bc2e42e4913d7bbdaf993620e88eb98608217fd7147cc6908c0bd757",
-                "sha256:3bdbeed6c74ea08740a8a9ff650d2dc1e24acf856a0c7615730a591667efe835"
+                "sha256:08cca213f0b109869c42b2feada3f346d0f38ab93f1fa559c8946219b28225e6",
+                "sha256:897ea58d14b03324436a6b2dd1d68053b1ae6b65e9a7e4a8af5059a75196504f"
             ],
             "index": "pypi",
-            "version": "==0.0.299"
+            "version": "==0.0.300"
         },
         "oauthlib": {
             "hashes": [
