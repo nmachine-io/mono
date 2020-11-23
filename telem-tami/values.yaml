@@ -1,4 +1,2 @@
-release_name: telem-db
-strategy: disabled
 host: telem-redis
 port: 27017

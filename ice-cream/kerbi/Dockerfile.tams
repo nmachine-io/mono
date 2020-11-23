@@ -1,21 +1,38 @@
-FROM ruby:2.6.3
+FROM ubuntu:20.04
 
 WORKDIR /app
-RUN apt-get update
-RUN apt-get install -y wget libxslt-dev libxml2-dev
+ARG RUBY_PATH=/usr/local/
+ARG RUBY_VERSION=2.6.3
 
-ADD Gemfile Gemfile.lock ./
-RUN gem install bundler && bundle install
+RUN apt-get update && \
+    apt-get install -y \
+        git \
+        curl \
+        gcc \
+        wget \
+        make \
+        libssl-dev \
+        zlib1g-dev \
+        libreadline-dev
 
-RUN wget -q https://github.com/nectar-cs/tam_server/releases/download/0.0.3/tam_server.tar.gz
+RUN git clone git://github.com/rbenv/ruby-build.git \
+  $RUBY_PATH/plugins/ruby-build \
+  && $RUBY_PATH/plugins/ruby-build/install.sh
+RUN ruby-build $RUBY_VERSION $RUBY_PATH
+
+ENV PATH $RUBY_PATH/bin:$PATH
+
+RUN wget -q https://github.com/nectar-cs/tam_server/releases/download/1.0.3/tam_server.tar.gz
 RUN tar -xf tam_server.tar.gz
 RUN mv tam_server /usr/local/bin/tam_server
 RUN chmod +x /usr/local/bin/tam_server
 
-ADD . .
+RUN gem install bundler
+ADD Gemfile Gemfile.lock ./
 
-RUN bundle exec ruby main.rb template adasd
-RUN strings libc.so.6 | grep GLIBC
+RUN bundle install
+
+ADD . .
 
 ENV TAM_CMD="/app/container-eval.sh"
 RUN ["tam_server"]

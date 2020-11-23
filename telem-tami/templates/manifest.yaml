@@ -1,9 +1,7 @@
-<% if values[:strategy] == 'managed_pvc' %>
-
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  namespace: <%= values[:release_name] %>
+  namespace: {{ .Release.Name }}
   name: telem-db-pvc
   labels:
     managed_by: nectar
@@ -21,7 +19,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: <%= values[:release_name] %>
+  namespace: {{ .Release.Name }}
   name: telem-db
   labels:
     managed_by: nectar
@@ -43,7 +41,7 @@ spec:
         - image: mongo
           name: mongodb
           ports:
-            - containerPort: <%= values[:port] %>
+            - containerPort: {{ .Values.port }}
           resources:  {}
           volumeMounts:
             - mountPath: /data/db
@@ -58,7 +56,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  namespace: <%= values[:release_name] %>
+  namespace: {{ .Release.Name }}
   name: telem-db
   labels:
     managed_by: nectar
@@ -69,7 +67,5 @@ spec:
     app: telem-db
   ports:
     - name: main
-      port: <%= values[:port] %>
-      targetPort: <%= values[:port] %>
-
-<% end %>
+      port: {{ .Values.port }}
+      targetPort: {{ .Values.port }}
