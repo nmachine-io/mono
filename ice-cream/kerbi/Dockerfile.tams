@@ -34,5 +34,5 @@ RUN bundle install
 
 ADD . .
 
-ENV TAM_CMD="/app/container-eval.sh"
+ENV TAM_CMD="/app/local-eval.sh"
 RUN ["tam_server"]
