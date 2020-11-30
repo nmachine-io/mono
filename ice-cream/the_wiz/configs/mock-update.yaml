@@ -10,8 +10,6 @@ kind: MockUpdate
 id: vendor.mock-updates.next
 version: 2.0.0
 inherit: vendor.mock-updates.release
-tam_type: local_executable
-tam_uri: tam-eval
 
 ---
 

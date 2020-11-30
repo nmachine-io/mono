@@ -1,9 +1,0 @@
-id: delete_cones
-kind: WizJob
-name: "Delete pods and services"
-type: delete_resources
-data:
-  namespace: $app | $all | $cluster
-  resource_types: ['pod', 'service']
-  label_selectors:
-    created_by: $app

@@ -5,6 +5,7 @@ info: This operation is not meant to succeed.
 synopsis: "<p>Demo operation for demonstrating what <b>error-recovery</b>
 looks like with Nectar.</p>"
 preflight_predicates: []
+tags: ['Demo']
 stages:
   - id: ice-cream.stage.fail-kubectl
     title: Kubectl apply failures

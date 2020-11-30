@@ -5,6 +5,10 @@ mode: public
 tags: ['deployment', 'app']
 info: "Amount of pod replicas for the website. More means
 more resilience to traffic spikes and application failures."
+decorator: 
+  kind: FixedReplicasDecorator
+  template: "<p>Workable for a {size} team making no more than {volume} requests per second.</p>"
+
 input:
   kind: SliderInput
   min: 1
@@ -17,10 +21,6 @@ validation:
     check_against: 0
     tone: warning
     reason: Zero replicas will shut down the server
-  - operator: "<"
-    check_against: 10
-    tone: warning
-    reason: Demo app won't need this level of resillience
 
 ---
 
@@ -34,11 +34,15 @@ because of faulty value."
 input:
   kind: SelectInput
   options:
-    vanilla: Vanilla
-    chocolate: Chocolate
+    - id: vanilla
+      title: Vanilla
+    - id: chocolate
+      title: Chocolate
 validation:
   - operator: in
     check_against: [vanilla, chocolate]
+    tone: warning
+    reason: Vanilla and chocolate not good enough for you?
 
 ---
 
@@ -50,8 +54,10 @@ info: "Kubernetes network service type"
 input:
   kind: SelectInput
   options:
-    ClusterIP: ClusterIP - accessible only inside the cluster
-    LoadBalancer: LoadBalancer - accessible on the public internet
+    - id: ClusterIP
+      title: ClusterIP - accessible only inside the cluster
+    - id: LoadBalancer
+      title: LoadBalancer - accessible on the public internet
 mode: public
 
 ---
