@@ -5,19 +5,15 @@ mode: public
 tags: ['deployment', 'app']
 info: "Amount of pod replicas for the website. More means
 more resilience to traffic spikes and application failures."
-decorator: 
-  kind: FixedReplicasDecorator
-  template: "<p>Workable for a {size} team making no more than {volume} requests per second.</p>"
-
 input:
   kind: SliderInput
-  min: 1
+  min: 0
   max: 15
   step: 1
 validation:
   - kind: FormatPredicate
     check_against: integer
-  - operator: ">="
+  - operator: ">"
     check_against: 0
     tone: warning
     reason: Zero replicas will shut down the server
@@ -29,7 +25,7 @@ id: deployment.flavor
 title: Website Flavor
 mode: public
 tags: ['deployment', 'app']
-info: "Ice-cream speciality for the website. Cannnot break the application
+info: "Ice-cream speciality for the website. Can break the application
 because of faulty value."
 input:
   kind: SelectInput

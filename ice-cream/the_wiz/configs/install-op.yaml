@@ -19,6 +19,13 @@ stages:
             variable: deployment.flavor
           - id: deployment.replicas
             variable: deployment.replicas
+          - id: deployment.password
+            title: Database Password
+            info: "Keep this value safe, it will not be shown again."
+            target: state
+            default:
+              kind: RandomStringSupplier
+              symbols: [letters, numbers]
       - id: installation.networking
         title: "Service"
         info: "Commits simple config and applies the manifest"
@@ -28,5 +35,6 @@ stages:
             variable: service.port
           - id: service.type
             variable: service.type
+
   - nectar.stages.telem-storage
   - nectar.stages.monitoring

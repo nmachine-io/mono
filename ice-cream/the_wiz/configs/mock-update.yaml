@@ -1,21 +1,22 @@
 kind: MockUpdate
-id: vendor.mock-updates.not-next
-inherit: vendor.mock-updates.partial
-injections:
-  frontend.image: 1.0.1
+id: nectar.mock-updates.app-update
+note_url: https://raw.githubusercontent.com/eivindml/template-release-note/master/README.md
+version: 2.0.0
 
 ---
 
 kind: MockUpdate
-id: vendor.mock-updates.next
-version: 2.0.0
-inherit: vendor.mock-updates.release
+id: nectar.mock-updates.injection
+bundle:
+  chart: 
+    foo: bar
+  inlines: 
+    bar: baz
 
 ---
 
 kind: MockUpdate
-inherit: vendor.mock-updates.wiz-update
-id: vendor.mock-updates.next3
-version: 2.0.0
-wiz_type: dev-server
-wiz_uri: http://localhost:5000
+id: nectar.mock-updates.initial-injection
+bundle:
+  chart: {}
+  inlines: {}
