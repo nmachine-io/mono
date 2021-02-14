@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+ruby '2.6.3'
+gem "activesupport"
+gem 'http'
+gem 'kerbi', '>= 1.1.32'

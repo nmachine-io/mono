@@ -1,0 +1,4 @@
+single_secret_name: nectar-injections
+strategy: single-secret
+b64_enc: true
+secrets: {}

@@ -10,5 +10,5 @@ class MainMixer < Kerbi::Mixer
   end
 end
 
-kerbi.generators = [ MainMixer ]
+kerbi.generators = [MainMixer ]
 puts kerbi.cli_exec
