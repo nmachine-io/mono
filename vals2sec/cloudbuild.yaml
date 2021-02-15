@@ -1,0 +1,15 @@
+substitutions:
+  _IMG_FQDN: us-central1-docker.pkg.dev/nectar-bazaar/public/vals2sec:1.0.0
+
+images:
+  - "${_IMG_FQDN}"
+
+steps:
+  - id: "Build image"
+    waitFor: []
+    name: gcr.io/cloud-builders/docker
+    args:
+      - "build"
+      - "."
+      - "-t"
+      - "${_IMG_FQDN}"
