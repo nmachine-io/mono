@@ -1,5 +1,5 @@
 substitutions:
-  _IMG_FQDN: "us-central1-docker.pkg.dev/nectar-bazaar/public/ice-cream-helm-ktea:1.0.0"
+  _IMG_FQDN: "us-central1-docker.pkg.dev/nectar-bazaar/public/ice-cream-kerbi-ktea:1.0.0"
 
 images:
   - "${_IMG_FQDN}"

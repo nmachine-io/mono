@@ -67,10 +67,10 @@
         },
         "google-auth": {
             "hashes": [
-                "sha256:008e23ed080674f69f9d2d7d80db4c2591b9bb307d136cea7b3bc129771d211d",
-                "sha256:514e39f4190ca972200ba33876da5a8857c5665f2b4ccc36c8b8ee21228aae80"
+                "sha256:d3640ea61ee025d5af00e3ffd82ba0a06dd99724adaf50bdd52f49daf29f3f65",
+                "sha256:da5218cbf33b8461d7661d6b4ad91c12c0107e2767904d5e3ae6408031d5463e"
             ],
-            "version": "==1.25.0"
+            "version": "==1.27.0"
         },
         "humanize": {
             "hashes": [
@@ -180,11 +180,11 @@
         },
         "nectwiz": {
             "hashes": [
-                "sha256:160502350c962d27a90558a6ecf62283f43f69cada059d427dfc8b7e44607a3f",
-                "sha256:8f05ed6d6e78383ac15082fbd4209e4fee972194367e10d34a00c46b82da4ea0"
+                "sha256:61748097dc3c8a9592f6b347b11be62da8a0536e067745952177d214d92eefe2",
+                "sha256:904b3daa465069bef7dab8bed727b69d84d55771e3cc65028632995be78ea1ff"
             ],
             "index": "pypi",
-            "version": "==0.0.315"
+            "version": "==0.0.316"
         },
         "oauthlib": {
             "hashes": [
@@ -353,11 +353,11 @@
         },
         "rsa": {
             "hashes": [
-                "sha256:69805d6b69f56eb05b62daea3a7dbd7aa44324ad1306445e05da8060232d00f4",
-                "sha256:a8774e55b59fd9fc893b0d05e9bfc6f47081f46ff5b46f39ccf24631b7be356b"
+                "sha256:74ba16e7ef58920b80b5c54c1c1066d391a2c1e812c466773f74c634eb12253b",
+                "sha256:9d74d1ff850745c9802cd6b53382bfeec7f6dbe4e26ee2759241ed1e7b0ecf5d"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==4.7"
+            "version": "==4.7.1"
         },
         "six": {
             "hashes": [

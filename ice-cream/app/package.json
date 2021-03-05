@@ -1,8 +1,8 @@
 {
-  "name": "docker_web_app",
+  "name": "nectar-ice-cream",
   "version": "1.0.0",
-  "description": "Node.js on Docker",
-  "author": "First Last <first.last@example.com>",
+  "description": "Demo app for Nectar",
+  "author": "Xavier Millot xavier@codenectar.com",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
