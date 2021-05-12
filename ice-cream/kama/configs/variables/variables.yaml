@@ -2,7 +2,6 @@ kind: ManifestVariable
 id: deployment.replicas
 title: Website Pod Replicas
 mode: public
-tags: ['deployment', 'app']
 info: "Amount of pod replicas for the website. More means
 more resilience to traffic spikes and application failures."
 input:
@@ -10,7 +9,7 @@ input:
   min: 0
   max: 15
   step: 1
-validation:
+validators:
   - kind: FormatPredicate
     check_against: integer
   - operator: ">"
@@ -24,7 +23,6 @@ kind: ManifestVariable
 id: deployment.flavor
 title: Website Flavor
 mode: public
-tags: ['deployment', 'app']
 info: "Ice-cream speciality for the website. Can break the application
 because of faulty value."
 input:
@@ -34,7 +32,7 @@ input:
       title: Vanilla
     - id: chocolate
       title: Chocolate
-validation:
+validators:
   - operator: in
     check_against: [vanilla, chocolate]
     tone: warning
@@ -45,8 +43,8 @@ validation:
 kind: ManifestVariable
 id: service.type
 title: Service Type
-tags: ['network', 'app']
 info: "Kubernetes network service type"
+category: "Network"
 input:
   kind: SelectInput
   options:
@@ -62,9 +60,9 @@ kind: ManifestVariable
 mode: public
 id: service.port
 title: Service Port
-tags: ['network', 'app']
+category: "Network"
 info: "Port for service to be accessible at"
-validation:
+validators:
   - kind: FormatPredicate
     check_against: integer
 
@@ -73,10 +71,9 @@ validation:
 kind: ManifestVariable
 mode: internal
 id: deployment.image
-tags: ['deployment', 'app']
 title: Main application image
 info: "Versioned application image. Should never be changed manually."
-validation:
+validators:
   - check_against: "gcr.io/nectar-bazaar/ice-cream-app:"
     operator: contains
     reason: Base image should never be different

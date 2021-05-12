@@ -5,7 +5,7 @@ class MainMixer < Kerbi::Mixer
 
   def run
     super do |g|
-      g.yaml 'manifest-v2'
+      g.yaml 'manifest'
     end
   end
 end

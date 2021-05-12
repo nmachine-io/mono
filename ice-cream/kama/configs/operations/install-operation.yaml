@@ -4,10 +4,10 @@ title: Installation
 preflight_action: 
   kind: RunPredicatesAction
   predicates:
-    - nectar.predicate.all-nodes-linux
-    - nectar.predicate.all-node-containers-docker
-    - nectar.predicate.metrics-server-running
-    - nectar.predicate.calico-pods-present-for-netpol
+    - sdk.predicate.all-nodes-linux
+    - sdk.predicate.all-node-containers-docker
+    - sdk.predicate.metrics-server-running
+    - sdk.predicate.calico-pods-present-for-netpol
 
 stages:
   - id: installation.flavor
@@ -19,9 +19,9 @@ stages:
         info: "Configures simple dep without applying."
         fields:
           - id: deployment.flavor
-            variable: deployment.flavor
+            variable: id::deployment.flavor
           - id: deployment.replicas
-            variable: deployment.replicas
+            variable: id::deployment.replicas
           - id: deployment.password
             title: Database Password
             info: "Keep this value safe, it will not be shown again."
@@ -32,12 +32,12 @@ stages:
       - id: installation.networking
         title: "Service"
         info: "Commits simple config and applies the manifest"
-        action: nectar.action.apply_application_manifest_e2e_action
+        action: id::sdk.action.apply_application_manifest_e2e_action
         fields:
           - id: service.port
-            variable: service.port
+            variable: id::service.port
           - id: service.type
-            variable: service.type
+            variable: id::service.type
 
-  - nectar.stages.telem-storage
-  - nectar.stages.monitoring
+  # - sdk.stages.telem-storage
+  # - sdk.stages.monitoring

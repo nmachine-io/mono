@@ -1,19 +1,19 @@
 <% if values[:quotas][:enabled] %>
-  apiVersion: v1
-  kind: ResourceQuota
-  metadata:
-    name: resource-quota
-    namespace: <%= values[:release_name] %>
-  spec:
-    hard:
-      requests.cpu: <%= values[:quotas][:requests][:cpu] %>
-      requests.memory: <%= values[:quotas][:requests][:memory] %>
-      limits.cpu: <%= values[:quotas][:limits][:cpu] %>
-      limits.memory: <%= values[:quotas][:limits][:memory] %>
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resource-quota
+  namespace: <%= values[:release_name] %>
+spec:
+  hard:
+    requests.cpu: <%= values[:quotas][:requests][:cpu] %>
+    requests.memory: <%= values[:quotas][:requests][:memory] %>
+    limits.cpu: <%= values[:quotas][:limits][:cpu] %>
+    limits.memory: <%= values[:quotas][:limits][:memory] %>
 
 ---
 
-<% end %>
+    <% end %>
 
 
 apiVersion: apps/v1
@@ -37,7 +37,7 @@ spec:
         - name: main
           image: <%= values[:deployment][:image] %>
           imagePullPolicy: Always
-          <% if values[:quotas][:enabled] %>
+            <% if values[:quotas][:enabled] %>
           resources:
             requests:
               memory: 25M
@@ -45,12 +45,11 @@ spec:
             limits:
               memory: 50M
               cpu: 30m
-          <% end %>
+            <% end %>
           env:
             - name: "FLAVOR"
               value: <%= values[:deployment][:flavor] %>
-            - name: NEW_VAR
-              value: <%= values[:deployment][:flavor] %>
+
 ---
 
 apiVersion: v1

@@ -2,17 +2,15 @@ release: 0.0.0
 namespace: default
 
 deployment:
-  image: gcr.io/nectar-bazaar/ice-cream-app:1.0.0
+  image: us-central1-docker.pkg.dev/nectar-bazaar/public/ice-cream-app:2.0.0
   replicas: 1
   version: none
   flavor: vanilla
-  bar: baz
 
 service:
   name: ice-cream
   port: 8080
   type: ClusterIP
-  foo:  bar
 
 quotas:
   enabled: false

@@ -1,0 +1,5 @@
+kind: Supplier
+id: nware.glance.master_provider
+serializer: identity
+source: 
+  - 

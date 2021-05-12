@@ -1,15 +1,30 @@
 substitutions:
   _IMG_FQDN: us-central1-docker.pkg.dev/nectar-bazaar/public/ice-cream-app:1.0.0
+  _IMG_FQDN2: us-central1-docker.pkg.dev/nectar-bazaar/public/ice-cream-app:2.0.0
 
 images:
   - "${_IMG_FQDN}"
+  - "${_IMG_FQDN2}"
 
 steps:
-  - id: "Build image"
+  - id: "Build v1 image"
     waitFor: []
     name: gcr.io/cloud-builders/docker
     args:
       - "build"
       - "."
+      - "--build-arg"
+      - "VERSION=v1"
       - "-t"
       - "${_IMG_FQDN}"
+
+  - id: "Build v2 image"
+    waitFor: []
+    name: gcr.io/cloud-builders/docker
+    args:
+      - "build"
+      - "."
+      - "--build-arg"
+      - "VERSION=v2"
+      - "-t"
+      - "${_IMG_FQDN2}"

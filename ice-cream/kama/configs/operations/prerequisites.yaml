@@ -7,4 +7,4 @@ message: "It is not recommended to perform database
 type: chart-value-compare
 variable: hub.backups.enabled
 op: in
-check_against: ['true', 'True', True]
+check_against: true

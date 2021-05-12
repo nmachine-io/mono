@@ -1,0 +1,24 @@
+# kind: EndpointGlance
+# id: ice-cream.glance.main-endpoint
+# endpoint:
+#   kind: EndpointSupplier
+#   title: Main Site
+#   selector: "services:ice-cream"
+
+# ---
+
+
+# kind: EndpointGlance
+# id: ice-cream.glance.grafana-endpoint
+# title: Metrics Endpoint
+# image: grafana
+# icon: ''
+# endpoint:
+#   kind: EndpointSupplier
+#   title: Grafana
+#   url: "{prefs/monitoring.url}"
+#   on_error: {}
+#   selector:
+#     res_kind: services
+#     name: "{prefs/monitoring.service_name}"
+#     namespace: "{prefs/monitoring.service_namespace}"

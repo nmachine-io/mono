@@ -5,7 +5,7 @@ verify_ssl = true
 
 [packages]
 python-engineio = "*"
-nectwiz="*"
+kama-sdk-py="*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.8"
