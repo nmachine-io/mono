@@ -1,5 +1,7 @@
 .env
 hack.sh
+kama_sdk
+telem_kaml
 nectwiz
 .gitignore
 requirements.txt

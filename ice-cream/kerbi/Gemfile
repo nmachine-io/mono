@@ -7,4 +7,4 @@ ruby '2.6.3'
 gem "activesupport"
 
 gem 'http'
-gem 'kerbi', '>= 1.1.33'
+gem 'kerbi', '>= 1.1.34'

@@ -8,6 +8,8 @@ __pycache__/
 *.so
 
 kama_sdk
+telem_kaml
+prom_kaml
 
 # Distribution / packaging
 .Python

@@ -6,7 +6,7 @@ images:
 
 steps:
   - id: "Build image"
-    waitFor: []
+1    waitFor: []
     name: gcr.io/cloud-builders/docker
     args:
       - "build"
