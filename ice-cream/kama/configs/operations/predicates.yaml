@@ -1,0 +1,7 @@
+kind: RunPredicatesAction
+id: action.predicate.install-preflight
+predicates:
+  - sdk.predicate.all-nodes-linux
+  - sdk.predicate.all-node-containers-docker
+  - sdk.predicate.metrics-server-running
+  - sdk.predicate.calico-pods-present-for-netpol

@@ -44,7 +44,8 @@ kind: ManifestVariable
 id: service.type
 title: Service Type
 info: "Kubernetes network service type"
-category: "Network"
+labels:
+  category: network
 input:
   kind: SelectInput
   options:
@@ -60,7 +61,7 @@ kind: ManifestVariable
 mode: public
 id: service.port
 title: Service Port
-category: "Network"
+category: network
 info: "Port for service to be accessible at"
 validators:
   - kind: FormatPredicate

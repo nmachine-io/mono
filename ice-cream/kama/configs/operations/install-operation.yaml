@@ -1,14 +1,7 @@
 kind: Operation
 id: installation
 title: Installation
-preflight_action: 
-  kind: RunPredicatesAction
-  predicates:
-    - sdk.predicate.all-nodes-linux
-    - sdk.predicate.all-node-containers-docker
-    - sdk.predicate.metrics-server-running
-    - sdk.predicate.calico-pods-present-for-netpol
-
+preflight_action: id::action.predicate.install-preflight
 stages:
   - id: installation.flavor
     title: Simple Assignments
