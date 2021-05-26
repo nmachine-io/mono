@@ -38,10 +38,18 @@ spec:
     spec:
       restartPolicy: Always
       containers:
+        - image: us-central1-docker.pkg.dev/nectar-bazaar/public/telem-server:1.0.0
+          imagePullPolicy: Always
+          name: server
+          ports:
+            - containerPort: {{ .Values.server_port }}
+#          env:
+#            - key: foo
+#              value: {{ .Values.strategy }}
         - image: mongo
           name: mongodb
           ports:
-            - containerPort: {{ .Values.port }}
+            - containerPort: {{ .Values.database_port }}
           resources:  {}
           volumeMounts:
             - mountPath: /data/db
@@ -67,5 +75,5 @@ spec:
     app: telem-db
   ports:
     - name: main
-      port: {{ .Values.port }}
-      targetPort: {{ .Values.port }}
+      port: {{ .Values.server_port }}
+      targetPort: {{ .Values.server_port }}
