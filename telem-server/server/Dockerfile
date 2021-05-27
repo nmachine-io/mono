@@ -17,6 +17,6 @@ ENV LC_ALL=C.UTF-8 \
     PYTHONUNBUFFERED=1 \
     FLASK_ENV=production
 
-COPY ../../telem-server-py .
+COPY . .
 
 CMD ["python", "app.py"]

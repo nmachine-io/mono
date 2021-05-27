@@ -10,14 +10,8 @@ def parse_json_body():
     return unmuck_primitives(request.json)
   except Exception:
     payload_str = request.data.decode('unicode-escape')
-    print("ORIGINAL PAYLOAD")
-    print(payload_str)
     truncated = payload_str[1:len(payload_str) - 1]
-    print("TRUNCED")
-    print(print(payload_str))
     as_dict = json.loads(truncated)
-    print("PARSED")
-    print(json.loads(truncated))
     return unmuck_primitives(as_dict)
 
 

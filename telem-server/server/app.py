@@ -5,6 +5,7 @@ from typing import Optional, TypedDict, Dict
 
 from bson import ObjectId
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from pymongo import MongoClient
 from pymongo.database import Database
 from pymongo.errors import ServerSelectionTimeoutError
@@ -12,6 +13,9 @@ from pymongo.errors import ServerSelectionTimeoutError
 import utils
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
+CORS(app)
+
 
 class Memory(TypedDict):
   status: str
@@ -23,6 +27,10 @@ memory: Memory = {
   'database': None
 }
 
+
+@app.route('/')
+def home():
+  return jsonify(data=dict(app='telem'))
 
 @app.route('/collections/<collection_id>/query')
 def query_collection(collection_id: str):
@@ -136,7 +144,8 @@ def serialize_record(record: Dict) -> Dict:
 
 
 if __name__ == '__main__':
-  app.run()
+  print("start as main")
+  app.run(host='0.0.0.0', port=5000)
 
 
 host_key = 'HOST'
