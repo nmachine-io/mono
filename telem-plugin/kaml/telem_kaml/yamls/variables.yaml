@@ -1,0 +1,81 @@
+kind: ManifestVariable
+id: enabled
+title: Enabled Switch
+info: "Master on/off switch for Telemetry plugin. If the plugin is enabled
+and you want to disable it, do NOT change this value; instead, use the
+'Disable Telemetry' operation."
+owner: publisher
+default_value: 27017
+input: kind::OnOffInput
+validators:
+  - kind: FormatPredicate
+    check_against: boolean
+
+---
+
+kind: ManifestVariable
+id: strategy
+title: Storage Strategy
+owner: publisher
+info: "Where the database lives. Either an in-cluster PVC (default) or an
+arbitrary MongoDB database you manage yourself and point to."
+default_value: pvc
+input:
+  kind: SelectInput
+  options:
+    - id: pvc
+      title: "Managed PVC: in-cluster storage managed by Nectar"
+    - id: nectar_cloud
+      title: "Nectar cloud storage: secure remote database"
+    - id: self_managed
+      title: "Own storage: you supplier a MongoDB database"
+validators:
+  - operator: in
+    check_against: [pvc, self_managed, cloud]
+
+---
+
+kind: ManifestVariable
+id: deployment.mongo.port
+title: Self-managed Database Port
+info: "Only set if using a self-managed database. Port on which
+your database is running. Value will be ignored if strategy is PVC."
+validators:
+  - kind: FormatPredicate
+    check_against: integer
+
+---
+
+kind: ManifestVariable
+id: deployment.mongo.host
+title: Self-managed Database Host
+info: "Only set if using a self-managed database. Port on which
+your database is running. Value will be ignored if strategy is PVC. For
+ formatting information, like
+how to include the password, refer to the MongoDB docs."
+validators:
+  kind: ListFlattener
+  source:
+    kind: IfThenElse
+    source: kind::TruePredicate
+    if_true:
+      - kind: Predicate
+        check_against: localhost
+    if_false: []
+
+---
+
+kind: ManifestVariable
+id: deployment.replicas
+title: Telemetry Service Replica Count
+info: "When enabled, the telemetry plugin uses a light Flask-based
+API to delegate calls. A replica count above 2 is generally sufficient
+for even large organizations."
+validators:
+  - kind: FormatPredicate
+    check_against: integer
+input:
+  kind: SliderInput
+  min: 0
+  max: 10
+  step: 1

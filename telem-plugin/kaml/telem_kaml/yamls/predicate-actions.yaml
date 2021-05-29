@@ -1,0 +1,14 @@
+kind: RunPredicatesAction
+title: Ensure no Resources if Disabled
+info: Note that this action performs no checks if enabled
+id: nmachine.telem.predicate_actions.check_any_resources_exist
+labels:
+  type: system_check
+predicates:
+  kind: IfThenElse
+  predicate: get::nmachine.telem.is_enabled
+  if_true: []
+  if_false:
+    - nmachine.telem.predicate.are_pods_around
+    - nmachine.telem.predicate.are_services_around
+    - nmachine.telem.predicate.are_pvcs_around

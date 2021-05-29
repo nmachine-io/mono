@@ -1,0 +1,65 @@
+kind: Stage
+id: nmachine.telem.stage.storage
+title: Telemetry Storage
+info: Configure where telemetry data should be persisted
+steps:
+  - kind: Step
+    id: nmachine.telem.step.telem-storage-step-1
+    title: Telemetry Persistence
+    info: "Nectar saves telemetry for important events so that users
+     can later audit their application. For this, a persistent database
+     is required. This step helps you decide where and how to host it."
+    commit:
+      standard:
+        kind: MergeSupplier
+        source: [get::props default_commit->.standard, {enabled: true}]
+    action:
+      kind: MultiAction
+      inherit: sdk.action.step_apply_application_manifest_e2e_action
+      config_space: nmachine.telem
+    fields:
+      - id::strategy
+      - id::deployment.mongo.host
+      - id::deployment.mongo.port
+
+---
+
+kind: Operation
+id: nmachine.telem.operation.storage
+title: Setup Telemetry Storage
+labels:
+  public: true
+synopsis: assets::delete-telem-storage-info.html
+info: Choose and implement a persistent storage solution for telemetry data.
+preflight_action:
+  kind: RunPredicatesAction
+  predicates:
+    - nmachine.telem.predicate.check-telem-is-disabled
+    - nmachine.telem.predicate.are_pods_around
+    - nmachine.telem.predicate.are_services_around
+    - nmachine.telem.predicate.are_pvcs_around
+stages:
+  - id::nmachine.telem.stage.storage
+
+---
+
+kind: Operation
+id: nmachine.telem.operation.delete-telem-pvc
+labels:
+  public: true
+title: Disable In-Cluster Telemetry Storage
+info: If using in-cluster storage for telemetry, destroys all related storage resource
+synopsis: assets::delete-telem-storage-info.md
+stages:
+  - id: nmachine.telem.stage.delete-telem-confirm
+    title: Confirm and Delete
+    info: Confirm consent and proceed to deleting telemetry-related resource
+    steps:
+      - id: nmachine.telem.step.delete-telem-confirm
+        title: Confirm Consent
+        info: "I understand that proceeding will irreversibly
+        delete the local telemetry database, erasing all data related
+         to updates, variable assignments, and operations."
+        synopsis: assets::delete-telem-storage-info.md
+        action: id::nmachine.telem.action.perform_disable
+        fields: [id::nmachine.telem.fields.delete-telem-confirm]

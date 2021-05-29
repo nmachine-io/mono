@@ -1,0 +1,151 @@
+kind: Concern
+id: sdk.concern.telem
+config_space: "@nmachine/telem"
+cached:
+  config:
+    kind: Supplier
+    source: get::sdk.supplier.config.prefs
+    output: .telem_db
+  strategy: get::props config->.strategy
+  host: get::props config->.host
+  port: get::props config->.port
+  is_managed_pvc:
+    kind: Predicate
+    challenge: get::props strategy
+    check_against: pvc
+
+---
+
+id: sdk.concern-card-adapter.telem
+kind: MonitoringConcernCardAdapter
+spec:
+  type: Block
+  title: KAMA Telemetry
+  action: get::sdk.provider.telem-concern.detail-link
+  sections:
+    - width: 2
+      elements:
+        - type: CallToAction
+          title: Telemetry is diabled
+          subtitle: Configuration changes not tracked
+
+---
+
+kind: Provider
+id: sdk.provider.telem-concern.detail-link
+source:
+  type: concern_detail
+  uri:
+    adapter_ref: id::sdk.concern-detail-adapter.telem
+    concern_ref: id::sdk.concern.telem
+
+---
+
+kind: ConcernDetailAdapter
+id: sdk.concern-detail-adapter.telem
+title: KAMA Telemetry
+page_adapters:
+  - id: overview
+    title: Overview
+    info: assets::telem-detail-info.txt
+    panel_adapters:
+      - id::sdk.attr_panel.telem.basic
+      - id::sdk.concern-field-set.telem.main
+#      - id::sdk.attr_panel.telem.auto_snapshots
+
+---
+
+
+kind: ConcernAttrPanelAdapter
+id: sdk.attr_panel.telem.auto_snapshots
+title: Automatic Snapshots
+attributes:
+  - id: auto_enabled
+    title: Automatic backups enabled
+    value:
+      type: Tag
+      text: true
+      humanize: true
+  - id: schedule
+    title: Automatic backups enabled
+    value: Every Friday after fucking your girl
+
+under:
+  type: Line
+  elements:
+    - type: ClearButton
+      style:
+        emotion: nectar
+      text: Update...
+      action:
+        type: operation
+        uri:
+          id: sdk.operation.telem-storage
+
+---
+
+kind: ConcernAttrPanelAdapter
+id: sdk.attr_panel.telem.basic
+title: Top Level Behavior
+attribute_adapters:
+  - kind: ConcernAttrAdapter
+    id: strategy
+    title: Strategy
+    value_info: This means this and that conflict
+    value:
+      type: Tag
+      humanize: true
+      text: get::props concern=>strategy
+  - ...get::mutant
+
+under:
+  type: Line
+  elements:
+    - type: ClearButton
+      text: Update...
+      action:
+        type: operation
+        uri:
+          id: sdk.operation.telem-storage
+#
+#  - kind: ConcernAttrAdapter
+#    id: port
+#    title: Database Port
+#    value_info: Not used unless own storage
+#    value:
+#      type: Tag
+#      humanize: true
+#      text: get::props concern=>port
+
+
+---
+
+kind: ListPluck
+id: mutant
+source:
+  - include: get::props concern=>pvc
+    value:
+      kind: ConcernAttrAdapter
+      id: host
+      title: Database Host
+      value_info: Not used unless own storage
+      value:
+        type: Tag
+        humanize: true
+        text: get::props concern=>host
+
+---
+
+
+
+################# FIELD SETS #####################
+
+
+
+
+kind: ConcernTableFieldSetAdapter
+id: sdk.concern-field-set.telem.main
+title: Parameters
+fields: []
+#  - kind: Field
+#    variable: id::deployment.replicas

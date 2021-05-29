@@ -1,0 +1,8 @@
+kind: Predicate
+id: namchine.telem.is_enabled
+operator: truthiness
+config_space: nmachine.prom
+challenge:
+  kind: Supplier
+  source: get::sdk.supplier.config.variables
+  output: .enabled
