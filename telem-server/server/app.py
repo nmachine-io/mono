@@ -12,6 +12,12 @@ from pymongo.errors import ServerSelectionTimeoutError
 
 import utils
 
+
+host_key = 'DB_HOST'
+port_key = 'DB_PORT'
+own_port_key = 'PORT'
+
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
 CORS(app)
@@ -109,11 +115,10 @@ def database() -> Optional[Database]:
 
 
 def connect() -> Optional[Database]:
-  connection_params = gen_connection_params()
   try:
     client = MongoClient(
       host=os.environ.get(host_key),
-      port=os.environ.get(port_key),
+      port=int(os.environ.get(port_key)),
       connectTimeoutMS=1_000,
       serverSelectionTimeoutMS=1_000
     )
@@ -154,8 +159,3 @@ def ser_for_storage(record: Dict):
 if __name__ == '__main__':
   own_port = int(os.environ.get(own_port_key, '5000'))
   app.run(host='0.0.0.0', port=own_port)
-
-
-host_key = 'DB_HOST'
-port_key = 'DB_PORT'
-own_port_key = 'PORT'
