@@ -1,5 +1,5 @@
 substitutions:
-  _IMG_FQDN: us-central1-docker.pkg.dev/nectar-bazaar/public/telem-db:1.0.0
+  _IMG_FQDN: us-central1-docker.pkg.dev/nectar-bazaar/public/telem-server-ktea:1.0.0
 
 images:
   - "${_IMG_FQDN}"

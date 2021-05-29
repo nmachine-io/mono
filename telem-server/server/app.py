@@ -32,13 +32,34 @@ memory: Memory = {
 def home():
   return jsonify(data=dict(app='telem'))
 
+
+@app.route('/collections/index')
+def list_collection():
+  if prep_state():
+    names = database().list_collection_names()
+    return jsonify(data=names)
+  else:
+    return respond_not_connected_400()
+
+
+@app.route('/collections/<collection_id>/drop', methods=['POST'])
+def drop_collection(collection_id: str):
+  if prep_state():
+    query = args_query2dict()
+    database()[collection_id].drop()
+    return jsonify(status='success')
+  else:
+    return respond_not_connected_400()
+
+
+
 @app.route('/collections/<collection_id>/query')
 def query_collection(collection_id: str):
   if prep_state():
     query = args_query2dict()
     collection = database()[collection_id]
     records = list(collection.find(query))
-    return jsonify(data=list(map(serialize_record, records)))
+    return jsonify(data=list(map(serialize_for_serving, records)))
   else:
     return respond_not_connected_400()
 
@@ -47,7 +68,7 @@ def query_collection(collection_id: str):
 def find_record_by_id(collection_id, record_id):
   if prep_state():
     if record := find_record(collection_id, {'_id': ObjectId(record_id)}):
-      return jsonify(data=serialize_record(record))
+      return jsonify(data=serialize_for_serving(record))
     else:
       error = f"record {collection_id}/{record_id} not found"
       return jsonify(error=error), 404
@@ -91,7 +112,8 @@ def connect() -> Optional[Database]:
   connection_params = gen_connection_params()
   try:
     client = MongoClient(
-      **connection_params,
+      host=os.environ.get(host_key),
+      port=os.environ.get(port_key),
       connectTimeoutMS=1_000,
       serverSelectionTimeoutMS=1_000
     )
@@ -109,31 +131,7 @@ def args_query2dict() -> Dict:
     return {}
 
 
-def gen_connection_params():
-  if is_auto_pvc():
-    return dict(
-      host='localhost',
-      port=27017
-    )
-  else:
-    return dict(
-      host=os.environ.get(host_key),
-      port=os.environ.get(port_key)
-    )
-
-
-def is_auto_pvc() -> bool:
-  if strategy := get_hosting_strategy():
-    return strategy == 'managed_pvc'
-  else:
-    return True
-
-
-def get_hosting_strategy():
-  return os.environ.get('STRATEGY')
-
-
-def serialize_record(record: Dict) -> Dict:
+def serialize_for_serving(record: Dict) -> Dict:
   new_record = {}
   for key, value in record.items():
     if isinstance(value, ObjectId):
@@ -143,10 +141,21 @@ def serialize_record(record: Dict) -> Dict:
   return new_record
 
 
+def ser_for_storage(record: Dict):
+  new_record = {}
+  for key, value in record.items():
+    if isinstance(value, dict):
+      new_record[key] = json.dumps(value)
+    else:
+      new_record[key] = value
+  return new_record
+
+
 if __name__ == '__main__':
-  print("start as main")
-  app.run(host='0.0.0.0', port=5000)
+  own_port = int(os.environ.get(own_port_key, '5000'))
+  app.run(host='0.0.0.0', port=own_port)
 
 
-host_key = 'HOST'
-port_key = 'PORT'
+host_key = 'DB_HOST'
+port_key = 'DB_PORT'
+own_port_key = 'PORT'

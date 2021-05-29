@@ -1,0 +1,19 @@
+<% deployment = values[:deployment] || {} %>
+<% server = deployment[:server] || {} %>
+
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: <%= release_name %>
+  name: <%= name %>
+  labels:
+    managed_by: <%= org %>
+    app: <%= name %>
+spec:
+  selector:
+    managed_by: <%= org %>
+    app: <%= name %>
+  ports:
+    - name: server
+      port: <%= server[:port] %>
+      targetPort: <%= server[:port] %>

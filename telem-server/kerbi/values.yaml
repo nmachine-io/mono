@@ -1,0 +1,16 @@
+org: nmachine
+name: telem
+enabled: true
+strategy: pvc
+
+deployment:
+  replicas: 1
+
+  server:
+    image: us-central1-docker.pkg.dev/nectar-bazaar/public/telem-server:1.0.0
+    port: 5000
+
+  mongo:
+    image: mongo
+    host: ''
+    port: 27017

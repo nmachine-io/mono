@@ -1,0 +1,15 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: <%= release_name %>
+  name: <%= name %>-pvc
+  labels:
+    managed_by: <%= org %>
+    app: <%= name %>
+  finalizers: []
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
