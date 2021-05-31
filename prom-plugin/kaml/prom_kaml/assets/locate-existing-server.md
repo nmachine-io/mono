@@ -20,7 +20,6 @@ but can also be from another source.
 The only requirement is that the 
 workload that run the server that responds to /api/query be exposed
 as a service.
-<br/><br/>
 
 #### NB: Out-of-cluster KAMAs
 

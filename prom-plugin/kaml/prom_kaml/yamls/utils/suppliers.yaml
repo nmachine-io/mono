@@ -1,0 +1,8 @@
+kind: Predicate
+id: nmachine.prom.predicate.is_prom_api_status_200
+challenge:
+  kind: HttpDataSupplier
+  property: status_code
+check_against: 200
+reason: "Endpoint did not return status code 200"
+tone: warning

@@ -12,17 +12,6 @@ stages:
 
 ---
 
-kind: Predicate
-id: sdk.predicate.is_monitoring_server_200
-challenge:
-  kind: HttpDataSupplier
-  property: status_code
-check_against: 200
-reason: "Endpoint did not return status code 200"
-tone: warning
-
----
-
 id: sdk.misc.ping-monitoring-server
 kind: MultiAction
 sub_actions:
@@ -32,7 +21,7 @@ sub_actions:
     info: Send HTTP to ${endpoint}
     endpoint: get::sdk.supplier.config.prefs .monitoring.url
     predicates:
-      - sdk.predicate.is_monitoring_server_200
+      - nmachine.prom.predicate.is_prom_api_status_200
 
 ---
 
@@ -81,7 +70,7 @@ steps:
             check_against: domain
             challenge: get::props inputs->.monitoring.url
           - challenge:
-              inherit: sdk.predicate.is_monitoring_server_200
+              inherit: nmachine.prom.predicate.is_prom_api_status_200
               endpoint: get::props inputs->.monitoring.url
 
       - id: monitoring.service_namespace
