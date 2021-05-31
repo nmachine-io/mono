@@ -12,6 +12,7 @@ from k8kat.res.svc.kat_svc import KatSvc
 
 from kama_sdk.core.core import utils
 from kama_sdk.core.core.config_man import config_man
+from kama_sdk.core.core.utils import pwar
 from prom_kaml.main.types import PromData
 
 
@@ -60,7 +61,7 @@ class PromClient:
     return self._config
 
   def is_prom_server_in_cluster(self) -> bool:
-    return self.config().get(LOCATION_KEY, 'out') == 'in'
+    return self.config().get(ACCESS_TYPE_KEY) == access_type_k8s
 
   def get_base_in_cluster_url(self) -> str:
     if svc := self.find_server_svc():
@@ -102,11 +103,10 @@ def invoke_proxy_url(svc: KatSvc, path: str, url_args: Dict) -> Optional[Dict]:
   resp = svc.proxy_get(path, url_args) or {}
   if resp.get('status', 500) < 300:
     try:
-      return json.loads(resp.get('body'))
-    except JSONDecodeError:
-      print(traceback.format_exc())
-      print(resp.get('body'))
-      print(f"[kama_sdk:prom_client] svc resp decode ^^ fail")
+      body = resp.get('body')
+      return body
+    except:
+      pwar(__name__, f"prom decode failed for resp {resp}", True)
       return None
 
 
@@ -142,8 +142,10 @@ def invoke_pure_http(path, args) -> Optional[Dict]:
 
 prom_client = PromClient()
 
+access_type_k8s = 'kubernetes'
+access_type_generic = 'generic'
 
 URL_KEY = 'url'
 SVC_NS_KEY = 'service_namespace'
 SVC_NAME_KEY = 'service_name'
-LOCATION_KEY = 'relative_to_cluster'
+ACCESS_TYPE_KEY = 'access_type'

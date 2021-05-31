@@ -20,8 +20,6 @@ sub_actions:
     title: Try to reach monitoring server
     info: Send HTTP to ${endpoint}
     endpoint: get::sdk.supplier.config.prefs .monitoring.url
-    predicates:
-      - nmachine.prom.predicate.is_prom_api_status_200
 
 ---
 
@@ -39,71 +37,20 @@ steps:
     info: "State whether the server is inside or outside
     the cluster, and point to it."
     synopsis: assets::locate-existing-server.md
+
+    commit:
+      standard:
+        kind: MergeSupplier
+        source: [get::props default_commit->.standard, {enabled: true}]
     action:
-      kind: IfThenElse
-      if_true: sdk.misc.ping-monitoring-server
-      source:
-        kind: Predicate
-        challenge: get::props op_state->.monitoring.type
-        check_against: disabled
-        operator: not-equal
+      kind: MultiAction
+      inherit: sdk.action.step_apply_application_manifest_e2e_action
+      config_space: nmachine.prom
+
     fields:
-      - kind: Field
-        id: monitoring.relative_to_cluster
-        title: Where is the Prometheus server located?
-        input: kind::SelectInput
-        options:
-          - id: in
-            title: Inside the Cluster
-          - id: out
-            title: Outside the Cluster
+      - id::access_type
+      - id::url
+      - id::service_namespace
+      - id::service_name
 
-      - kind: Field
-        id: monitoring.url
-        title: Data Source API's Base URL
-        visible:
-          kind: Predicate
-          challenge: get::props inputs->.monitoring.relative_to_cluster
-          check_against: out
-        validators:
-          - kind: FormatPredicate
-            check_against: domain
-            challenge: get::props inputs->.monitoring.url
-          - challenge:
-              inherit: nmachine.prom.predicate.is_prom_api_status_200
-              endpoint: get::props inputs->.monitoring.url
-
-      - id: monitoring.service_namespace
-        title: Namespace containing Prometheus Operator
-        visible:
-          kind: Predicate
-          challenge: get::props inputs->.monitoring.relative_to_cluster
-          check_against: in
-        variable:
-          id: monitoring.service_namespace
-          default: get::ns
-          input:
-            kind: SelectInput
-            options:
-              kind: ResourcesSupplier
-              selector: "expr::Namespace:*"
-              many: true
-              output: options_format
-              serializer: legacy
-
-      - id: monitoring.service_name
-        title: Prometheus Operator Service
-        visible:
-          kind: Predicate
-          challenge: get::props inputs->.monitoring.service_namespace
-          operator: presence
-        input:
-          kind: SelectInput
-          options:
-            kind: ResourcesSupplier
-            many: true
-            selector:
-              res_kind: Service
-              namespace: "get::props inputs->.monitoring.service_namespace"
-            output: options_format
-            serializer: legacy
+    summary_desc: get::nmachine.prom.locate_op_summary

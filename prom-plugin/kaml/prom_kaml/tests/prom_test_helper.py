@@ -11,7 +11,7 @@ from prom_kaml.main.prom_data_supplier import PromDataSupplier
 
 def vanilla_setup():
   config_man.patch_user_vars({
-    client_module.LOCATION_KEY: 'in',
+    client_module.ACCESS_TYPE_KEY: client_module.access_type_k8s,
     client_module.SVC_NS_KEY: svc_ns,
     client_module.SVC_NAME_KEY: svc_name
   }, space='nmachine.prom')

@@ -57,6 +57,9 @@ class PromDataSupplier(Supplier):
     else:
       print(f"[kama_sdk:prom_supplier] bad req type {self._type}")
       response = None
+
+    print("sup RETURNNNNNNNNNNNNNNN")
+    print(response)
     return response
 
   def fetch_matrix(self) -> Optional[PromMatrix]:
