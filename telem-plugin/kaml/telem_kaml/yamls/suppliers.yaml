@@ -1,7 +1,0 @@
-kind: ResourcesSupplier
-id: nmachine.telem.supplier.res_counter
-serializer: legacy
-output: __count__
-selector:
-#  res_kind: Deployment
-  label_selector: { managed_by: nmachine, app: telem }

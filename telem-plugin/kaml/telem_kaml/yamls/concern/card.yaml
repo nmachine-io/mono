@@ -1,0 +1,49 @@
+id: sdk.concern-card-adapter.telem
+kind: ConcernCardAdapter
+spec:
+  type: Block
+  title: KAMA Telemetry
+  action: get::sdk.provider.telem-concern.detail-link
+  sections:
+    - width: 2
+      elements:
+        kind: IfThenElse
+        source: get::namchine.telem.is_enabled
+        if_true: [get::nmachine.telem.provider.enabled-card]
+        if_false: [get::nmachine.telem.provider.disabled-card-cta]
+
+---
+
+kind: Provider
+id: nmachine.telem.provider.enabled-card
+resolve_output: true
+source:
+  type: Section
+  elements:
+    - get::nmachine.telem.provider.card.header
+
+---
+
+kind: Provider
+id: nmachine.telem.provider.card.header
+source:
+  type: Line
+  elements:
+    - type: Image
+      uri: services/mongodb/large
+    - type: Text
+      text: In-cluster MongoDB
+      style: [bold]
+    - type: ClearTag
+      text: Online
+      style:
+        emotion: milGreen
+
+---
+
+kind: Provider
+id: nmachine.telem.provider.disabled-card-cta
+source:
+  type: CallToAction
+  title: Telemetry is diabled
+  subtitle: Configuration changes not tracked

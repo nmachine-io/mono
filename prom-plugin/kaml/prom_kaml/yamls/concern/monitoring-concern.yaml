@@ -1,0 +1,195 @@
+kind: Concern
+id: nmachine.prom.concern.monitoring
+cached:
+  config:
+    kind: ConfigSupplier
+    source: prefs
+    output: .monitoring
+  is_online:
+    kind: PromDataSupplier
+    type: ping
+logo_url:
+  kind: ImageSrcSupplier
+  source: "services/${get::props config->.type}/medium"
+grafana_logo_url:
+  kind: ImageSrcSupplier
+  source: "services/grafana/medium"
+
+svc:
+  kind: ResourcesSupplier
+  many: false
+  selector:
+    name: get::props config->.service_name
+    res_kind: services
+    namespace: get::props config->.service_namespace
+type: get::props config->.type
+status:
+  kind: IfThenElse
+  source: get::props is_online
+  if_true: Online
+  if_false: Offline
+
+---
+
+id: nmachine.prom.concern-card-adapter.monitoring
+kind: MonitoringConcernCardAdapter
+spec:
+  type: Block
+  title: Monitoring Plugin
+  action:
+    type: concern_detail
+    uri:
+      adapter_ref: id::nmachine.prom.concern-detail-adapter.monitoring
+      concern_red: id::nmachine.prom.concern.monitoring
+
+  sections:
+    - type: Section
+      width: 1
+      elements:
+        - type: ThreePartHeader
+          style:
+            mb: 20px
+          title:
+            type: Line
+            elements:
+              - type: Text
+                style: [bold, calm]
+                text: Prometheus
+              - type: ClearTag
+                text: get::props concern=>status
+          subtitle:
+            type: Line
+            elements:
+              - type: Text
+                text: https://bigcloud.net/ligma-then-eat-cavior
+                maxChars: 20
+                style: [hov_underline, hov_point]
+              - type: Icon
+                name: open_in_new
+                style:
+                  minWidth: auto
+                  emotion: warning2
+          graphic:
+            type: Image
+            uri: get::props concern=>logo_url
+
+
+        # - type: Line
+        #   elements:
+        #     - type: Icon
+        #       name: add
+        #       style:
+        #         mt: -2px
+        #         emotion: pleasant
+        #     - type: Text
+        #       text: Alerts configured
+        #     - type: Icon
+        #       name: check_circle_outline
+        #       style:
+        #         emotion: cool
+
+
+    - type: Section
+      width: 1
+      elements:
+        - type: ThreePartHeader
+          style:
+            mb: 20px
+          title:
+            type: Line
+            elements:
+              - type: Text
+                humanize: true
+                style: 
+                  bold: true
+                  calm: true
+                  maxWidth: auto
+                text: Grafana
+              - type: ClearTag
+                text: get::props concern=>status
+          subtitle:
+            type: Line
+            elements:
+              - type: Text
+                text: "localhost:9090"
+                style: [hov_underline, hov_point]
+              - type: Icon
+                name: open_in_new
+                style:
+                  emotion: warning2
+          graphic:
+            type: Image
+            uri: get::props concern=>grafana_logo_url
+        # - type: Line
+        #   elements:
+        #     - type: Icon
+        #       name: add
+        #       style:
+        #         mt: -2px
+        #         emotion: pleasant
+        #     - type: Text
+        #       text: Authentication Enabled
+        #     - type: Icon
+        #       name: check_circle_outline
+        #       style:
+        #         emotion: cool
+
+---
+
+kind: ConcernDetailAdapter
+id: nmachine.prom.concern-detail-adapter.monitoring
+title: NMachine Prometheus Plugin
+page_adapters:
+  - title: Configuration
+    id: overview
+    panel_adapters:
+#      - kind: ConcernFieldSetAdapter
+#        id: fields
+#        info: I can add shit here too
+#        title: Configuration
+#        field_set: id::nmachine.prom.detail-field-set.main
+      - kind: ConcernAttrPanelAdapter
+        id: fields2
+        title: Configuration
+        under:
+          type: Line
+          elements:
+            - type: ClearButton
+              text: Configure
+              action:
+                type: operation
+                uri:
+                  id: nmachine.prom.operation.locate-existing-server
+        attribute_adapters:
+          - id: foo
+            title: Prometheus location
+            value: Inside cluster
+            info: relative to cluster
+          - id: bar
+            title: Using proxy
+            value: True
+          - id: baz
+            title: Kubernetes namespace
+            value:
+              type: Text
+              text: monitoring
+              style: [hacker]
+            value_info: relative to cluster
+          - id: Azo
+            title: Kubernetes service name
+            value:
+              type: Text
+              text: monitoring
+              style: [hacker]
+
+
+---
+
+kind: FieldSet
+id: nmachine.prom.detail-field-set.main
+fields:
+  - variable: id::deployment.image
+#  - variable: id::deployment.replicas
+buttons:
+  - type: ClearButton
+    text: Update

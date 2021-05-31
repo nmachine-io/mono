@@ -16,21 +16,6 @@ cached:
 
 ---
 
-id: sdk.concern-card-adapter.telem
-kind: MonitoringConcernCardAdapter
-spec:
-  type: Block
-  title: KAMA Telemetry
-  action: get::sdk.provider.telem-concern.detail-link
-  sections:
-    - width: 2
-      elements:
-        - type: CallToAction
-          title: Telemetry is diabled
-          subtitle: Configuration changes not tracked
-
----
-
 kind: Provider
 id: sdk.provider.telem-concern.detail-link
 source:

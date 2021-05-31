@@ -1,0 +1,17 @@
+kind: ResourcesSupplier
+id: nmachine.telem.supplier.res_counter
+serializer: legacy
+output: __count__
+selector:
+  label_selector: { managed_by: nmachine, app: telem }
+
+---
+
+kind: Predicate
+id: namchine.telem.is_enabled
+operator: truthiness
+config_space: nmachine.telem
+challenge:
+  kind: Supplier
+  source: get::sdk.supplier.config.variables
+  output: .enabled
