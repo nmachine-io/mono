@@ -14,8 +14,8 @@ class PromMatrixToSeriesSupplier(Supplier):
     return super(PromMatrixToSeriesSupplier, self).source_data()
 
   def _compute(self) -> Optional[List]:
-    if result := self.source_data():
-      as_time_series = self.matrix2series(result)
+    if data := self.source_data():
+      as_time_series = self.matrix2series(data)
       return as_time_series
     else:
       return None
