@@ -1,8 +1,6 @@
 import os
 from typing import List, Dict, Type
 
-from kama_sdk.core.core.config_man import config_man
-
 from kama_sdk.core.core.kaml import KamlDescriptor
 from kama_sdk.core.core import utils
 from kama_sdk.model.base.model import Model

@@ -12,6 +12,8 @@ class PromDataSupplier(Supplier):
 
   @cached_property
   def client(self) -> Optional[PromClient]:
+    print("INIT CONFIG")
+    print(self.client_config_root)
     if config := self.client_config_root:
       return PromClient(config)
     else:
@@ -58,8 +60,6 @@ class PromDataSupplier(Supplier):
       print(f"[kama_sdk:prom_supplier] bad req type {self._type}")
       response = None
 
-    print("sup RETURNNNNNNNNNNNNNNN")
-    print(response)
     return response
 
   def fetch_matrix(self) -> Optional[PromMatrix]:

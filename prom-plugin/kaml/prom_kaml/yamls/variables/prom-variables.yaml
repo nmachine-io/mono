@@ -1,0 +1,69 @@
+kind: ManifestVariable
+id: prometheus.access_type
+config_space: nmachine.prom
+title: Where is the Prometheus server located?
+input: kind::SelectInput
+options:
+  - id: kubernetes
+    title: Inside the cluster
+  - id: generic
+    title: Outside the cluster
+
+---
+
+kind: ManifestVariable
+id: prometheus.url
+title: Prometheus' Base URL
+info: "Include http:// or https:// as well as port numbers.
+Include any part of the path that non-standard"
+config_space: nmachine.prom
+validators:
+  - kind: FormatPredicate
+    check_against: domain
+
+---
+
+kind: ManifestVariable
+id: prometheus.service_namespace
+title: Server Workload Namespace
+info: Kubernetes namespace
+config_space: nmachine.prom
+input:
+  kind: SelectInput
+  options:
+    kind: ResourcesSupplier
+    selector: "expr::Namespace:*"
+    many: true
+    output: options_format
+    serializer: legacy
+
+---
+
+kind: ManifestVariable
+id: prometheus.service_name
+title: Server Service Name
+info: "Name of service exposing the Prometheus server in your cluster."
+config_space: nmachine.prom
+cached:
+  thing: sdk.supplier.config.variables->.prometheus.namespace
+  service_ns:
+    kind: Supplier
+    inherit: sdk.supplier.config.variables
+    output: .prometheus.namespace
+input:
+  kind: IfThenElse
+  source:
+    kind: Predicate
+    challenge: get::props service_ns
+    operator: truthiness
+  if_true:
+    kind: SelectInput
+    options:
+      kind: ResourcesSupplier
+      many: true
+      selector:
+        res_kind: Service
+        namespace: get::props service_ns
+      output: options_format
+      serializer: legacy
+  if_false: kind::GenericInput

@@ -24,10 +24,10 @@ operator: or
 source:
   - kind: Predicate
     operator: truthiness
-    challenge: get::props inputs->.url
+    challenge: get::props inputs->.prometheus.url
   - kind: Predicate
     operator: truthiness
-    challenge: get::props inputs->.service_name
+    challenge: get::props inputs->.prometheus.service_name
 
 ---
 

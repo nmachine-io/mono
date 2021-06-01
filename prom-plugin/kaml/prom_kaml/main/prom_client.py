@@ -1,10 +1,9 @@
-import json
 import time
 import traceback
 from datetime import datetime, timedelta
 from functools import lru_cache
 from json import JSONDecodeError
-from typing import Optional, Dict, Tuple
+from typing import Optional, Dict, Tuple, Any
 from urllib.parse import quote
 
 import requests
@@ -49,10 +48,13 @@ class PromClient:
 
   @lru_cache(maxsize=1)
   def find_server_svc(self) -> Optional[KatSvc]:
-    if config := self.config():
-      prom_ns = config.get(SVC_NS_KEY)
-      prom_name = config.get(SVC_NAME_KEY)
+    if self.config():
+      prom_ns = self.read_config(SVC_NS_KEY)
+      prom_name = self.read_config(SVC_NS_KEY)
       return KatSvc.find(prom_name, prom_ns)
+
+  def read_config(self, deep_key: str) -> Optional[Any]:
+    return utils.deep_get2(self.config(), deep_key)
 
   def config(self) -> Optional[Dict]:
     if self._config is None:
@@ -61,7 +63,7 @@ class PromClient:
     return self._config
 
   def is_prom_server_in_cluster(self) -> bool:
-    return self.config().get(ACCESS_TYPE_KEY) == access_type_k8s
+    return self.read_config(ACCESS_TYPE_KEY) == access_type_k8s
 
   def get_base_in_cluster_url(self) -> str:
     if svc := self.find_server_svc():
@@ -69,7 +71,7 @@ class PromClient:
       return f"http://{svc.name}.{svc.namespace}:{port}"
 
   def get_base_out_of_cluster_url(self) -> str:
-    return self.config().get(URL_KEY)
+    return self.read_config(URL_KEY)
 
 
 def instant_path_and_args(query: str, ts: datetime = None) -> Tuple:
@@ -145,7 +147,7 @@ prom_client = PromClient()
 access_type_k8s = 'kubernetes'
 access_type_generic = 'generic'
 
-URL_KEY = 'url'
-SVC_NS_KEY = 'service_namespace'
-SVC_NAME_KEY = 'service_name'
-ACCESS_TYPE_KEY = 'access_type'
+URL_KEY = 'prometheus.url'
+SVC_NS_KEY = 'prometheus.service_namespace'
+SVC_NAME_KEY = 'prometheus.service_name'
+ACCESS_TYPE_KEY = 'prometheus.access_type'
