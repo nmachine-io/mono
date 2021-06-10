@@ -11,7 +11,5 @@ kind: Predicate
 id: namchine.telem.is_enabled
 operator: truthiness
 config_space: nmachine.telem
-challenge:
-  kind: Supplier
-  source: get::sdk.supplier.config.variables
-  output: .enabled
+challenge: get::sdk.supplier.config.variables->.enabled
+thing: self>>some-prop

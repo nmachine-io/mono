@@ -12,8 +12,6 @@ class PromDataSupplier(Supplier):
 
   @cached_property
   def client(self) -> Optional[PromClient]:
-    print("INIT CONFIG")
-    print(self.client_config_root)
     if config := self.client_config_root:
       return PromClient(config)
     else:

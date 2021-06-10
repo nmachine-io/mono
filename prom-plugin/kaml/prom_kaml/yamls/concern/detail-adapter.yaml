@@ -1,0 +1,29 @@
+kind: ConcernDetailAdapter
+id: nmachine.prom.concern-detail-adapter.monitoring
+title: NMachine Prometheus Plugin
+page_adapters:
+  - title: Configuration
+    id: overview
+    panel_adapters:
+      - kind: ConcernValuePanelAdapter
+        id: sueme
+        naked: true
+        value:
+          type: Markdown
+          text: assets::plugin-intro.md
+          style: {bkgEmotion: barelyGrey}
+
+      - kind: ConcernAttrPanelAdapter
+        id: fields2
+        title: Configuration
+        attribute_adapters:
+          kind: Vars2AttrAdaptersSupplier
+          variables:
+            - id::prometheus.access_type
+            - id::prometheus.url
+            - id::prometheus.service_namespace
+            - id::prometheus.service_name
+            - id::grafana.access_type
+            - id::grafana.url
+            - id::grafana.service_namespace
+            - id::grafana.service_name

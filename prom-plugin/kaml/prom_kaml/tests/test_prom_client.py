@@ -14,7 +14,7 @@ class TestPromClient(ClusterTest):
       my_helper.vanilla_setup()
 
       cli = prom_client
-      svc = cli.find_server_svc()
+      svc = cli.find_prom_svc()
       self.assertIsNotNone(svc)
       self.assertEqual(my_helper.svc_ns, svc.namespace)
       self.assertEqual(my_helper.svc_name, svc.name)

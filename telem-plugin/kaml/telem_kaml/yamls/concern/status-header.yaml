@@ -1,0 +1,33 @@
+kind: Provider
+id: nmachine.telem.view-adapter.header
+source:
+  type: ThreePartHeader
+  style: {mb: 20px}
+  title:
+    type: Line
+    elements:
+      - type: Text
+        style: [bold, calm]
+        text: Telemetry Server
+        action:
+          type: concern_detail
+          uri:
+          adapter_ref:
+      - type: ClearTag
+        text: get::self>>concern>>status
+        thing: get::something
+  subtitle:
+    type: Line
+    elements:
+      - type: Text
+        text: get::self>>concern>>goto_preview
+        maxChars: 20
+        action: get::self>>concern>>goto
+      - type: Icon
+        name: open_in_new
+        style:
+          minWidth: auto
+          emotion: warning2
+  graphic:
+    type: Image
+    uri: /services/prometheus/medium

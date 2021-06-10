@@ -1,0 +1,11 @@
+kind: Supplier
+id: nmachine.prom.supplier.status-computer
+labels:
+  role: status-computer
+  space: nmachine.prom
+config_space: nmachine.prom
+source:
+  kind: IfThenElse
+  source: get::sdk.supplier.config.variables->.enabled
+  if_true: get::kind::Consts->.app_statuses.running
+  if_false: get::kind::Consts->.app_statuses.idle

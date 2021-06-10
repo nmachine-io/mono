@@ -4,8 +4,10 @@ from typing import List, Dict, Type
 from kama_sdk.core.core.kaml import KamlDescriptor
 from kama_sdk.core.core import utils
 from kama_sdk.model.base.model import Model
+from prom_kaml.main.grafana_state_supplier import GrafanaStateSupplier
 from prom_kaml.main.prom_data_supplier import PromDataSupplier
 from prom_kaml.main.prom_matrix_to_timeseries_provider import PromMatrixToSeriesSupplier
+from prom_kaml.main.prom_state_supplier import PromStateSupplier
 
 
 def describe_self():
@@ -22,7 +24,9 @@ def describe_self():
 def model_classes() -> List[Type[Model]]:
   return [
     PromDataSupplier,
-    PromMatrixToSeriesSupplier
+    PromMatrixToSeriesSupplier,
+    PromStateSupplier,
+    GrafanaStateSupplier
   ]
 
 

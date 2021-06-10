@@ -1,7 +1,7 @@
 kind: ManifestVariable
 id: prometheus.access_type
 config_space: nmachine.prom
-title: Where is the Prometheus server located?
+title: Prometheus API Access type
 input: kind::SelectInput
 options:
   - id: kubernetes

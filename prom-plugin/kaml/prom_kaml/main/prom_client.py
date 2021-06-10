@@ -31,7 +31,7 @@ class PromClient:
 
   def do_invoke(self, path: str, url_args: Dict) -> Optional[PromData]:
     if self.is_prom_server_in_cluster():
-      if svc := self.find_server_svc():
+      if svc := self.find_prom_svc():
         if utils.is_in_cluster():
           base_url = self.get_base_in_cluster_url()
           response = invoke_normal_url(base_url, path, url_args)
@@ -40,18 +40,25 @@ class PromClient:
       else:
         return None
     else:
-      base_url = self.get_base_out_of_cluster_url()
+      base_url = self.get_prom_ext_url()
       response = invoke_normal_url(base_url, path, url_args)
 
     if response:
       return response.get('data')
 
   @lru_cache(maxsize=1)
-  def find_server_svc(self) -> Optional[KatSvc]:
+  def find_prom_svc(self) -> Optional[KatSvc]:
     if self.config():
       prom_ns = self.read_config(SVC_NS_KEY)
-      prom_name = self.read_config(SVC_NS_KEY)
+      prom_name = self.read_config(SVC_NAME_KEY)
       return KatSvc.find(prom_name, prom_ns)
+
+  @lru_cache(maxsize=1)
+  def find_grafana_svc(self) -> Optional[KatSvc]:
+    if self.config():
+      svc_ns = self.read_config(GRAFANA_SVC_NS_KEY)
+      svc_name = self.read_config(GRAFANA_SVC_NAME_KEY)
+      return KatSvc.find(svc_name, svc_ns)
 
   def read_config(self, deep_key: str) -> Optional[Any]:
     return utils.deep_get2(self.config(), deep_key)
@@ -62,16 +69,28 @@ class PromClient:
       self._config = root
     return self._config
 
+  def is_grafana_configured(self):
+    if self.is_grafana_server_in_cluster():
+      return self.find_prom_svc() is not None
+    else:
+      return self.get_prom_ext_url()
+
   def is_prom_server_in_cluster(self) -> bool:
     return self.read_config(ACCESS_TYPE_KEY) == access_type_k8s
 
+  def is_grafana_server_in_cluster(self) -> bool:
+    return self.read_config(GRAFANA_ACCESS_TYPE_KEY) == access_type_k8s
+
   def get_base_in_cluster_url(self) -> str:
-    if svc := self.find_server_svc():
+    if svc := self.find_prom_svc():
       port = svc.first_tcp_port_num()
       return f"http://{svc.name}.{svc.namespace}:{port}"
 
-  def get_base_out_of_cluster_url(self) -> str:
+  def get_prom_ext_url(self) -> str:
     return self.read_config(URL_KEY)
+
+  def get_grafana_ext_url(self) -> str:
+    return self.read_config(GRAFANA_URL_KEY)
 
 
 def instant_path_and_args(query: str, ts: datetime = None) -> Tuple:
@@ -131,8 +150,8 @@ def dict_args2str(args: Dict) -> str:
 
 
 def invoke_pure_http(path, args) -> Optional[Dict]:
-  arg2s = lambda arg: f"{arg[0]}={arg[1]}"
-  url = f"{path}?{'&'.join(list(map(arg2s, args.items())))}"
+  arg2str = lambda arg: f"{arg[0]}={arg[1]}"
+  url = f"{path}?{'&'.join(list(map(arg2str, args.items())))}"
   # noinspection PyBroadException
   try:
     return requests.get(url).json()
@@ -151,3 +170,8 @@ URL_KEY = 'prometheus.url'
 SVC_NS_KEY = 'prometheus.service_namespace'
 SVC_NAME_KEY = 'prometheus.service_name'
 ACCESS_TYPE_KEY = 'prometheus.access_type'
+
+GRAFANA_URL_KEY = 'grafana.url'
+GRAFANA_SVC_NS_KEY = 'grafana.service_namespace'
+GRAFANA_SVC_NAME_KEY = 'grafana.service_name'
+GRAFANA_ACCESS_TYPE_KEY = 'grafana.access_type'
