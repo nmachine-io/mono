@@ -1,108 +1,68 @@
 kind: ConcernDetailAdapter
-id: sdk.concern-detail-adapter.telem
+id: nmachine.telem.detail-adapter
 title: KAMA Telemetry
+concern: get::&nmachine.telem.concern
 page_adapters:
   - id: overview
     title: Overview
-    info: assets::telem-detail-info.txt
     panel_adapters:
-      - id::sdk.attr_panel.telem.basic
-      - id::sdk.concern-field-set.telem.main
-#      - id::sdk.attr_panel.telem.auto_snapshots
+      - id::nmachine.telem.attr_panel.intro
+      - id::nmachine.telem.attr_panel.basic-fields
 
 ---
 
-
-kind: ConcernAttrPanelAdapter
-id: sdk.attr_panel.telem.auto_snapshots
-title: Automatic Snapshots
-attributes:
-  - id: auto_enabled
-    title: Automatic backups enabled
-    value:
-      type: Tag
-      text: true
-      humanize: true
-  - id: schedule
-    title: Automatic backups enabled
-    value: Every Friday after fucking your girl
-
-under:
-  type: Line
-  elements:
-    - type: ClearButton
-      style:
-        emotion: nectar
-      text: Update...
-      action:
-        type: operation
-        uri:
-          id: sdk.operation.telem-storage
+kind: ConcernValuePanelAdapter
+title: About this plugin
+id: nmachine.telem.attr_panel.intro
+naked: true
+value:
+  type: Markdown
+  text: assets::telem-detail-info.md
+  style: {bkgEmotion: barelyGrey}
 
 ---
 
 kind: ConcernAttrPanelAdapter
-id: sdk.attr_panel.telem.basic
-title: Top Level Behavior
+id: nmachine.telem.attr_panel.basic-fields
+title: Basic Settings
+info: Data below read from manifest variables
+config_space: nmachine.telem
 attribute_adapters:
-  - kind: ConcernAttrAdapter
-    id: strategy
-    title: Strategy
-    value_info: This means this and that conflict
-    value:
-      type: Tag
-      humanize: true
-      text: get::props concern=>strategy
-  - ...get::mutant
-
+  kind: Vars2AttrAdaptersSupplier
+  variables:
+    - id::enabled
+    - id::strategy
 under:
-  type: Line
-  elements:
-    - type: ClearButton
-      text: Update...
-      action:
-        type: operation
-        uri:
-          id: sdk.operation.telem-storage
-#
-#  - kind: ConcernAttrAdapter
-#    id: port
-#    title: Database Port
-#    value_info: Not used unless own storage
-#    value:
-#      type: Tag
-#      humanize: true
-#      text: get::props concern=>port
-
+  type: ClearButton
+  style:
+    emotion: nectar
+  text: get::self>>concern=>main_button_text
+  action:
+    type: operation
+    uri:
+      space: nmachine.telem
+      id: get::self>>concern=>main_button_action
 
 ---
 
-kind: ListPluck
-id: mutant
-source:
-  - include: get::props concern=>pvc
-    value:
-      kind: ConcernAttrAdapter
-      id: host
-      title: Database Host
-      value_info: Not used unless own storage
-      value:
-        type: Tag
-        humanize: true
-        text: get::props concern=>host
+kind: ConcernAttrPanelAdapter
+id: nmachine.telem.attr_panel.basic-fields
+title: Basic Settings
+info: Data below read from manifest variables
+config_space: nmachine.telem
+attribute_adapters:
+  kind: Vars2AttrAdaptersSupplier
+  variables:
+    - id::enabled
+    - id::strategy
+under:
+  type: ClearButton
+  style:
+    emotion: nectar
+  text: get::self>>concern=>main_button_text
+  action:
+    type: operation
+    uri:
+      space: nmachine.telem
+      id: get::self>>concern=>main_button_action
 
----
-
-
-
-################# FIELD SETS #####################
-
-
-
-
-kind: ConcernTableFieldSetAdapter
-id: sdk.concern-field-set.telem.main
-title: Parameters
-fields: []
-#  - kind: Field
-#    variable: id::deployment.replicas

@@ -8,26 +8,25 @@ source:
     elements:
       - type: Text
         style: [bold, calm]
-        text: Telemetry Server
+        text: Telemetry Service
         action:
           type: concern_detail
-          uri:
-          adapter_ref:
+          uri: {adapter_ref: id::nmachine.telem.detail-adapter}
       - type: ClearTag
-        text: get::self>>concern>>status
-        thing: get::something
+#        text: get::self>>concern=>status
+        text: online
   subtitle:
     type: Line
     elements:
       - type: Text
-        text: get::self>>concern>>goto_preview
-        maxChars: 20
-        action: get::self>>concern>>goto
+        text: Changes being recorded
+#        maxChars: 20
+        action: null
       - type: Icon
-        name: open_in_new
+        name: done_all
         style:
           minWidth: auto
-          emotion: warning2
+          emotion: milGreen
   graphic:
     type: Image
-    uri: /services/prometheus/medium
+    uri: /services/mongodb/large

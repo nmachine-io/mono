@@ -1,0 +1,59 @@
+<% pvc = values[:pvc] || {} %>
+<% annotations = (pvc[:annotations] || {}).to_yaml %>
+<% storage_class = pvc.dig(:storageClassName) %>
+<% finalizers = pvc[:finalizers] || [] %>
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: <%= release_name %>
+  name: <%= name %>-pvc
+  annotations: <%= annotations %>
+  labels:
+    managed_by: <%= org %>
+    app: <%= name %>
+  finalizers:
+  <% finalizers.each do |finalizer| %>
+    - <%= finalizer %>
+  <% end %>
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  <% if storage_class %>
+  storageClassName: <%= storage_class %>
+  <% end %>
+
+---
+
+<% pvc = values[:backups_pvc] || {} %>
+<% annotations = (pvc[:annotations] || {}).to_yaml %>
+<% storage_class = pvc.dig(:storageClassName) %>
+<% finalizers = pvc[:finalizers] || [] %>
+
+<% if pvc[:enabled] %>
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: <%= release_name %>
+  name: <%= name %>-backups-pvc
+  annotations: <%= annotations %>
+  labels:
+    managed_by: <%= org %>
+    app: <%= name %>
+  finalizers:
+      <% finalizers.each do |finalizer| %>
+    - <%= finalizer %>
+    <% end %>
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+    <% if storage_class %>
+  storageClassName: <%= storage_class %>
+    <% end %>
+<% end %>

@@ -3,6 +3,7 @@ from typing import List, Dict
 
 from kama_sdk.core.core.kaml import KamlDescriptor
 from kama_sdk.core.core import utils
+from telem_kaml.models.telem_status_supplier import TelemStatusSupplier
 from telem_kaml.telem_backend import TelemPluginBackend
 
 
@@ -13,10 +14,16 @@ def describe_self() -> KamlDescriptor:
     app_identifier='telem-plugin',
     model_descriptors=model_descriptors(),
     asset_paths=[assets_path],
-    model_classes=[],
+    model_classes=classes(),
     telem_backend=TelemPluginBackend,
     virtual_kteas=[]
   )
+
+
+def classes():
+  return [
+    TelemStatusSupplier
+  ]
 
 
 def model_descriptors() -> List[Dict]:
