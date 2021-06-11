@@ -1,5 +1,10 @@
+kind: OnlineIfEnabledPredicate
+id: nmachine.telem.predicate.is_online_if_enabled
+title: Ensure service is online
+info: If telem is enabled, probe service readiness
+reason: Service, its resources, or database, is down
 
-
+---
 
 kind: Predicate
 config_space: "@nmachine/telem"

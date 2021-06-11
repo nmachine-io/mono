@@ -1,9 +1,7 @@
 <% backups = values[:backups] || {} %>
-<% deployment = values[:deployment] || {} %>
-<% server = deployment[:server] || {} %>
-<% mongo = deployment[:mongo] || {} %>
+<%# job = backups[:job] || {} %>
 
-apiVersion: apps/v1
+apiVersion: batch/v1
 kind: Job
 metadata:
   namespace: <%= release_name %>
@@ -11,49 +9,33 @@ metadata:
   labels:
     managed_by: <%= org %>
     app: <%= name %>
+    role: backups
 spec:
-  replicas: <%= deployment[:replicas] %>
-  selector:
-    matchLabels:
-      managed_by: <%= org %>
-      app: <%= name %>
+  ttlSecondsAfterFinished: 0
   template:
-    metadata:
-      labels:
-        managed_by: <%= org %>
-        app: <%= name %>
     spec:
-      restartPolicy: Always
+      restartPolicy: Never
       containers:
-        - image: <%= server[:image] %>
-          imagePullPolicy: Always
-          name: server
-          ports:
-            - containerPort: 5000
-          env:
-            - name: STRATEGY
-              value: <%= values[:strategy] %>
-            - name: DB_HOST
-              value: "<%= final_host %>"
-            - name: DB_PORT
-              value: "<%= final_port %>"
-            - name: PORT
-              value: "<%= server[:port] %>"
-
-          <% if pvc? %>
-        - image: <%= mongo[:image] %>
-          name: mongodb
-          ports:
-            - containerPort: <%= mongo[:port] %>
-          resources:  {}
+        - image: mongo
+          name: runner
+          command: ["/bin/sh"]
+          args:
+            - "-c"
+            - "mongodump"
+            - "--host"
+            - "ice-cream-66d4795df4-x4nv5"
+            - "--out"
+            - /var/backups/backup-$(date +"%m-%d-%Y-%H-%M")
+          resources: {}
           volumeMounts:
-            - mountPath: /data/db
-              name: <%= name %>-volume
-          <% end %>
-
-        <% if pvc? %>
+#            - mountPath: /data/db
+#              name: <%#= name %>-volume
+            - mountPath: /var/backups
+              name: <%= name %>-backups-volume
       volumes:
-        - name: <%= name %>-volume
+#        - name: <%#= name %>-volume
+#          persistentVolumeClaim:
+#            claimName: <%#= name %>-pvc
+        - name: <%= name %>-backups-volume
           persistentVolumeClaim:
-            claimName: <%= name %>-pvc
-    <% end %>
+            claimName: <%= name %>-backups-pvc

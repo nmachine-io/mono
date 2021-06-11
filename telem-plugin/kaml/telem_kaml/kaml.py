@@ -3,6 +3,7 @@ from typing import List, Dict
 
 from kama_sdk.core.core.kaml import KamlDescriptor
 from kama_sdk.core.core import utils
+from telem_kaml.models.misc import OnlineIfEnabledPredicate
 from telem_kaml.models.telem_status_supplier import TelemStatusSupplier
 from telem_kaml.telem_backend import TelemPluginBackend
 
@@ -22,7 +23,8 @@ def describe_self() -> KamlDescriptor:
 
 def classes():
   return [
-    TelemStatusSupplier
+    TelemStatusSupplier,
+    OnlineIfEnabledPredicate
   ]
 
 

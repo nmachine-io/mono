@@ -70,8 +70,6 @@ class TelemStatusSupplier(Supplier):
       )
 
 
-
-
 def client() -> TelemPluginBackend:
   # noinspection PyTypeChecker
   return tabs_man.get_backend()

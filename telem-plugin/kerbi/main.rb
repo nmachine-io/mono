@@ -9,16 +9,17 @@ class TelemMixer < Kerbi::Mixer
 				b.yaml 'pvc' if pvc?
 				b.yaml 'deployment'
 				b.yaml 'service'
+				# b.yaml "backup-job"
 			end
 		end
 	end
 
 	def final_host
-		pvc? ? 'localhost' : values.dig(:deployment, :mongo, :host)
+		pvc? ? 'localhost' : values.dig(:mongo, :host)
 	end
 
 	def final_port
-		pvc? ? '27017' : values.dig(:deployment, :mongo, :port)
+		pvc? ? '27017' : values.dig(:mongo, :port)
 	end
 
 	def name

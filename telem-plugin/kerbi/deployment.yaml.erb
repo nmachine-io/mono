@@ -1,6 +1,5 @@
-<% deployment = values[:deployment] || {} %>
-<% server = deployment[:server] || {} %>
-<% mongo = deployment[:mongo] || {} %>
+<% server = values[:server] || {} %>
+<% mongo = values[:mongo] || {} %>
 
 apiVersion: apps/v1
 kind: Deployment
@@ -11,7 +10,7 @@ metadata:
     managed_by: <%= org %>
     app: <%= name %>
 spec:
-  replicas: <%= deployment[:replicas] %>
+  replicas: <%= server[:replicas] %>
   selector:
     matchLabels:
       managed_by: <%= org %>
