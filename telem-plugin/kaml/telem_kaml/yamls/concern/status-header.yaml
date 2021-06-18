@@ -13,8 +13,7 @@ source:
           type: concern_detail
           uri: {adapter_ref: id::nmachine.telem.detail-adapter}
       - type: ClearTag
-#        text: get::self>>concern=>status
-        text: online
+        text: get::self>>concern=>status
   subtitle:
     type: Line
     elements:

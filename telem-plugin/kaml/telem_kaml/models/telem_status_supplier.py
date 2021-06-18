@@ -41,11 +41,11 @@ class TelemStatusSupplier(Supplier):
   def status(self):
     if client().is_enabled():
       if client().is_connected():
-        return 'online'
+        return 'Online'
       else:
-        return 'offline'
+        return 'Offline'
     else:
-      return 'disabled'
+      return 'Disabled'
 
   @cached_property
   def action_preview_str(self):

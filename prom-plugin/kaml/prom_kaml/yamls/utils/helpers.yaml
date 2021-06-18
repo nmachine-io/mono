@@ -1,0 +1,31 @@
+kind: PromDataSupplier
+id: nmachine.prom.supplier.deployment_memory
+step: 5m
+resource_name: ""
+resource_namespace: get::ns
+source: "sum(
+          container_memory_usage_bytes{
+            namespace='${get::self>>resource_namespace}',
+            pod=~'${get::self>>resource_name}-.*',
+            image!='',
+            container_name!='POD'
+          }
+        )"
+
+---
+
+kind: PromDataSupplier
+id: nmachine.prom.supplier.deployment_cpu
+step: 5m
+resource_name: ""
+resource_namespace: get::ns
+source: "sum(
+          rate(
+            container_cpu_usage_seconds_total{
+              namespace='${get::self>>resource_namespace}',
+              pod=~'${get::self>>resource_name}-.*',
+              image!='',
+              container_name!='POD'
+              }[20m]
+            )
+          )"

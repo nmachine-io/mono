@@ -88,6 +88,6 @@ variable:
       many: true
       selector:
         res_kind: Service
-        namespace: "get::self>inputs->.prometheus.service_namespace=>whateger"
+        namespace: get::props inputs->.prometheus.service_namespace
       output: options_format
       serializer: legacy

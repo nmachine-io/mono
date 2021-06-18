@@ -12,3 +12,14 @@ predicates:
     - nmachine.telem.predicate.are_pods_around
     - nmachine.telem.predicate.are_services_around
     - nmachine.telem.predicate.are_pvcs_around
+
+---
+
+kind: RunPredicatesAction
+id: nmachine.telem.action.is_online_if_enabled
+title: Ensure service is online
+info: If telem is enabled, probe service readiness
+predicates:
+  - id::nmachine.telem.predicate.is_online_if_enabled
+labels:
+  type: system_check

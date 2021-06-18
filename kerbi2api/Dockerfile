@@ -20,12 +20,12 @@ RUN git clone git://github.com/rbenv/ruby-build.git \
       &&  $RUBY_PATH/plugins/ruby-build/install.sh
 RUN ruby-build $RUBY_VERSION $RUBY_PATH
 
-RUN  wget -q https://github.com/nectar-cs/tam_server/releases/download/1.0.3/tam_server.tar.gz \
-  && tar -xf tam_server.tar.gz \
-  && mv tam_server /usr/local/bin/tam_server \
-  && chmod +x /usr/local/bin/tam_server
+RUN wget -q https://github.com/nmachine-io/ktea-executable-server/releases/download/1.0.8/ktea-executable-server.tar.gz \
+  && tar -xf ktea-executable-server.tar.gz \
+  && mv server /usr/local/bin/server \
+  && chmod +x /usr/local/bin/server
 
 WORKDIR /app
 RUN gem install bundler -v 2.1.4
 ADD local-eval.sh .
-ENV TAM_CMD="/app/local-eval.sh"
+ENV KTEA_EXECUTABLE="/app/local-eval.sh"

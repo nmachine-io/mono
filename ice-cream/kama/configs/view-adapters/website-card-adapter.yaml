@@ -1,0 +1,119 @@
+kind: ConcernCardAdapter
+id: org.concern-card-adapter.main-website
+title: Website
+spec:
+  type: Block
+  title: Website Status
+  elements:
+    - type: Section
+      width: 1
+      elements:
+        - id::card-adapter.website.header
+        - id::card-adapter.website.workload-dots
+    - type: Section
+      width: 1
+      elements:
+        - id::card-adapter.website.memory
+        - id::card-adapter.website.cpu
+        - id::card-adapter.website.alerts
+
+---
+
+kind: Provider
+id: card-adapter.website.header
+source:
+  type: ThreePartHeader
+  style:
+    mb: 13px
+  title:
+    type: Line
+    elements:
+      - type: Text
+        text: Ice-Cream Store
+        style: [bold, calm]
+      - type: ClearTag
+        text: get::props concern=>status
+  subtitle:
+    type: Line
+    elements:
+      - type: Text
+        text: "localhost:${get::props concern=>port_forward_spec.pod_port}"
+        style: [hov_underline, hov_point]
+        action:
+          type: port_forward
+          uri:
+            kind: MergeSupplier
+            source:
+              - get::props concern=>port_forward_spec
+              - logo_url: get::props concern=>logo
+      - type: Icon
+        name: open_in_new
+        style:
+          emotion: warning2
+  graphic:
+    type: Image
+    uri: get::props concern=>logo
+
+
+---
+
+kind: Provider
+id: card-adapter.website.workload-dots
+source:
+  type: Line
+  elements:
+    - Workloads
+    - type: StatusDots
+      data: get::props concern=>pod_statuses
+      shape: square
+      spacing: 1.5px
+
+---
+
+kind: Provider
+id: card-adapter.website.memory
+source:
+  type: SeriesSummary
+  first: graph
+  style:
+    mt: -10px
+  data:
+    kind: SeriesSummarySupplier
+    humanizer: kind::BytesHumanizer
+    source:
+      kind: PromMatrixToSeriesSupplier
+      source: get::props concern=>mem_dump
+
+---
+
+kind: Provider
+id: card-adapter.website.cpu
+source:
+  type: SeriesSummary
+  first: graph
+  style:
+    width: 100%
+  data:
+    kind: SeriesSummarySupplier
+    humanizer: kind::CoresHumanizer
+    source:
+      kind: PromMatrixToSeriesSupplier
+      source: get::props concern=>cpu_dump
+
+
+
+---
+
+kind: Provider
+id: card-adapter.website.alerts
+source:
+  type: SeriesSummary
+  first: graph
+  style:
+    width: 100%
+  data:
+    kind: SeriesSummarySupplier
+    humanizer: kind::CoresHumanizer
+    source:
+      kind: PromMatrixToSeriesSupplier
+      source: get::props concern=>cpu_dump
