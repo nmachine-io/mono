@@ -8,14 +8,14 @@ spec:
     - type: Section
       width: 1
       elements:
-        - id::card-adapter.website.header
-        - id::card-adapter.website.workload-dots
+        - get::id::card-adapter.website.header
+        - get::id::card-adapter.website.workload-dots
     - type: Section
       width: 1
       elements:
-        - id::card-adapter.website.memory
-        - id::card-adapter.website.cpu
-        - id::card-adapter.website.alerts
+        - get::id::card-adapter.website.memory
+        - get::id::card-adapter.website.cpu
+        - get::id::card-adapter.website.alerts
 
 ---
 
@@ -32,7 +32,7 @@ source:
         text: Ice-Cream Store
         style: [bold, calm]
       - type: ClearTag
-        text: get::props concern=>status
+        text: get::self>>concern=>status
   subtitle:
     type: Line
     elements:
@@ -44,8 +44,8 @@ source:
           uri:
             kind: MergeSupplier
             source:
-              - get::props concern=>port_forward_spec
-              - logo_url: get::props concern=>logo
+              - get::self>>concern=>port_forward_spec
+              - logo_url: get::self>>concern=>logo
       - type: Icon
         name: open_in_new
         style:
@@ -53,7 +53,6 @@ source:
   graphic:
     type: Image
     uri: get::props concern=>logo
-
 
 ---
 
@@ -64,7 +63,7 @@ source:
   elements:
     - Workloads
     - type: StatusDots
-      data: get::props concern=>pod_statuses
+      data: get::self>>concern=>pod_statuses
       shape: square
       spacing: 1.5px
 
@@ -99,8 +98,6 @@ source:
     source:
       kind: PromMatrixToSeriesSupplier
       source: get::props concern=>cpu_dump
-
-
 
 ---
 
