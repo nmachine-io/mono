@@ -37,14 +37,14 @@ source:
     type: Line
     elements:
       - type: Text
-        text: "localhost:${get::props concern=>port_forward_spec.pod_port}"
+        text: "localhost:${get::self>>concern>>port_forward_spec>>pod_port}"
         style: [hov_underline, hov_point]
         action:
           type: port_forward
           uri:
             kind: MergeSupplier
             source:
-              - get::self>>concern=>port_forward_spec
+              - get::self>>concern>>port_forward_spec>>spec
               - logo_url: get::self>>concern=>logo
       - type: Icon
         name: open_in_new

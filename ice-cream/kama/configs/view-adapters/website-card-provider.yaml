@@ -17,6 +17,7 @@ cached:
   mem_dump:
     kind: Supplier
     inherit: nmachine.prom.supplier.deployment_memory
+    step: 10s
     resource_name: get::&kind::IceCreamConsts>>workload_name
 
   cpu_dump:

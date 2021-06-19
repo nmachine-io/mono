@@ -31,5 +31,9 @@ class WebsiteHelper(Concern):
     return "Online" if self.is_online() else "Offline"
 
   @model_attr()
-  def port_forward_spec(self) -> Optional[PortForwardSpec]:
-    return PortForwardSpecSupplier({'source': self.svc}).resolve()
+  def port_forward_spec(self) -> PortForwardSpecSupplier:
+    return self.inflate_child(
+      PortForwardSpecSupplier,
+      kod=dict(source=self.svc()),
+      resolve_prop=False
+    )
