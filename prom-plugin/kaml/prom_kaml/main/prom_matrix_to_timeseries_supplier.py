@@ -5,6 +5,7 @@ from werkzeug.utils import cached_property
 
 from kama_sdk.model.humanizer.quantity_humanizer import QuantityHumanizer
 from kama_sdk.model.supplier.base.supplier import Supplier
+from prom_kaml.main import prom_utils
 from prom_kaml.main.types import PromMatrixEntry
 
 
@@ -46,13 +47,11 @@ class PromMatrixToSeriesSupplier(Supplier):
         if len(datapoint) == 2:
           epoch, computed_val = datapoint
           entry = find_or_create_entry(output, epoch)
-          decimal_value = float(computed_val)
-          if self.humanizer:
-            if self.with_unit:
-              decimal_value = self.humanizer.humanize_expr(decimal_value)
-            else:
-              decimal_value = self.humanizer.humanize_quantity(decimal_value)
-          entry[key] = decimal_value
+          entry[key] = prom_utils.process_num(
+            computed_val, 
+            self.humanizer, 
+            self.with_unit
+          )
         else:
           print(f"[kama_sdk:prom_series_computer] !=2 entry val {datapoint}")
 

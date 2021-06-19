@@ -6,8 +6,9 @@ from kama_sdk.core.core import utils
 from kama_sdk.model.base.model import Model
 from prom_kaml.main.grafana_state_supplier import GrafanaStateSupplier
 from prom_kaml.main.prom_data_supplier import PromDataSupplier
-from prom_kaml.main.prom_matrix_to_timeseries_provider import PromMatrixToSeriesSupplier
+from prom_kaml.main.prom_matrix_to_timeseries_supplier import PromMatrixToSeriesSupplier
 from prom_kaml.main.prom_state_supplier import PromStateSupplier
+from prom_kaml.main.prom_vector_to_groups_provider import PromVectorsToGroupsSupplier
 
 
 def describe_self():
@@ -25,6 +26,7 @@ def model_classes() -> List[Type[Model]]:
   return [
     PromDataSupplier,
     PromMatrixToSeriesSupplier,
+    PromVectorsToGroupsSupplier,
     PromStateSupplier,
     GrafanaStateSupplier
   ]

@@ -21,6 +21,16 @@ class TestPromDataSupplier(ClusterTest):
       })
       self.assertTrue(supplier.resolve())
 
+  def test_foo(self):
+    thing = PromDataSupplier.inflate({
+      'kind': PromDataSupplier.__name__,
+      supplier_module.TYPE_KEY: 'vector',
+      supplier_module.STEP_KEY: '15m',
+      'source': group_query
+    })
+    result = thing.resolve()
+    print(result)
+
   def test_supply_matrix(self):
     if my_helper.easy_setup():
       supplier = my_helper.vanilla_matrix_supplier()
@@ -28,3 +38,11 @@ class TestPromDataSupplier(ClusterTest):
       self.assertIsNotNone(result)
       self.assertGreater(len(result), 15)
       self.assertGreater(len(result[0].items()), 1)
+
+
+group_query = "sum(" \
+                "container_memory_usage_bytes{" \
+                " container_name!='POD', " \
+                " image!=''" \
+                "}" \
+              ") by(namespace)"
