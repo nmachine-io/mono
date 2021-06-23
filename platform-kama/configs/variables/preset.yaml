@@ -1,0 +1,18 @@
+kind: ConfigurationPreset
+id: provider.presets.default
+title: Absolute Default
+info: Bare minimum defaults set by the publisher.
+default: true
+variables:
+  kind: ConfigSupplier
+  field_key: default_vars
+
+---
+
+kind: ConfigurationPreset
+id: provider.presets.high-limits
+title: Starter pack
+info: Insecure database, no authentication provider.
+variables:
+  kind: PresetAssignmentsSupplier
+  source: unsafe-database

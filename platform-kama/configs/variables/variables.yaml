@@ -1,80 +1,90 @@
-kind: ManifestVariable
-id: deployment.replicas
-title: Website Pod Replicas
-mode: public
-info: "Amount of pod replicas for the website. More means
-more resilience to traffic spikes and application failures."
-input:
-  kind: SliderInput
-  min: 0
-  max: 15
-  step: 1
-validators:
-  - kind: FormatPredicate
-    check_against: integer
-  - operator: ">"
-    check_against: 0
-    tone: warning
-    reason: Zero replicas will shut down the server
-
----
-
-kind: ManifestVariable
-id: deployment.flavor
-title: Website Flavor
-mode: public
-info: "Ice-cream speciality for the website. Can break the application
-because of faulty value."
-input:
-  kind: SelectInput
-  options:
-    - id: vanilla
-      title: Vanilla
-    - id: chocolate
-      title: Chocolate
-validators:
-  - operator: in
-    check_against: [vanilla, chocolate]
-    tone: warning
-    reason: Vanilla and chocolate not good enough for you?
-
----
-
-kind: ManifestVariable
-id: service.type
-title: Service Type
-info: "Kubernetes network service type"
-labels:
-  category: network
-input:
-  kind: SelectInput
-  options:
-    - id: ClusterIP
-      title: ClusterIP - accessible only inside the cluster
-    - id: LoadBalancer
-      title: LoadBalancer - accessible on the public internet
-mode: public
-
----
-
-kind: ManifestVariable
-mode: public
-id: service.port
-title: Service Port
-category: network
-info: "Port for service to be accessible at"
-validators:
-  - kind: FormatPredicate
-    check_against: integer
-
----
-
-kind: ManifestVariable
-mode: internal
-id: deployment.image
-title: Main application image
-info: "Versioned application image. Should never be changed manually."
-validators:
-  - check_against: "gcr.io/nectar-bazaar/ice-cream-app:"
-    operator: contains
-    reason: Base image should never be different
+#
+#
+#
+#kind: ManifestVariable
+#id: deployment.replicas
+#title: Website Pod Replicas
+#mode: public
+#info: "Amount of pod replicas for the website. More means
+#more resilience to traffic spikes and application failures."
+#input:
+#  kind: SliderInput
+#  min: 0
+#  max: 15
+#  step: 1
+#validators:
+#  - kind: FormatPredicate
+#    check_against: integer
+#  - operator: ">"
+#    check_against: 0
+#    tone: warning
+#    reason: Zero replicas will shut down the server
+#
+#
+#in_dependencies:
+#  - variable: some-hpa
+#
+#
+#read_prevented: get::self>>logic
+#
+#---
+#
+#kind: ManifestVariable
+#id: deployment.flavor
+#title: Website Flavor
+#mode: public
+#info: "Ice-cream speciality for the website. Can break the application
+#because of faulty value."
+#input:
+#  kind: SelectInput
+#  options:
+#    - id: vanilla
+#      title: Vanilla
+#    - id: chocolate
+#      title: Chocolate
+#validators:
+#  - operator: in
+#    check_against: [vanilla, chocolate]
+#    tone: warning
+#    reason: Vanilla and chocolate not good enough for you?
+#
+#---
+#
+#kind: ManifestVariable
+#id: service.type
+#title: Service Type
+#info: "Kubernetes network service type"
+#labels:
+#  category: network
+#input:
+#  kind: SelectInput
+#  options:
+#    - id: ClusterIP
+#      title: ClusterIP - accessible only inside the cluster
+#    - id: LoadBalancer
+#      title: LoadBalancer - accessible on the public internet
+#mode: public
+#
+#---
+#
+#kind: ManifestVariable
+#mode: public
+#id: service.port
+#title: Service Port
+#category: network
+#info: "Port for service to be accessible at"
+#validators:
+#  - kind: FormatPredicate
+#    check_against: integer
+#
+#---
+#
+#kind: ManifestVariable
+#mode: internal
+#id: deployment.image
+#title: Main application image
+#info: "Versioned application image. Should never be changed manually."
+#validators:
+#  - check_against: "gcr.io/nectar-bazaar/ice-cream-app:"
+#    operator: contains
+#    reason: Base image should never be different

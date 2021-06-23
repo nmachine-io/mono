@@ -158,10 +158,10 @@
         },
         "k8kat": {
             "hashes": [
-                "sha256:15a8e4030b4a337c2138225fc8a7bf7fff38172a6c9b217a548a4375b6a47e6b",
-                "sha256:d514ab4640a112c27d808ed98610c556dbb6514d571408b8de4cda16a4ff3093"
+                "sha256:975bb60ed173f4f4f0175170f8abc7a1496dc1c79681fa2480e3d47d8e9a69ec",
+                "sha256:d887d90811877878d069f1ce78bfb6145ce9eeb30354f792d028124919ece2d7"
             ],
-            "version": "==0.0.234"
+            "version": "==0.0.237"
         },
         "kama-sdk-py": {
             "hashes": [
@@ -247,10 +247,10 @@
         },
         "python-dotenv": {
             "hashes": [
-                "sha256:00aa34e92d992e9f8383730816359647f358f4a3be1ba45e5a5cefd27ee91544",
-                "sha256:b1ae5e9643d5ed987fc57cc2583021e38db531946518130777734f9589b3141f"
+                "sha256:dd8fe852847f4fbfadabf6183ddd4c824a9651f02d51714fa075c95561959c7d",
+                "sha256:effaac3c1e58d89b3ccb4d04a40dc7ad6e0275fda25fd75ae9d323e2465e202d"
             ],
-            "version": "==0.17.1"
+            "version": "==0.18.0"
         },
         "python-engineio": {
             "hashes": [

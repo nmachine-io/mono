@@ -1,0 +1,41 @@
+#kind: ManifestVariableDependency
+#id: variable_relations.hpa_disabled_prevents_min
+#effect: prevents_read
+#title: "HPA configuration will be ignored if it is disabled"
+#active:
+#  kind: Predicate
+#  challenge: get::self>>from_variable>>current_value
+#  operator: falsiness
+#
+#---
+#
+#kind: ManifestVariableDependencySelector
+#inherit: variable_dependency.template.hpa_disabled
+#from:
+#  id: backend.server.hpa.enabled
+#to:
+#  id: "backend.server.hpa.-*"
+#
+#---
+#
+#kind: ManifestVariableDependency
+#inherit: variable_dependency.template.ingress_disabled
+#labels:
+#  from_variable: ingress.enabled
+#  to_variable: ingress.class
+#
+#---
+#
+#kind: ManifestVariableDependency
+#inherit: variable_dependency.template.ingress_disabled
+#variable_selectors:
+#  from_variable: ingress.enabled
+#  to_variable: ingress.routes.-.*
+#
+#---
+#
+#kind: ManifestVariableDependency
+#inherit: variable_dependency.template.ingress_disabled
+#labels:
+#  from_variable: ingress.enabled
+#  to_variable: ingress.routes.backend

@@ -1,0 +1,26 @@
+kind: WebsiteHelper
+id: org.concern.main-website
+labels:
+  space: app
+cached:
+  best_url:
+    kind: BestSvcUrlSupplier
+    source: get::props svc
+
+  logo: get::&kind::IceCreamConsts>>site_logo
+
+  pod_statuses:
+    kind: Supplier
+    inherit: sdk.supplier.pods_in_dots_format
+    pods: get::self>>svc=>pods
+
+  mem_dump:
+    kind: Supplier
+    inherit: nmachine.prom.supplier.deployment_memory
+    step: 10s
+    resource_name: get::&kind::IceCreamConsts>>workload_name
+
+  cpu_dump:
+    kind: Supplier
+    inherit: nmachine.prom.supplier.deployment_cpu
+    resource_name: get::&kind::IceCreamConsts>>workload_name

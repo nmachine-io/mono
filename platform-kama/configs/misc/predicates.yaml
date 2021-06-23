@@ -1,0 +1,49 @@
+kind: ResourceCountPredicate
+id: predicate.db-creds-exists
+title: Database credentials secret exists
+reason: Secret db-creds not present in namespace '${get::ns}'
+res_kind: Secret
+name: db-creds
+
+---
+
+kind: ResourceCountPredicate
+id: predicate.auth0-creds-exists
+title: Auth0 credentials secret exists
+reason: Secret auth0 not present in namespace '${get::ns}'
+res_kind: Secret
+name: auth0
+
+---
+
+kind: Supplier
+id: goo
+inhert: template
+secret_name: gcp-svc-acct-keyfile
+output: ".gcp_svc_acct_keyfile"
+
+---
+
+kind: Supplier
+id: template
+secret_name: ''
+cached:
+  res:
+    kind: ResourcesSupplier
+    selector:
+      res_kind: Secret
+      name: get::self>>secret_name
+    many: false
+    serializer: legacy
+source: get::self>>res=>decoded_data
+
+---
+#
+#kind: Predicate
+#res:
+#  kind: ResourcesSupplier
+#  selector:
+#    res_kind: Secret
+#    name: db-creds
+#  many: false
+#challenge: get::self>>res=>data->.db_user=>__count__

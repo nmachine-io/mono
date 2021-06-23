@@ -1,0 +1,47 @@
+kind: MultiPredicate
+id: predicate.ingress_enabled_resource_in_sync
+title: Ingress enabled variable/resource in Sync?
+reason: "The variable 'ingress.enabled' and the Kubernetes resource
+are out of sync: the variable is set to 'false' but the resource
+exists. This is a normal occurrence when you change the 'ingress.enabled'
+variable directly instead of running the operation."
+operator: and
+negate: true
+source:
+  - kind: Predicate
+    challenge: get::kind::ConfigVarsSupplier->.ingress.enabled
+    operator: falsy
+  - kind: ResourceCountPredicate
+    res_kind: Ingress
+    operator: greater-than
+    check_against: 0
+
+---
+
+kind: RemediationOption
+title: Delete the dangling Ingress resource
+info: "If the intention is to keep ingress disabled, the dangling
+resource should be deleted. Clicking this button will"
+button:
+  text: Delete Ingress
+  uri:
+    kind: DeleteResourcesAction
+    selector: "expr::Ingress:*"
+match_predicates:
+  id: predicate.ingress_enabled_resource_in_sync
+
+---
+
+kind: Remediation
+title: "Change the variable to 'true'"
+info: "If the intention is actually to have ingress enabled, the variable
+should be updated to 'true'."
+button:
+  text: Delete Ingress
+  uri:
+    kind: Action
+    inherit: sdk.action.safely_apply_application_manifest_e2e_action
+    values:
+      ingress.enabled: true
+match_predicates:
+  id: predicate.ingress_enabled_resource_in_sync
