@@ -21,7 +21,7 @@ source:
 kind: MultiPredicate
 id: nmachine.prom.has_host_or_svc_inputs
 operator: or
-source:
+predicates:
   - kind: Predicate
     operator: truthiness
     challenge: get::props inputs->.prometheus.url

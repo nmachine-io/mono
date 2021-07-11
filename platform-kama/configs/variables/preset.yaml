@@ -1,18 +1,18 @@
 kind: ConfigurationPreset
 id: provider.presets.default
-title: Absolute Default
-info: Bare minimum defaults set by the publisher.
+title: Base Configuration Only
+info: "Ships with an INSECURE database, no authentication provider,
+no automation."
 default: true
-variables:
-  kind: ConfigSupplier
-  field_key: default_vars
+variables: get::kind::DefaultVariablesSupplier
 
 ---
 
 kind: ConfigurationPreset
 id: provider.presets.high-limits
 title: Starter pack
-info: Insecure database, no authentication provider.
+info: "Insecure database, no authentication provider."
+requires_further_config: true
 variables:
   kind: PresetAssignmentsSupplier
   source: unsafe-database

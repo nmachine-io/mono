@@ -1,20 +1,104 @@
-kind: MultiPredicate
+
+kind: HealthScout
+model_matcher:
+  kind: ManifestVariable
+  id: variable.template.ingress_route_path
+optimistic_predicates:
+  - predicate.ingress_enabled_resource_in_sync
+pessimistic_predicates:
+  - bar
+
+---
+
+kind: HealthScout
+model_match:
+  kind: Concern
+  identity:
+    res_kind: Pod
+pessimistic_predicates:
+  - maybe get alerts from prometheus?
+  - check that restarts < N
+  - check that events with "warning" < N
+  - check that ternary_status = positive
+
+---
+
+kind: Predicate
 id: predicate.ingress_enabled_resource_in_sync
 title: Ingress enabled variable/resource in Sync?
+info: "Ensure resource exists if and only if variable set to true"
 reason: "The variable 'ingress.enabled' and the Kubernetes resource
 are out of sync: the variable is set to 'false' but the resource
 exists. This is a normal occurrence when you change the 'ingress.enabled'
 variable directly instead of running the operation."
-operator: and
+
+challenge:
+  kind: ResourcesSupplier
+  selector: {res_kind: Ingress}
+  output: ". | length"
+
+check_against:
+  kind: IfThenElse
+  source:
+    kind: Predicate
+    challenge: get::kind::MergedVariablesSupplier->.ingress.enabled
+    operator: truthy
+  if_true: 1
+  if_false: 0
+
+---
+
+kind: Predicate
+id: predicate.publisher_frontend_enabled_resource_in_sync
+title: Publisher Frontend enabled variable/resource in Sync?
+info: "Ensure resources exists if and only if variable set to true"
+reason: "The variable 'publisher_frontend.enabled' and the Kubernetes resource
+are out of sync: the variable is set to 'false' but the resource
+exists. This is a normal occurrence when you change the 'publisher_frontend.enabled'
+variable directly instead of running the operation."
+
+challenge:
+  kind: ResourcesSupplier
+  selector:
+    res_kind: Deployment
+    name: publisher-frontend
+  output: ". | length"
+
+check_against:
+  kind: IfThenElse
+  source:
+    kind: Predicate
+    challenge: get::kind::MergedVariablesSupplier->.publisher_frontend.enabled
+    operator: truthy
+  if_true: 1
+  if_false: 0
+
+---
+
+kind: MultiPredicate
+id: predicate.publisher_frontend.redundant_exposure
+title: Service type matches Ingress config
+info: "Ensure ingress does not make service type redundant"
+reason: "The service type is made redundant by your ingress configuration.
+If you wish to expose your service via Ingress, the service type should
+be trivial, that is 'ClusterIP', otherwise, you might be unintentionally
+double-serving this service."
+
+ingress_enabled: get::kind::MergedVariablesSupplier->.ingress.enabled
+routed: get::kind::MergedVariablesSupplier->.ingress.routes.publisher_frontend.host
+svc_type: get::kind::MergedVariablesSupplier->.publisher_frontend.service_type
+has_ingress_intent:
+  kind: MultiPredicate
+  predicates: [get::self>>ingress_enabled, get::self>>routed]
+is_external_svc:
+  kind: Predicate
+  operator: in
+  challenge: get::self>>svc_type
+  check_against: [NodePort, LoadBalancer]
+predicates:
+  - get::self>>has_ingress_intent
+  - get::self>>is_external_svc
 negate: true
-source:
-  - kind: Predicate
-    challenge: get::kind::ConfigVarsSupplier->.ingress.enabled
-    operator: falsy
-  - kind: ResourceCountPredicate
-    res_kind: Ingress
-    operator: greater-than
-    check_against: 0
 
 ---
 

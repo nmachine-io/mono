@@ -1,0 +1,83 @@
+kind: ManifestVariable
+id: publisher_frontend.enabled
+title: Publisher Frontend Enabled?
+info: "Toggle for enabling/disabling the publisher frontend web app."
+input: {kind: OnOffInput}
+health_predicates:
+  - "id::predicate.publisher_frontend_enabled_resource_in_sync"
+
+---
+
+kind: ManifestVariable
+id: publisher_frontend.replicas
+title: Publisher Frontend Replicas
+info: "Fixed replica count for the publisher frontend web application"
+input:
+  kind: SliderIpnut
+
+---
+
+kind: ManifestVariable
+id: publisher_frontend.image
+title: Publisher frontend application image
+info: "Fully qualified image name for the web app. Should never be
+set manually."
+owner: publisher
+
+---
+
+kind: ManifestVariable
+id: publisher_frontend.hpa.enabled
+title: Publisher frontend HPA enabled?
+info: "Desired state of the Horizontal Pod Auto-scaling for the
+publisher frontend"
+input: {kind: OnOffInput}
+
+---
+
+kind: ManifestVariable
+id: publisher_frontend.hpa.min
+title: Minimum publisher frontend HPA replicas
+info: "Never let the replica count fall below this amount for
+the publisher frontend web app. "
+input:
+  kind: SliderInput
+
+---
+
+kind: ManifestVariable
+id: publisher_frontend.service_type
+title: Publisher frontend networking service type
+info: "Kubernetes service type for deciding how microservice
+is exposed inside and outside the cluster."
+health_predicates:
+  - id::predicate.publisher_frontend.redundant_exposure
+input:
+  kind: SelectInput
+  options: [ClusterIP, NodePort, LoadBalancer]
+owner: publisher
+
+
+---
+
+kind: ManifestVariableDependency
+id: variable-dependency.when-hpa-is-enabled
+title: Value ignored when publisher_frontend.hpa.enabled is true
+from: [id::publisher_frontend.hpa.enabled]
+to: {id: [publisher_frontend.replicas]}
+active:
+  kind: Predicate
+  challenge: get::self>>from_variable>>current_value
+  operator: truthy
+
+---
+
+kind: ManifestVariableDependency
+id: variable-dependency.when-hpa-is-disabled
+title: Value ignored when publisher_frontend.hpa.enabled is false
+from: [id::publisher_frontend.hpa.enabled]
+to: {id: [publisher_frontend.hpa.min, publisher_frontend.hpa.max]}
+active:
+  kind: Predicate
+  challenge: get::self>>from_variable>>current_value
+  operator: falsy

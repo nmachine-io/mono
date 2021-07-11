@@ -1,3 +1,20 @@
+kind: Predicate
+id: predicate.status-computer
+info: Just checks whether all pods are running
+labels:
+  role: status-computer
+challenge:
+  kind: ResourcesSupplier
+  selector:
+    res_kind: Pod
+    label_selector: {app: nmachine}
+  output: ternary_status
+  serializer: legacy
+operator: contains-only
+check_against: ['positive', 'pending']
+
+---
+
 kind: ResourceCountPredicate
 id: predicate.db-creds-exists
 title: Database credentials secret exists
@@ -36,14 +53,3 @@ cached:
     many: false
     serializer: legacy
 source: get::self>>res=>decoded_data
-
----
-#
-#kind: Predicate
-#res:
-#  kind: ResourcesSupplier
-#  selector:
-#    res_kind: Secret
-#    name: db-creds
-#  many: false
-#challenge: get::self>>res=>data->.db_user=>__count__

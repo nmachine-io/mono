@@ -67,17 +67,17 @@
         },
         "google-auth": {
             "hashes": [
-                "sha256:154f7889c5d679a6f626f36adb12afbd4dbb0a9a04ec575d989d6ba79c4fd65e",
-                "sha256:6d47c79b5d09fbc7e8355fd9594cc4cf65fdde5d401c63951eaac4baa1ba2ae1"
+                "sha256:9266252e11393943410354cf14a77bcca24dd2ccd9c4e1aef23034fe0fbae630",
+                "sha256:c7c215c74348ef24faef2f7b62f6d8e6b38824fe08b1e7b7b09a02d397eda7b3"
             ],
-            "version": "==1.31.0"
+            "version": "==1.32.1"
         },
         "humanize": {
             "hashes": [
-                "sha256:2cc4f7d2f5994ea9fcddd4b681ddea9abd23baa8cc64bd0af041a0162636f31c",
-                "sha256:892a5b7b87763c4c6997a58382c2b1f4614048a2e01c23ef1bb0456e6f9d4d5d"
+                "sha256:aab7625d62dd5e0a054c8413a47d1fa257f3bdd8e9a2442c2fe36061bdd1d9bf",
+                "sha256:b2413730ce6684f85e0439a5b80b8f402e09f03e16ab8023d1da758c6ff41148"
             ],
-            "version": "==3.9.0"
+            "version": "==3.10.0"
         },
         "idna": {
             "hashes": [
@@ -158,10 +158,10 @@
         },
         "k8kat": {
             "hashes": [
-                "sha256:975bb60ed173f4f4f0175170f8abc7a1496dc1c79681fa2480e3d47d8e9a69ec",
-                "sha256:d887d90811877878d069f1ce78bfb6145ce9eeb30354f792d028124919ece2d7"
+                "sha256:03c7e1083ba510b537a2f789f13cdb1c4e7bf48c8d976b1a4196ba01f9a63a5e",
+                "sha256:0da389cadec05ca7d01388d88aa3d0589e0fe1447f997e5acf86a57ab06db6bb"
             ],
-            "version": "==0.0.237"
+            "version": "==0.0.238"
         },
         "kama-sdk-py": {
             "hashes": [
@@ -317,10 +317,10 @@
         },
         "rq": {
             "hashes": [
-                "sha256:2c7f795a2c85d84125314e49853ed66ca9acf062e997ada16e259c1c284f525f",
-                "sha256:feec0f914e69cae2380e2f46d82901e2abbd6fb09db320acb295f486a338f89f"
+                "sha256:7af1e9706dbe6f1eac16dffacd8271ec27c1369950941f14dab6bb08a62979d7",
+                "sha256:bdfef943de838955e474cfd0e25b9b8c53ed4b9c361fe4bb11cf56d17a87acc5"
             ],
-            "version": "==1.8.1"
+            "version": "==1.9.0"
         },
         "rsa": {
             "hashes": [
@@ -353,10 +353,10 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:753a0374df26658f99d826cfe40394a686d05985786d946fbe4165b5148f5a7c",
-                "sha256:a7acd0977125325f516bda9735fa7142b909a8d01e8b2e4c8108d0984e6e0098"
+                "sha256:39fb8672126159acb139a7718dd10806104dec1e2f0f6c88aab05d17df10c8d4",
+                "sha256:f57b4c16c62fa2760b7e3d97c35b255512fb6b59a259730f36ba32ce9f8e342f"
             ],
-            "version": "==1.26.5"
+            "version": "==1.26.6"
         },
         "validators": {
             "hashes": [

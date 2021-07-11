@@ -1,18 +1,24 @@
-kind: WebsiteHelper
-id: org.concern.main-website
-labels:
-  space: app
+kind: Concern
+id: provider.backend
 cached:
   best_url:
     kind: BestSvcUrlSupplier
     source: get::props svc
 
-  logo: get::&kind::IceCreamConsts>>site_logo
+  deployment:
+    kind: ResourcesSupplier
+    many: false
+    serializer: legacy
+    selector:
+      res_kind: Deployment
+      name: backend
+
+  logo: cool
 
   pod_statuses:
     kind: Supplier
     inherit: sdk.supplier.pods_in_dots_format
-    pods: get::self>>svc=>pods
+    pods: get::self>>deployment=>pods
 
   mem_dump:
     kind: Supplier

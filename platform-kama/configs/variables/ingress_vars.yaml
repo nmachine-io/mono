@@ -39,9 +39,8 @@ title: Application Ingress Toggle
 info: "If enabled, Ingress resource is provisioned to route out-of-cluster
 traffic to the application's various services. Note that you must have
 a DNS solution"
-input:
-  kind: OnOffInput
-correctness_predicates:
+input: {kind: OnOffInput}
+health_predicates:
   - id::predicate.ingress_enabled_resource_in_sync
 
 ---
@@ -50,8 +49,8 @@ kind: ManifestVariable
 id: ingress.routes.publisher_frontend.host
 inherit: variable.template.ingress_route_host
 casual_name: Publisher Dashboard
-correctness_predicates:
-  - kind::FalsePredicate
+health_predicates:
+  - id::predicate.publisher_frontend.redundant_exposure
 
 ---
 
@@ -74,6 +73,13 @@ id: ingress.routes.backend.host
 inherit: variable.template.ingress_route_host
 casual_name: Backend
 
+---
+
+kind: ManifestVariable
+id: ingress.class
+title: Ingress controller class
+info: "Name of Ingress controller for consuming ingress resources. It
+must exist in your Kubernetes cluster; it will not be created otherwise"
 
 
 ################## DEPENDENCIES ###################
@@ -85,8 +91,7 @@ kind: ManifestVariableDependency
 id: variable-dependency.when-ingress-is-disabled
 title: Value ignored when ingress.enabled is false
 from: [id::ingress.enabled]
-to:
-  id: [ingress.class, ingress.routes.*]
+to: {id: [ingress.class, ingress.routes.*]}
 active:
   kind: Predicate
   challenge: get::self>>from_variable>>current_value

@@ -28,16 +28,16 @@ kind: Operation
 id: nmachine.telem.operation.storage
 title: Setup Telemetry Storage
 labels:
-  public: true
+  searchable: true
 synopsis: assets::delete-telem-storage-info.html
 info: Choose and implement a persistent storage solution for telemetry data.
-preflight_action:
-  kind: RunPredicatesAction
+preflight_predicate:
+  kind: MultiPredicate
   predicates:
-    - nmachine.telem.predicate.check-telem-is-disabled
-    - nmachine.telem.predicate.are_pods_around
-    - nmachine.telem.predicate.are_services_around
-    - nmachine.telem.predicate.are_pvcs_around
+    - id::nmachine.telem.predicate.check-telem-is-disabled
+    - id::nmachine.telem.predicate.are_pods_around
+    - id::nmachine.telem.predicate.are_services_around
+    - id::nmachine.telem.predicate.are_pvcs_around
 stages:
   - id::nmachine.telem.stage.storage
 
@@ -46,7 +46,7 @@ stages:
 kind: Operation
 id: nmachine.telem.operation.delete-telem-pvc
 labels:
-  public: true
+  searchable: true
 title: Disable In-Cluster Telemetry Storage
 info: If using in-cluster storage for telemetry, destroys all related storage resource
 synopsis: assets::delete-telem-storage-info.md

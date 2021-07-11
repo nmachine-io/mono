@@ -6,7 +6,7 @@ or is capable of monitoring the application"
 synopsis: assets::locate-existing-server.md
 tags: ['monitoring']
 labels:
-  public: true
+  searchable: true
 stages:
   - id::nmachine.prom.stage.locate-existing-prom
   - id::nmachine.prom.stage.locate-existing-grafana
