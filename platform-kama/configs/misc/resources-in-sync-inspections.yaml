@@ -10,19 +10,6 @@ pessimistic_predicates:
 
 ---
 
-kind: HealthScout
-model_match:
-  kind: Concern
-  identity:
-    res_kind: Pod
-pessimistic_predicates:
-  - maybe get alerts from prometheus?
-  - check that restarts < N
-  - check that events with "warning" < N
-  - check that ternary_status = positive
-
----
-
 kind: Predicate
 id: predicate.ingress_enabled_resource_in_sync
 title: Ingress enabled variable/resource in Sync?
@@ -77,8 +64,8 @@ check_against:
 
 kind: MultiPredicate
 id: predicate.publisher_frontend.redundant_exposure
-title: Service type matches Ingress config
-info: "Ensure ingress does not make service type redundant"
+title: Service type and Ingress consistent with each other?
+info: "If ingress is enabled, ensure the service type is ClusterIP."
 reason: "The service type is made redundant by your ingress configuration.
 If you wish to expose your service via Ingress, the service type should
 be trivial, that is 'ClusterIP', otherwise, you might be unintentionally

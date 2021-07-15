@@ -158,10 +158,10 @@
         },
         "k8kat": {
             "hashes": [
-                "sha256:03c7e1083ba510b537a2f789f13cdb1c4e7bf48c8d976b1a4196ba01f9a63a5e",
-                "sha256:0da389cadec05ca7d01388d88aa3d0589e0fe1447f997e5acf86a57ab06db6bb"
+                "sha256:37dd2fc7b4ade00266b54e98cda40c66baf2925a572fef50fcbfd86b306d461c",
+                "sha256:4d6dc9d0d9d8d847778aceff1a6a1199b35578b1e3b02f960493c75b00f34446"
             ],
-            "version": "==0.0.238"
+            "version": "==0.0.240"
         },
         "kama-sdk-py": {
             "hashes": [

@@ -1,0 +1,75 @@
+kind: ConcernCardAdapter
+id: card-adapter.publisher-frontend
+title: Website
+spec:
+  type: Block
+  title: Service Status
+  elements:
+    - type: Section
+      width: 1
+      elements:
+        - get::id::three-stat1
+        - get::id::fckem1
+        - get::id::lalent1
+
+---
+
+kind: Provider
+id: lalent1
+source:
+  type: Line
+  elements:
+    - type: Text
+      text: "Health"
+    - type: AsyncPredicateDots
+      data:
+        - id::predicate.publisher_frontend.all_green
+        - id::predicate.publisher_frontend_enabled_resource_in_sync
+        - id::predicate.publisher_frontend.redundant_exposure
+
+---
+
+kind: Provider
+id: three-stat1
+source:
+  type: ThreePartHeader
+  title:
+    type: Text
+    text: Publisher Frontend
+    style: [bold, calm]
+    action:
+      type: concern_detail
+      uri:
+        adapter_ref: detail-adapter.publisher-frontend
+        concern_ref: provider.publisher-frontend
+
+  subtitle:
+    type: Line
+    elements:
+      - type: Text
+        text: Workloads
+      - type: StatusDots
+        data: get::self>>concern=>pod_statuses
+        shape: square
+        spacing: 1.5px
+  graphic:
+    type: Icon
+    name: language
+
+---
+
+kind: Provider
+id: fckem1
+source:
+  type: Line
+  elements:
+    - type: Text
+      text: "http://localhost:${get::self>>concern>>port_forward_spec->.pod_port}"
+      style: [hov_underline, hov_point]
+      action:
+        type: port_forward
+        uri: get::self>>concern>>port_forward_spec
+    - type: Icon
+      name: open_in_new
+      style:
+        emotion: warning2

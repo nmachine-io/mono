@@ -1,5 +1,7 @@
 kind: MultiAction
 id: nmachine.telem.action.perform_disable
+title: Disable Plugin
+info: Update variables, destroy resources
 config_space: nmachine.telem
 sub_actions:
 

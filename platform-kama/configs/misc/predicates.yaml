@@ -39,17 +39,3 @@ inhert: template
 secret_name: gcp-svc-acct-keyfile
 output: ".gcp_svc_acct_keyfile"
 
----
-
-kind: Supplier
-id: template
-secret_name: ''
-cached:
-  res:
-    kind: ResourcesSupplier
-    selector:
-      res_kind: Secret
-      name: get::self>>secret_name
-    many: false
-    serializer: legacy
-source: get::self>>res=>decoded_data

@@ -1,0 +1,45 @@
+kind: Provider
+id: card-adapter.website.memory
+source:
+  type: SeriesSummary
+  first: graph
+  style:
+    mt: -10px
+  data:
+    kind: SeriesSummarySupplier
+    humanizer: kind::BytesHumanizer
+    source:
+      kind: PromMatrixToSeriesSupplier
+      source: get::props concern=>mem_dump
+
+---
+
+kind: Provider
+id: card-adapter.website.cpu
+source:
+  type: SeriesSummary
+  first: graph
+  style:
+    width: 100%
+  data:
+    kind: SeriesSummarySupplier
+    humanizer: kind::CoresHumanizer
+    source:
+      kind: PromMatrixToSeriesSupplier
+      source: get::props concern=>cpu_dump
+
+---
+
+kind: Provider
+id: card-adapter.website.alerts
+source:
+  type: SeriesSummary
+  first: graph
+  style:
+    width: 100%
+  data:
+    kind: SeriesSummarySupplier
+    humanizer: kind::CoresHumanizer
+    source:
+      kind: PromMatrixToSeriesSupplier
+      source: get::props concern=>cpu_dump

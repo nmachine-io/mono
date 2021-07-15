@@ -3,16 +3,13 @@ id: org.concern-card-adapter.main-website
 title: Website
 spec:
   type: Block
-  title: Website Status
+  title: Service Status
   elements:
     - type: Section
       width: 1
       elements:
         - get::id::three-stat
-#        - get::id::card-adapter.website.header
         - get::id::fckem
-#        - get::id::fckem
-#        - get::id::nukem
         - get::id::lalent
 
 ---
@@ -20,14 +17,17 @@ spec:
 kind: Provider
 id: lalent
 source:
-  type: AsyncPredicateDots
-  data:
-    - kind::TruePredicate
-    - kind::TruePredicate
-    - kind::TruePredicate
-    - kind::FalsePredicate
+  type: Line
+  elements:
+    - type: Text
+      text: "Health:"
+    - type: AsyncPredicateDots
+      data:
+        - id::predicate.db_secret_exists
+        - id::predicate.auth0_secret_exists
 
 ---
+
 
 kind: Provider
 id: three-stat
@@ -37,6 +37,11 @@ source:
     type: Text
     text: Application Backend
     style: [bold, calm]
+    action:
+      type: concern_detail
+      uri:
+        adapter_ref: detail-adapter.backend
+        concern_ref: provider.backend
   subtitle:
     type: Line
     elements:
@@ -48,7 +53,7 @@ source:
         spacing: 1.5px
   graphic:
     type: Icon
-    name: language
+    name: api
 
 ---
 
@@ -77,16 +82,11 @@ source:
   type: Line
   elements:
     - type: Text
-      #        text: "localhost:${get::self>>concern>>port_forward_spec>>pod_port}"
-      text: "http://localhost:9090"
+      text: "http://localhost:${get::self>>concern>>port_forward_spec->.pod_port}"
       style: [hov_underline, hov_point]
       action:
         type: port_forward
-        uri:
-          kind: MergeSupplier
-          source:
-            - get::self>>concern>>port_forward_spec>>spec
-            - logo_url: get::self>>concern=>logo
+        uri: get::self>>concern>>port_forward_spec
     - type: Icon
       name: open_in_new
       style:

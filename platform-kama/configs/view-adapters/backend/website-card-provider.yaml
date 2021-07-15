@@ -13,8 +13,6 @@ cached:
       res_kind: Deployment
       name: backend
 
-  logo: cool
-
   pod_statuses:
     kind: Supplier
     inherit: sdk.supplier.pods_in_dots_format
@@ -30,3 +28,15 @@ cached:
     kind: Supplier
     inherit: nmachine.prom.supplier.deployment_cpu
     resource_name: get::&kind::IceCreamConsts>>workload_name
+
+  the_svc:
+    kind: ResourcesSupplier
+    many: false
+    serializer: legacy
+    selector:
+      res_kind: Service
+      name: backend
+
+  port_forward_spec:
+    kind: PortForwardSpecSupplier
+    svc: get::self>>the_svc

@@ -1,0 +1,79 @@
+kind: Operation
+id: operation.seed_orgs
+title: Seed Demo Organizations
+synopsis: assets::seed-orgs-synopsis.md
+info: Create fake organizations for demos and development
+tags: ["Seeding"]
+labels:
+  searchable: true
+stages:
+  - kind: Stage
+    id: seed_orgs.main
+    title: Seeding
+    steps:
+      - kind: Step
+        title: Configure Quantities
+        info: Customize each quantity to produce the desired data.
+        id: seed_orgs.main.main
+        synopsis: assets::seed-orgs-synopsis.md
+        fields:
+          - kind: Field
+            id: org_count
+            target: state
+            title: Organization count
+            info: Seed this amount of organizations
+            default: 1
+            validators:
+              - kind: FormatPredicate
+                check_against: positive-integer
+
+          - kind: Field
+            id: app_count
+            target: state
+            title: Applications-per-organization count
+            info: Seed this amount of applications for every organization seeded
+            default: 1
+            validators:
+              - kind: FormatPredicate
+                check_against: positive-integer
+
+          - kind: Field
+            id: install_count
+            target: state
+            title: Installs-per-applications count
+            info: Seed this amount of installs for every application seeded
+            default: 10
+            validators:
+              - kind: FormatPredicate
+                check_against: positive-integer
+
+          - kind: Field
+            id: event_count
+            target: state
+            title: Events/errors-per-install count
+            info: Seed this amount of KAMA events/errors for every install seeded
+            default: 3
+            validators:
+              - kind: FormatPredicate
+                check_against: positive-integer
+
+        action:
+          kind: PodShellExecAction
+          id: shelly
+          expression: "${get::self>>op_state->.org_count},
+                       ${get::self>>op_state->.app_count},
+                       ${get::self>>op_state->.install_count},
+                       ${get::self>>op_state->.event_count}
+          "
+          command: rake seed:orgs[${get::self>>expression}]
+          pod:
+            kind: ResourcesSupplier
+            many: false
+            serializer: legacy
+            selector:
+              res_kind: Pod
+              label_selector: {microservice: backend}
+
+---
+
+kind: Provider
