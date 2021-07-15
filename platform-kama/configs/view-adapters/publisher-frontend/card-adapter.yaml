@@ -19,8 +19,9 @@ id: lalent1
 source:
   type: Line
   elements:
-    - type: Text
+    - type: ClearTag
       text: "Health"
+#      style: [bold, calm]
     - type: AsyncPredicateDots
       data:
         - id::predicate.publisher_frontend.all_green
@@ -54,7 +55,7 @@ source:
         spacing: 1.5px
   graphic:
     type: Icon
-    name: language
+    name: roofing
 
 ---
 
@@ -63,6 +64,10 @@ id: fckem1
 source:
   type: Line
   elements:
+    - type: ClearTag
+      text: Access
+#      style: [bold, calm]
+
     - type: Text
       text: "http://localhost:${get::self>>concern>>port_forward_spec->.pod_port}"
       style: [hov_underline, hov_point]
@@ -72,4 +77,4 @@ source:
     - type: Icon
       name: open_in_new
       style:
-        emotion: warning2
+        emotion: hipBlue

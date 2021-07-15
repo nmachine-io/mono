@@ -60,12 +60,15 @@ stages:
         action:
           kind: PodShellExecAction
           id: shelly
-          expression: "${get::self>>op_state->.org_count},
-                       ${get::self>>op_state->.app_count},
-                       ${get::self>>op_state->.install_count},
-                       ${get::self>>op_state->.event_count}
-          "
-          command: rake seed:orgs[${get::self>>expression}]
+          expression:
+            kind: JoinSupplier
+            separator: ","
+            items:
+               - "${get::self>>op_state->.org_count}"
+               - "${get::self>>op_state->.app_count}"
+               - "${get::self>>op_state->.install_count}"
+               - "${get::self>>op_state->.event_count}"
+          command: rake seed:deep_orgs[${get::self>>expression}]
           pod:
             kind: ResourcesSupplier
             many: false
@@ -73,7 +76,3 @@ stages:
             selector:
               res_kind: Pod
               label_selector: {microservice: backend}
-
----
-
-kind: Provider

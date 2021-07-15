@@ -19,8 +19,8 @@ id: lalent
 source:
   type: Line
   elements:
-    - type: Text
-      text: "Health:"
+    - type: ClearTag
+      text: Health
     - type: AsyncPredicateDots
       data:
         - id::predicate.db_secret_exists
@@ -81,6 +81,8 @@ id: fckem
 source:
   type: Line
   elements:
+    - type: ClearTag
+      text: Access
     - type: Text
       text: "http://localhost:${get::self>>concern>>port_forward_spec->.pod_port}"
       style: [hov_underline, hov_point]
@@ -90,7 +92,7 @@ source:
     - type: Icon
       name: open_in_new
       style:
-        emotion: warning2
+        emotion: hipBlue
 
 ---
 
