@@ -28,7 +28,6 @@ source:
 
 ---
 
-
 kind: Provider
 id: three-stat
 source:
@@ -84,11 +83,9 @@ source:
     - type: ClearTag
       text: Access
     - type: Text
-      text: "http://localhost:${get::self>>concern>>port_forward_spec->.pod_port}"
+      text: get::self>>concern>>site>>as_url
       style: [hov_underline, hov_point]
-      action:
-        type: port_forward
-        uri: get::self>>concern>>port_forward_spec
+      action: get::self>>concern>>site>>as_action
     - type: Icon
       name: open_in_new
       style:
@@ -102,57 +99,9 @@ source:
   type: Line
   elements:
     - type: Text
-      text: Workloads
+      text: Pods
       style: [bold, calm]
     - type: StatusDots
       data: get::self>>concern=>pod_statuses
       shape: square
       spacing: 1.5px
-
----
-
-kind: Provider
-id: card-adapter.website.memory
-source:
-  type: SeriesSummary
-  first: graph
-  style:
-    mt: -10px
-  data:
-    kind: SeriesSummarySupplier
-    humanizer: kind::BytesHumanizer
-    source:
-      kind: PromMatrixToSeriesSupplier
-      source: get::props concern=>mem_dump
-
----
-
-kind: Provider
-id: card-adapter.website.cpu
-source:
-  type: SeriesSummary
-  first: graph
-  style:
-    width: 100%
-  data:
-    kind: SeriesSummarySupplier
-    humanizer: kind::CoresHumanizer
-    source:
-      kind: PromMatrixToSeriesSupplier
-      source: get::props concern=>cpu_dump
-
----
-
-kind: Provider
-id: card-adapter.website.alerts
-source:
-  type: SeriesSummary
-  first: graph
-  style:
-    width: 100%
-  data:
-    kind: SeriesSummarySupplier
-    humanizer: kind::CoresHumanizer
-    source:
-      kind: PromMatrixToSeriesSupplier
-      source: get::props concern=>cpu_dump

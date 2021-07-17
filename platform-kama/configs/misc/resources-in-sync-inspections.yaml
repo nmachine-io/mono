@@ -18,7 +18,7 @@ reason: "The variable 'ingress.enabled' and the Kubernetes resource
 are out of sync: the variable is set to 'false' but the resource
 exists. This is a normal occurrence when you change the 'ingress.enabled'
 variable directly instead of running the operation."
-
+negate: true
 challenge:
   kind: ResourcesSupplier
   selector: {res_kind: Ingress}

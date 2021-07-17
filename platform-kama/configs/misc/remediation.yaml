@@ -1,0 +1,32 @@
+kind: ActionErrorRemediationOption
+id: action-error-remediator.delete-lingering-ingress
+title: Delete Ingress Resource
+info: "If your intention was to have Ingress disabled, you can keep
+the variable set to 'false' and just delete the lingering Ingress resource."
+match:
+  type: negative_predicate
+  name: predicate.ingress_enabled_resource_in_sync
+button_action:
+  kind: DeleteResourcesAction
+  selectors:
+    - kind: ResourceSelector
+      res_kind: Ingress
+      name: nmachine-ingress
+
+---
+
+kind: ActionErrorRemediationOption
+id: action-error-remediator.set-ingress-true
+title: Update variable to 'true'
+info: "If your intention is to have ingress enabled and your
+chart variable was simply out of sync, all that is needed is to
+set the variable to 'true' and run kubectl apply for good measure."
+match:
+  type: negative_predicate
+  name: predicate.ingress_enabled_resource_in_sync
+button_action:
+  type: action
+  data:
+    kind: Action
+    inherit: sdk.action.safely_apply_application_manifest_e2e_action
+    values: {"ingress.enabled": true}

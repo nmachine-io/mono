@@ -48,7 +48,8 @@ source:
     type: Line
     elements:
       - type: Text
-        text: Workloads
+        text: Pods
+        style: [calm]
       - type: StatusDots
         data: get::self>>concern=>pod_statuses
         shape: square
@@ -66,14 +67,10 @@ source:
   elements:
     - type: ClearTag
       text: Access
-#      style: [bold, calm]
-
     - type: Text
-      text: "http://localhost:${get::self>>concern>>port_forward_spec->.pod_port}"
+      text: get::self>>concern>>site>>as_url
       style: [hov_underline, hov_point]
-      action:
-        type: port_forward
-        uri: get::self>>concern>>port_forward_spec
+      action: get::self>>concern>>site>>as_action
     - type: Icon
       name: open_in_new
       style:

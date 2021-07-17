@@ -13,17 +13,7 @@ cached:
       res_kind: Deployment
       name: publisher-frontend
 
-  the_svc:
-    kind: ResourcesSupplier
-    many: false
-    serializer: legacy
-    selector:
-      res_kind: Service
-      name: publisher-frontend
-
-  port_forward_spec:
-    kind: PortForwardSpecSupplier
-    svc: get::self>>the_svc
+  site: get::&id::best-site-endpoint.publisher-frontend
 
   pod_statuses:
     kind: Supplier

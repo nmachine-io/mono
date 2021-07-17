@@ -5,6 +5,7 @@ page_adapters:
   - title: Overview
     id: overview
     panel_adapters:
+      - id::panel_adapter.publisher_frontend.site_access
       - id::ligam
 
   - title: Variables
@@ -16,6 +17,20 @@ page_adapters:
     id: actions
     panel_adapters:
       - id::foolham
+
+---
+
+kind: ConcernValuePanelAdapter
+id: panel_adapter.publisher_frontend.site_access
+title: Website Access
+info: Changing a variable will lose the context
+value:
+  type: AccessPoints
+  data:
+    kind: SiteAccessNodesSerializer
+    site_access_nodes:
+      - id::site-access-node.publisher-frontend.ingress
+      - id::site-access-node.publisher-frontend.service
 
 ---
 
