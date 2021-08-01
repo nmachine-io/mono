@@ -21,7 +21,7 @@ casual_name: ""
 title: ${get::self>>casual_name} Ingress Host
 info: "Custom path prefix path for ${get::self>>casual_name}. It
 is not recommended to set a value other than '/' as it may create bugs."
-owner: publisher
+level: default_vars
 validators:
   - kind: FormatPredicate
     check_against: path

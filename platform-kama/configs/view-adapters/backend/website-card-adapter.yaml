@@ -32,6 +32,8 @@ kind: Provider
 id: three-stat
 source:
   type: ThreePartHeader
+  style:
+    mt: -50px
   title:
     type: Text
     text: Application Backend
@@ -83,13 +85,13 @@ source:
     - type: ClearTag
       text: Access
     - type: Text
-      text: get::self>>concern>>site>>as_url
+      text: get::self>>concern>>site>>resolved_url
       style: [hov_underline, hov_point]
-      action: get::self>>concern>>site>>as_action
+      action: get::self>>concern>>site>>resolved_action_descriptor
     - type: Icon
       name: open_in_new
       style:
-        emotion: hipBlue
+        emotion: pleasant
 
 ---
 
@@ -105,3 +107,16 @@ source:
       data: get::self>>concern=>pod_statuses
       shape: square
       spacing: 1.5px
+
+
+---
+
+kind: DeleteResourcesAction
+id: "parent"
+selectors:
+  - kind: ResourceSelector
+    id: "child-one"
+    res_kind: ConfigMap
+  - kind: ResourceSelector
+    id: "child-two"
+    res_kind: Secret

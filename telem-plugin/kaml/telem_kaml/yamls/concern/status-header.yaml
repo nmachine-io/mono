@@ -1,3 +1,8 @@
+
+
+
+---
+
 kind: Provider
 id: nmachine.telem.view-adapter.header
 source:
@@ -12,8 +17,10 @@ source:
         action:
           type: concern_detail
           uri: {adapter_ref: id::nmachine.telem.detail-adapter}
-      - type: ClearTag
-        text: get::self>>concern=>status
+      - type: AsyncPredicateDots
+        data:
+          - kind::TruePredicate
+          - kind::FalsePredicate
   subtitle:
     type: Line
     elements:
@@ -27,5 +34,5 @@ source:
           minWidth: auto
           emotion: milGreen
   graphic:
-    type: Image
-    uri: /services/mongodb/large
+    type: Icon
+    name: track_changes

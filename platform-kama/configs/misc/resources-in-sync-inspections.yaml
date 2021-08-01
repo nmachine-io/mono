@@ -1,15 +1,3 @@
-
-kind: HealthScout
-model_matcher:
-  kind: ManifestVariable
-  id: variable.template.ingress_route_path
-optimistic_predicates:
-  - predicate.ingress_enabled_resource_in_sync
-pessimistic_predicates:
-  - bar
-
----
-
 kind: Predicate
 id: predicate.ingress_enabled_resource_in_sync
 title: Ingress enabled variable/resource in Sync?
@@ -86,33 +74,3 @@ predicates:
   - get::self>>has_ingress_intent
   - get::self>>is_external_svc
 negate: true
-
----
-
-kind: RemediationOption
-title: Delete the dangling Ingress resource
-info: "If the intention is to keep ingress disabled, the dangling
-resource should be deleted. Clicking this button will"
-button:
-  text: Delete Ingress
-  uri:
-    kind: DeleteResourcesAction
-    selector: "expr::Ingress:*"
-match_predicates:
-  id: predicate.ingress_enabled_resource_in_sync
-
----
-
-kind: Remediation
-title: "Change the variable to 'true'"
-info: "If the intention is actually to have ingress enabled, the variable
-should be updated to 'true'."
-button:
-  text: Delete Ingress
-  uri:
-    kind: Action
-    inherit: sdk.action.safely_apply_application_manifest_e2e_action
-    values:
-      ingress.enabled: true
-match_predicates:
-  id: predicate.ingress_enabled_resource_in_sync

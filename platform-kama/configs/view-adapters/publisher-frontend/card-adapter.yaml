@@ -56,7 +56,7 @@ source:
         spacing: 1.5px
   graphic:
     type: Icon
-    name: roofing
+    name: personal_video
 
 ---
 
@@ -68,10 +68,10 @@ source:
     - type: ClearTag
       text: Access
     - type: Text
-      text: get::self>>concern>>site>>as_url
+      text: get::self>>concern>>site>>resolved_url
       style: [hov_underline, hov_point]
-      action: get::self>>concern>>site>>as_action
+      action: get::self>>concern>>site>>resolved_action_descriptor
     - type: Icon
       name: open_in_new
       style:
-        emotion: hipBlue
+        emotion: pleasant

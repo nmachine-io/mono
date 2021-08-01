@@ -4,7 +4,7 @@ title: Enabled Switch
 info: "Master on/off switch for Telemetry plugin. If the plugin is enabled
 and you want to disable it, do NOT change this value; instead, use the
 'Disable Telemetry' operation."
-owner: publisher
+level: default_vars
 default_value: 27017
 input: kind::OnOffInput
 validators:
@@ -16,7 +16,7 @@ validators:
 kind: ManifestVariable
 id: strategy
 title: Storage Strategy
-owner: publisher
+level: default_vars
 info: "Where the database lives. Either an in-cluster PVC (default) or an
 arbitrary MongoDB database you manage yourself and point to."
 default_value: pvc

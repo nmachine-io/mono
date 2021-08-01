@@ -29,7 +29,7 @@ id: cert_manager.server
 title: Server URL for Certificate Manager
 info: "Most likely a 'letsencrypt' endpoint. For the certificate
 manager to consume."
-owner: publisher
+level: default_vars
 category: id::variable-category.security
 health_predicates:
   - id::predicate.cert_manager_server_is_endpoint

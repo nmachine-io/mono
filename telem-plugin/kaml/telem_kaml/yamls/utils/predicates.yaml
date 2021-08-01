@@ -1,3 +1,17 @@
+kind: Predicate
+id: whatever
+
+---
+
+kind: Predicate
+auto_false_if:
+  kind: Predicate
+  config_space: nmachine.telem
+  id: enabled
+
+
+---
+
 kind: OnlineIfEnabledPredicate
 id: nmachine.telem.predicate.is_online_if_enabled
 title: Ensure service is online

@@ -22,7 +22,7 @@ id: publisher_frontend.image
 title: Publisher frontend application image
 info: "Fully qualified image name for the web app. Should never be
 set manually."
-owner: publisher
+level: default_vars
 
 ---
 
@@ -55,7 +55,7 @@ health_predicates:
 input:
   kind: SelectInput
   options: [ClusterIP, NodePort, LoadBalancer]
-owner: publisher
+level: default_vars
 
 
 ---
