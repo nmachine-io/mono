@@ -1,0 +1,76 @@
+kind: Operation
+id: operation.update-db-creds
+title: Reset Application Database
+info: Delete database and its volume, create new ones with new access credentials.
+synopsis: assets::new-creds-synopsis.md
+labels:
+  searchable: true
+stages:
+  - kind: Stage
+    id: stage.update-db-creds.main
+    title: New Credentials
+    info: foo info
+    steps:
+
+      - kind: Step
+        id: step.update-db-creds.delete
+        title: Provide new Credentials and Consent
+        synopsis: assets::new-creds-synopsis.md
+        info: "I understand that proceeding will irreversibly
+              delete the application database."
+        fields:
+          - kind: Field
+            id: fields.update-db-creds.confirm
+            title: I have read and understood the above.
+            target: none
+            input: kind::CheckboxInput
+            validators:
+              - check_against: true
+                reason: "Check to continue"
+# dev-zxbg30ji.us.auth0.com
+# 5OFtZxLvc2y8Ht9ClTCoDGJXQNUFBadn
+        action:
+          kind: DeleteResourcesAction
+          selectors:
+            - res_kind: Deployment
+              name: postgres
+            - res_kind: Deployment
+              name: backend
+            - res_kind: Deployment
+              name: backend-worker
+            - res_kind: Secret
+              name: db-creds
+            - res_kind: PersistentVolumeClaim
+              name: postgres-pvc
+
+      - kind: Step
+        id: step.update-db-creds.main
+        title: Create resources with new credentials
+        synopsis: assets::new-creds-synopsis.md
+
+        action: id::sdk.action.step_apply_application_manifest_e2e_action
+
+        fields:
+
+          - kind: Field
+            id: secrets.standard.db_creds.db_user
+            title: Database username
+            info: "This is the database-level username. You will not use
+            it when logging into the application. Treat it as a password."
+            target: inline
+            default: postgres-user
+            validators:
+              - operator: truthiness
+                reason: "Cannot be blank"
+
+          - kind: Field
+            id: secrets.standard.db_creds.db_password
+            title: Database password
+            info: "This is the database-level password. You will not use
+            it when logging into the application."
+            target: inline
+            default: get::kind::RandomStringSupplier
+
+            validators:
+              - operator: truthiness
+                reason: "Cannot be blank"

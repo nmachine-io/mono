@@ -1,0 +1,41 @@
+kind: Predicate
+id: predicate.status-computer
+info: Just checks whether all pods are running
+labels:
+  role: status-computer
+challenge:
+  kind: ResourcesSupplier
+  selector:
+    res_kind: Pod
+    label_selector: {app: nmachine}
+  output: ternary_status
+  serializer: legacy
+operator: contains-only
+check_against: ['positive', 'pending']
+
+---
+
+kind: ResourceCountPredicate
+id: predicate.db-creds-exists
+title: Database credentials secret exists
+reason: Secret db-creds not present in namespace '${get::ns}'
+res_kind: Secret
+name: db-creds
+
+---
+
+kind: ResourceCountPredicate
+id: predicate.auth0-creds-exists
+title: Auth0 credentials secret exists
+reason: Secret auth0 not present in namespace '${get::ns}'
+res_kind: Secret
+name: auth0
+
+---
+
+kind: Supplier
+id: goo
+inhert: template
+secret_name: gcp-svc-acct-keyfile
+output: ".gcp_svc_acct_keyfile"
+

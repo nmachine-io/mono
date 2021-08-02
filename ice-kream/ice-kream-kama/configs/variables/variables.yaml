@@ -1,0 +1,72 @@
+kind: ManifestVariable
+id: backend.admin_email
+title: Admin Email
+info: "Although not strictly necessary, it is a good idea to have this variable
+defined. Without it, most 'god-mode' operations will not work."
+category: id::variable-category.security
+health_predicates:
+  - id::predicate.admin_email_defined
+validators:
+  - kind: FormatPredicate
+    check_against: email
+
+---
+
+kind: ManifestVariable
+id: global.auth0.domain
+title: Auth0 Domain
+info: "'Domain' value obtained from your Auth0 account. Not treated as a secret."
+category: id::variable-category.security
+health_predicates:
+  - id::predicate.auth-domain-defined
+validators:
+  - operator: truthiness
+    reason: Cannot be nil
+
+---
+
+kind: ManifestVariable
+id: global.auth0.client_id
+title: Auth0 Domain
+info: "'Client ID' value obtained from your Auth0 account. Not treated as a secret."
+category: id::variable-category.security
+health_predicates:
+  - id::predicate.auth-client-id-defined
+validators:
+  - operator: truthiness
+    reason: Cannot be nil
+
+---
+
+kind: FormatPredicate
+id: predicate.admin_email_defined
+title: Admin Email defined?
+info: Check whether the variable 'backend.admin_email' is defined and is a valid email.
+check_against: email
+reason: "Several 'god-mode' operations, such as seeding will fail if undefined.
+Note that this value only points to a user and will not create it. You need
+to also log into the application with this email address."
+tone: warning
+challenge: get::kind::MergedVariablesSupplier->.backend.admin_email
+
+---
+
+kind: Predicate
+id: predicate.auth-domain-defined
+title: Auth0 Domain defined?
+info: Check whether the variable global.auth0.domain is defined and non-empty.
+operator: truthiness
+reason: "This variable should never be nil, otherwise user authentication
+will not work."
+challenge: get::kind::MergedVariablesSupplier->.global.auth0.domain
+
+---
+
+kind: Predicate
+id: predicate.auth-client-id-defined
+title: Auth0 ClientID defined?
+info: Check whether the variable global.auth0.client_id is defined and non-empty.
+operator: truthiness
+reason: "This variable should never be nil, otherwise user authentication
+will not work."
+challenge: get::kind::MergedVariablesSupplier->.global.auth0.client_id

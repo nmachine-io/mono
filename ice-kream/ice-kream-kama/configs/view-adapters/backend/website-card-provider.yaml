@@ -1,0 +1,32 @@
+kind: Concern
+id: provider.backend
+cached:
+  best_url:
+    kind: BestSvcUrlSupplier
+    source: get::props svc
+
+  deployment:
+    kind: ResourcesSupplier
+    many: false
+    serializer: legacy
+    selector:
+      res_kind: Deployment
+      name: backend
+
+  pod_statuses:
+    kind: Supplier
+    inherit: sdk.supplier.pods_in_dots_format
+    pods: get::self>>deployment=>pods
+
+  mem_dump:
+    kind: Supplier
+    inherit: nmachine.prom.supplier.deployment_memory
+    step: 10s
+    resource_name: get::&kind::IceCreamConsts>>workload_name
+
+  cpu_dump:
+    kind: Supplier
+    inherit: nmachine.prom.supplier.deployment_cpu
+    resource_name: get::&kind::IceCreamConsts>>workload_name
+
+  site: get::&id::best-site-endpoint.backend

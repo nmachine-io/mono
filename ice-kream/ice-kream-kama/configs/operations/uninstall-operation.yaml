@@ -1,0 +1,36 @@
+kind: Operation
+id: uninstall
+title: Pre-Uninstall
+
+stages:
+  - id: uninstall.foo
+    title: Simple Assignments
+    info: "Chart and state assignments that end with a manifest-apply."
+    steps:
+      - id: do_nothing
+        title: "Deployment"
+        info: "Configures simple dep without applying."
+        # fields:
+        #   - id: deployment.flavor
+        #     variable: deployment.flavor
+        #   - id: deployment.replicas
+        #     variable: deployment.replicas
+        #   - id: deployment.password
+        #     title: Database Password
+        #     info: "Keep this value safe, it will not be shown again."
+        #     target: state
+        #     default:
+        #       kind: RandomStringSupplier
+        #       symbols: [letters, numbers]
+      # - id: installation.networking
+      #   title: "Service"
+      #   info: "Commits simple config and applies the manifest"
+      #   action: nware.action.apply_application_manifest_e2e_action
+      #   fields:
+      #     - id: service.port
+      #       variable: service.port
+      #     - id: service.type
+      #       variable: service.type
+
+  # - nware.stages.telem-storage
+  # - nware.stages.monitoring

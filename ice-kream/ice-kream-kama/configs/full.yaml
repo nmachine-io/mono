@@ -1,0 +1,51 @@
+kind: SimpleIngressSiteAccessNode
+id: site-access-node.publisher-frontend.ingress
+ingress_selector: {res_kind: Ingress, name: nmachine-ingress}
+match: {service: publisher-frontend}
+predicates:
+  - kind::TruePredicate
+  - kind::FalsePredicate
+
+---
+
+kind: SimpleServiceSiteAccessNode
+id: site-access-node.publisher-frontend.service
+service_selector: {res_kind: Service, name: publisher-frontend}
+predicates:
+  - kind::TruePredicate
+  - kind::FalsePredicate
+
+---
+
+kind: BestSiteEndpointSupplier
+id: best-site-endpoint.publisher-frontend
+site_access_nodes:
+  - id::site-access-node.publisher-frontend.ingress
+  - id::site-access-node.publisher-frontend.service
+    
+---
+
+kind: SimpleIngressSiteAccessNode
+id: site-access-node.backend.ingress
+ingress_selector: {res_kind: Ingress, name: nmachine-ingress}
+match: {service: backend}
+predicates:
+  - kind::TruePredicate
+  - kind::FalsePredicate
+
+---
+
+kind: SimpleServiceSiteAccessNode
+id: site-access-node.backend.service
+service_selector: {res_kind: Service, name: backend}
+predicates:
+  - kind::TruePredicate
+  - kind::FalsePredicate
+
+---
+
+kind: BestSiteEndpointSupplier
+id: best-site-endpoint.backend
+site_access_nodes:
+  - id::site-access-node.backend.ingress
+  - id::site-access-node.backend.service

@@ -1,0 +1,98 @@
+################## TEMPLATES ###################
+
+kind: ManifestVariable
+id: variable.template.ingress_route_host
+casual_name: ""
+title: ${get::self>>casual_name} Ingress Host
+info: "Routes requests from this domain to the ${get::self>>casual_name}. Has
+no effect if ingress.enabled is false/null Has no effect if
+cluster does not have an ingress backend."
+category: id::variable-category.networking
+validators:
+  - kind: FormatPredicate
+    check_against: domain
+
+---
+
+kind: ManifestVariable
+id: variable.template.ingress_route_path
+category: id::variable-category.networking
+casual_name: ""
+title: ${get::self>>casual_name} Ingress Host
+info: "Custom path prefix path for ${get::self>>casual_name}. It
+is not recommended to set a value other than '/' as it may create bugs."
+level: default_vars
+validators:
+  - kind: FormatPredicate
+    check_against: path
+
+
+################## ACTUAL ###################
+
+
+---
+
+kind: ManifestVariable
+id: ingress.enabled
+category: id::variable-category.networking
+title: Application Ingress Toggle
+info: "If enabled, Ingress resource is provisioned to route out-of-cluster
+traffic to the application's various services. Note that you must have
+a DNS solution"
+input: {kind: OnOffInput}
+health_predicates:
+  - id::predicate.ingress_enabled_resource_in_sync
+
+---
+
+kind: ManifestVariable
+id: ingress.routes.publisher_frontend.host
+inherit: variable.template.ingress_route_host
+casual_name: Publisher Dashboard
+health_predicates:
+  - id::predicate.publisher_frontend.redundant_exposure
+
+---
+
+kind: ManifestVariable
+id: ingress.routes.backend.path
+inherit: variable.template.ingress_route_path
+casual_name: Backend
+
+---
+
+kind: ManifestVariable
+id: ingress.routes.publisher_frontend.path
+inherit: variable.template.ingress_route_path
+casual_name: Publisher Dashboard
+
+---
+
+kind: ManifestVariable
+id: ingress.routes.backend.host
+inherit: variable.template.ingress_route_host
+casual_name: Backend
+
+---
+
+kind: ManifestVariable
+id: ingress.class
+title: Ingress controller class
+info: "Name of Ingress controller for consuming ingress resources. It
+must exist in your Kubernetes cluster; it will not be created otherwise"
+
+
+################## DEPENDENCIES ###################
+
+
+---
+
+kind: ManifestVariableDependency
+id: variable-dependency.when-ingress-is-disabled
+title: Value ignored when ingress.enabled is false
+from: [id::ingress.enabled]
+to: {id: [ingress.class, ingress.routes.*]}
+active:
+  kind: Predicate
+  challenge: get::self>>from_variable>>current_value
+  operator: falsy
