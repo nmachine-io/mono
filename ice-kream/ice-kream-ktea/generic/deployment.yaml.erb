@@ -1,0 +1,27 @@
+<% root = extras[:root] %>
+<% microservice = extras[:name] %>
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: <%= release_name %>
+  name: <%= microservice %>
+  labels:
+    app: <%= app_name %>
+    microservice: <%= microservice %>
+spec:
+  replicas: <%= root[:replicas] %>
+  selector:
+    matchLabels:
+      app: <%= app_name %>
+      microservice: <%= microservice %>
+  template:
+    metadata:
+      labels:
+        app: <%= app_name %>
+        microservice: <%= microservice %>
+    spec:
+      initContainers:
+        <%= embed_in_yaml(extras[:init_containers], 7) %>
+      containers:
+        <%= embed_in_yaml(extras[:containers], 7) %>

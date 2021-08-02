@@ -1,0 +1,20 @@
+<% root = extras[:root] %>
+<% microservice = extras[:name] %>
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: <%= microservice %>
+  namespace: <%= release_name %>
+  labels:
+    app: <%= consts.app_name %>
+    microservice: <%= microservice %>
+spec:
+  type: <%= root[:service_type] || 'ClusterIP' %>
+  selector:
+    app: <%= consts.app_name %>
+    microservice: <%= microservice %>
+  ports:
+    - port: <%= root[:port] %>
+      targetPort: <%= root[:port] %>
+      protocol: TCP

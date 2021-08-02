@@ -1,0 +1,19 @@
+<% root = values[:cert_manager] || {} %>
+
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: letsencrypt-prod
+  namespace: <%= release_name %>
+  labels:
+    app: <%= consts.app_name %>
+spec:
+  acme:
+    server: <%= root[:server] %>
+    email: <%= root[:email] %>
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+    - http01:
+        ingress:
+          class: <%= values.dig(:ingress, :class) %>

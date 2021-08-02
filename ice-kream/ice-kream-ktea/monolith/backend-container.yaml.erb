@@ -1,0 +1,16 @@
+<% root = extras[:root] %>
+<% full_command = "bundle exec #{extras[:command]}" %>
+<% command_parts = full_command.split(" ") %>
+
+name: <%= extras[:name] %>
+image: <%= root[:image] %>
+imagePullPolicy: <%= root[:image_pull_policy] %>
+command:
+  <%= embed_in_yaml(command_parts, 1) %>
+
+<% if root[:port].present? %>
+ports:
+  - containerPort: <%= root[:port] %>
+<% end %>
+
+env: <%= embed_in_yaml(extras[:env_vars], 1) %>

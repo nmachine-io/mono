@@ -1,0 +1,43 @@
+<% root = values[:ingress] || {} %>
+
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  namespace: <%= release_name %>
+  name: <%= consts.app_name %>-ingress
+  annotations:
+    kubernetes.io/ingress.class: <%= root[:class] %>
+    cert-manager.io/issuer: "letsencrypt-prod"
+  labels:
+    app: <%= app_name %>
+spec:
+  tls:
+  - hosts:
+      <% defined_routes.each do |route| %>
+      - <%= route[:host] %>
+      <% end %>
+    secretName: "echo-tls"
+  rules:
+    <% defined_routes.each do |route| %>
+    - host: <%= route[:host] %>
+      http:
+        paths:
+          - path: <%= route[:path] %>
+            backend:
+              serviceName: <%= route[:service_name] %>
+              servicePort: <%= route[:service_port] %>
+    <% end %>
+#    - host: <%#= ven_front[:host] %>
+#      http:
+#        paths:
+#          - path: <%#= ven_front[:path] %>
+#            backend:
+#              serviceName: ven-front
+#              servicePort: 80
+#    - host: <%#= store_front[:host] %>
+#      http:
+#        paths:
+#          - path: <%#= store_front[:path] %>
+#            backend:
+#              serviceName: store-front
+#              servicePort: 80

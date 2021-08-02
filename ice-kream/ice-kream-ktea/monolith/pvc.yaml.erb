@@ -1,0 +1,16 @@
+<% root = values[:storage] %>
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: <%= consts.pvc_name %>
+  namespace: <%= release_name %>
+  finalizers: []
+  labels:
+    app: <%= app_name %>
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: <%= root[:size] %>

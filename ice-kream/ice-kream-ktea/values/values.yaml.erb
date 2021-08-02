@@ -1,0 +1,33 @@
+<% img_base = 'us-central1-docker.pkg.dev/nectar-bazaar/public' %>
+
+env: production
+
+secrets:
+  standard:
+    db_creds:
+      db_password: ""
+
+storage:
+  size: 1Gi
+  internal: true
+
+monolith:
+  image: "<%= img_base %>/ice-kream-app:1.0.0"
+  image_pull_policy: Always
+  admin_email: admin@admin.com
+  replicas: 1
+  port: 3000
+  service_type: ClusterIP
+
+ingress:
+  enabled: false
+  class: nginx
+  routes:
+    monolith:
+      host: "lk"
+      path: "/"
+
+cert_manager:
+  enabled: true
+  email: ''
+  server: 'https://acme-v02.api.letsencrypt.org/directory'

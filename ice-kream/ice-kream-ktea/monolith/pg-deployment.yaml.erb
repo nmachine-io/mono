@@ -1,0 +1,49 @@
+<% microservice_name = consts.postgres_name %>
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: <%= release_name %>
+  name: <%= microservice_name %>
+  labels:
+    app: <%= app_name %>
+    microservice: <%= microservice_name %>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <%= app_name %>
+      microservice: <%= microservice_name %>
+  template:
+    metadata:
+      name: <%= microservice_name %>
+      labels:
+        app: <%= app_name %>
+        microservice: <%= microservice_name %>
+    spec:
+      volumes:
+        - name: database
+          persistentVolumeClaim:
+            claimName: <%= consts.pvc_name %>
+      containers:
+        - name: postgres
+          image: "postgres:9.6-alpine"
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: "/var/lib/postgresql/data"
+              name: database
+              subPath: postgres
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: <%= consts.db_creds_secret_name %>
+                  key: db_password
+                  optional: true
+            - name: POSTGRES_DB
+              value: mosaic-postgres
+            - name: PGDATA
+              value: /var/lib/postgresql/data

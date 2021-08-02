@@ -1,0 +1,30 @@
+name: RAILS_ENV
+value: <%= values[:env] || 'production' %>
+---
+name: RAILS_LOG_TO_STDOUT
+value: "true"
+---
+name: ADMIN_EMAIL
+value: <%= values.dig(consts.backend_name.to_sym, :admin_email) %>
+---
+name: DATABASE_USER
+value: "postgres"
+---
+name: DATABASE_HOST
+value: <%= consts.postgres_name %>
+---
+name: DATABASE_PORT
+value: "5432"
+---
+name: RAILS_SERVE_STATIC_FILES
+value: "true"
+---
+name: DATABASE_PASSWORD
+valueFrom:
+  secretKeyRef:
+    name: <%= consts.db_creds_secret_name %>
+    key: db_password
+    optional: true
+---
+name: SECRET_KEY_BASE
+value: "7bb0f08664366f0f5a525fde0e90e333deecfb133775f0f88bf0d84f754121d171abe7a19554102be0b594bd414254122874acc8fd0454f5d155754def22a599"
