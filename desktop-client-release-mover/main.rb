@@ -3,17 +3,18 @@ require 'octokit'
 REPO_ID = "nmachine-io/consumer-frontend-desktop"
 GH_SEC_NAME = "gh-token-delete-me-later"
 DEB_NAME = "deb_release.deb"
+
+GET_SEC_PREFIX = "gcloud secrets versions access latest"
 WGET_PREFIX = "wget -q --auth-no-challenge --header='Accept:application/octet-stream'"
 BUCKET_PREFIX = "gs://nmachine-public/releases"
 
-RELEASE_TYPES = [
-  { extension: ".deb", fname: DEB_NAME }
-]
+RELEASE_TYPES = [{ extension: ".deb", fname: DEB_NAME }]
 
-token = `gcloud secrets versions access latest --secret=#{GH_SEC_NAME}`
+token = `#{GET_SEC_PREFIX} --secret=#{GH_SEC_NAME} `
+puts "tok #{token}"
 client = Octokit::Client.new(access_token: token)
 
-releases = client.releases(REPO_ID, query: { type: 'created_at', sort: 'asc' })
+releases = client.releases(REPO_ID, query: { type: 'published_at', sort: 'desc' })
 latest_release = releases.first
 
 if latest_release
