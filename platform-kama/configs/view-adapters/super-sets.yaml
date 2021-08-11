@@ -1,5 +1,5 @@
 kind: ConcernSuperSet
-id: overview
+id: main
 sets:
   - id::org.concern-grid.main
   - id::sdk.concern.resource_tables.deployments

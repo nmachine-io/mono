@@ -27,8 +27,6 @@ stages:
             validators:
               - check_against: true
                 reason: "Check to continue"
-# dev-zxbg30ji.us.auth0.com
-# 5OFtZxLvc2y8Ht9ClTCoDGJXQNUFBadn
         action:
           kind: DeleteResourcesAction
           selectors:

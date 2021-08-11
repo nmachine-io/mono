@@ -1,8 +1,8 @@
 import os
 
-from kama_sdk import entrypoint
+from kama_sdk.cli import entrypoint
 from kama_sdk.model.base.model import models_man
-from kama_sdk.core.core import utils, kaml_man
+from kama_sdk.utils import utils, kaml_man
 
 
 def register_self():

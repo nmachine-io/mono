@@ -1,7 +1,0 @@
-service:
-  name: service
-  port: 80
-
-pod:
-  name: pod
-  image: nginx:1.19.2
