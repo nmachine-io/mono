@@ -1,0 +1,32 @@
+timeout: 1200s
+
+substitutions:
+  _IMG_FQDN: "us-central1-docker.pkg.dev/nectar-bazaar/private/ruby-gcloud"
+  _NEW_VER: 2.6.3
+
+images:
+  - "${_IMG_FQDN}:${_NEW_VER}"
+
+steps:
+  - id: "Pull previous"
+    name: gcr.io/cloud-builders/docker
+    waitFor: []
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |-
+        docker pull ${_IMG_FQDN}}:${_NEW_VER} || exit 0;
+
+  - id: "Build image"
+    name: gcr.io/cloud-builders/docker
+    waitFor:
+      - "Pull previous"
+    args:
+      - "build"
+      - "."
+      - "--build-arg"
+      - "RUBY_VERSION=2.6.3"
+      - "--cache-from"
+      - "${_IMG_FQDN}:${_NEW_VER}"
+      - "-t"
+      - "${_IMG_FQDN}:${_NEW_VER}"

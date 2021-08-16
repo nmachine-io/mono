@@ -3,7 +3,7 @@ id: backend.admin_email
 title: Admin Email
 info: "Although not strictly necessary, it is a good idea to have this variable
 defined. Without it, most 'god-mode' operations will not work."
-category: id::variable-category.security
+category: id::sdk.variable-category.security
 health_predicates:
   - id::predicate.admin_email_defined
 validators:
@@ -16,7 +16,7 @@ kind: ManifestVariable
 id: global.auth0.domain
 title: Auth0 Domain
 info: "'Domain' value obtained from your Auth0 account. Not treated as a secret."
-category: id::variable-category.security
+category: id::sdk.variable-category.security
 health_predicates:
   - id::predicate.auth-domain-defined
 validators:
@@ -29,7 +29,7 @@ kind: ManifestVariable
 id: global.auth0.client_id
 title: Auth0 Domain
 info: "'Client ID' value obtained from your Auth0 account. Not treated as a secret."
-category: id::variable-category.security
+category: id::sdk.variable-category.security
 health_predicates:
   - id::predicate.auth-client-id-defined
 validators:

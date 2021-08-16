@@ -15,7 +15,7 @@ validators:
 kind: ManifestVariable
 id: global.auth0.domain
 title: Auth0 Domain
-info: "'Domain' value obtained from your Auth0 account. Not treated as a secret."
+info: "'Domain' for your Auth0 account. Not treated as a secret."
 category: id::variable-category.security
 health_predicates:
   - id::predicate.auth-domain-defined

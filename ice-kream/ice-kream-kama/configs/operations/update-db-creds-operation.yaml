@@ -27,8 +27,6 @@ stages:
             validators:
               - check_against: true
                 reason: "Check to continue"
-# dev-zxbg30ji.us.auth0.com
-# 5OFtZxLvc2y8Ht9ClTCoDGJXQNUFBadn
         action:
           kind: DeleteResourcesAction
           selectors:
@@ -48,7 +46,7 @@ stages:
         title: Create resources with new credentials
         synopsis: assets::new-creds-synopsis.md
 
-        action: id::sdk.action.step_apply_application_manifest_e2e_action
+        action: id::sdk.action.commit_template_apply_step
 
         fields:
 

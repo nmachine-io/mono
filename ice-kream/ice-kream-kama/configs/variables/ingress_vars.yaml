@@ -7,7 +7,7 @@ title: ${get::self>>casual_name} Ingress Host
 info: "Routes requests from this domain to the ${get::self>>casual_name}. Has
 no effect if ingress.enabled is false/null Has no effect if
 cluster does not have an ingress backend."
-category: id::variable-category.networking
+category: id::sdk.variable-category.networking
 validators:
   - kind: FormatPredicate
     check_against: domain
@@ -16,7 +16,7 @@ validators:
 
 kind: ManifestVariable
 id: variable.template.ingress_route_path
-category: id::variable-category.networking
+category: id::sdk.variable-category.networking
 casual_name: ""
 title: ${get::self>>casual_name} Ingress Host
 info: "Custom path prefix path for ${get::self>>casual_name}. It
@@ -34,7 +34,7 @@ validators:
 
 kind: ManifestVariable
 id: ingress.enabled
-category: id::variable-category.networking
+category: id::sdk.variable-category.networking
 title: Application Ingress Toggle
 info: "If enabled, Ingress resource is provisioned to route out-of-cluster
 traffic to the application's various services. Note that you must have
