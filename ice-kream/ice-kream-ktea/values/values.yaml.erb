@@ -12,19 +12,21 @@ storage:
   internal: true
 
 monolith:
-  image: "<%= img_base %>/ice-kream-app:1.0.0"
-  image_pull_policy: Always
-  admin_email: admin@admin.com
-  replicas: 1
-  port: 3000
-  service_type: ClusterIP
+  deployment:
+    image: "<%= img_base %>/ice-kream-app:1.0.0"
+    image_pull_policy: Always
+    admin_email: admin@admin.com
+    replicas: 1
+  service:
+    port: 3000
+    type: ClusterIP
 
 ingress:
   enabled: false
   class: nginx
   routes:
     monolith:
-      host: "lk"
+      host: ""
       path: "/"
 
 cert_manager:

@@ -8,32 +8,23 @@ class MonolithMixer < Kerbi::Mixer
   def run
     super do |t|
       t.yaml 'pvc'
-      t.yaml 'pg-deployment', extras: postgres_bundle
-      t.yaml generic('service'), extras: postgres_bundle
+      t.yaml 'pg-deployment', extras: postgres_extras
+      t.yaml generic('service'), extras: postgres_extras
       t.yaml generic('deployment'), extras: deployment_extras
-      t.yaml generic('service'), extras: monolith_service_extras
+      t.yaml generic('service'), extras: service_extras
     end
   end
 
-  def monolith_service_extras
-    {
-      name: consts.backend_name,
-      root: backend_deployment_values_root
-    }
-  end
-
   def deployment_extras
-    root = backend_deployment_values_root
+    root = deployment_values_root
+    init_container = container_config(root, 'db-init', 'rake db:init')
+    main_container = container_config(root, 'main', 'rails server')
     {
       name: consts.backend_name,
       root: root,
-      init_containers: [container_config(root, 'db-init', 'rake db:init') ],
-      containers: [container_config(root, 'main', 'rails server') ]
+      init_containers: [init_container],
+      containers: [main_container]
     }
-  end
-
-  def backend_deployment_values_root
-    values.dig(*consts.backend_name.to_sym) || {}
   end
 
   def container_config(root, name, command)
@@ -41,7 +32,8 @@ class MonolithMixer < Kerbi::Mixer
       name: name,
       command: command,
       env_vars: templated_env_vars,
-      root: root
+      root: root,
+      service_root: service_values_root
     }
     self.inflate_yaml_file('backend-container', [], [], extras).first
   end
@@ -54,17 +46,25 @@ class MonolithMixer < Kerbi::Mixer
     "./../generic/#{name}"
   end
 
-  def postgres_bundle
+  def postgres_extras
     {
       root: { port: 5432 },
       name: consts.postgres_name
     }
   end
 
-  def backend_server_bundle
+  def service_extras
     {
-      root: backend_deployment_values_root,
-      name: consts.backend_name
+      name: consts.backend_name,
+      root: service_values_root
     }
+  end
+
+  def deployment_values_root
+    values.dig(consts.backend_name.to_sym, :deployment) || {}
+  end
+
+  def service_values_root
+    values.dig(consts.backend_name.to_sym, :service) || {}
   end
 end

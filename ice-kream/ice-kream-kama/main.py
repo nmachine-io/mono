@@ -1,7 +1,6 @@
 import os
 
 from kama_sdk.cli import entrypoint
-from kama_sdk.core.core import plugins_manager
 from kama_sdk.model.base.model import models_manager
 from kama_sdk.utils.descriptor_utils import load_dir_yamls
 
@@ -15,8 +14,9 @@ def register_self():
 
 
 def register_plugins():
-  plugins_manager.register('telem_kaml')
-  plugins_manager.register('prom_kaml')
+  pass
+  # plugins_manager.register('telem_kaml')
+  # plugins_manager.register('prom_kaml')
 
 
 if __name__ == '__main__':

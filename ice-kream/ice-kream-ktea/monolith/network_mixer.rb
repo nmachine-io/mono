@@ -38,7 +38,6 @@ class NetworkMixer < Kerbi::Mixer
   end
 
   def ingress_enabled?
-    explicit = values.dig(:ingress, :enabled).to_s == 'true'
-    explicit && defined_routes.any?
+    values.dig(:ingress, :enabled).to_s == 'true'
   end
 end

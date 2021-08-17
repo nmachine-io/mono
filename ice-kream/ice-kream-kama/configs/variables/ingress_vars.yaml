@@ -92,7 +92,7 @@ id: variable-dependency.when-ingress-is-disabled
 title: Value ignored when ingress.enabled is false
 from: [id::ingress.enabled]
 to: {id: [ingress.class, ingress.routes.*]}
-active:
+active_condition:
   kind: Predicate
   challenge: get::self>>from_variable>>current_value
   operator: falsy

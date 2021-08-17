@@ -57,7 +57,7 @@ info: "If ingress is enabled, ensure the service type is ClusterIP."
 reason: "The service type is made redundant by your ingress configuration.
 If you wish to expose your service via Ingress, the service type should
 be trivial, that is 'ClusterIP', otherwise, you might be unintentionally
-double-serving this service."
+be double-exposing this service on the public internet."
 
 ingress_enabled: get::kind::MergedVariablesSupplier->.ingress.enabled
 routed: get::kind::MergedVariablesSupplier->.ingress.routes.publisher_frontend.host
@@ -65,12 +65,11 @@ svc_type: get::kind::MergedVariablesSupplier->.publisher_frontend.service_type
 has_ingress_intent:
   kind: MultiPredicate
   predicates: [get::self>>ingress_enabled, get::self>>routed]
-is_external_svc:
-  kind: Predicate
-  operator: in
-  challenge: get::self>>svc_type
-  check_against: [NodePort, LoadBalancer]
 predicates:
-  - get::self>>has_ingress_intent
-  - get::self>>is_external_svc
+  - kind: MultiPredicate
+    predicates: [get::self>>ingress_enabled, get::self>>routed]
+  - kind: Predicate
+    operator: in
+    challenge: get::self>>svc_type
+    check_against: [NodePort, LoadBalancer]
 negate: true

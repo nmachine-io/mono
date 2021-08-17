@@ -65,7 +65,7 @@ id: variable-dependency.when-hpa-is-enabled
 title: Value ignored when publisher_frontend.hpa.enabled is true
 from: [id::publisher_frontend.hpa.enabled]
 to: {id: [publisher_frontend.replicas]}
-active:
+active_condition:
   kind: Predicate
   challenge: get::self>>from_variable>>current_value
   operator: truthy
@@ -77,7 +77,7 @@ id: variable-dependency.when-hpa-is-disabled
 title: Value ignored when publisher_frontend.hpa.enabled is false
 from: [id::publisher_frontend.hpa.enabled]
 to: {id: [publisher_frontend.hpa.min, publisher_frontend.hpa.max]}
-active:
+active_condition:
   kind: Predicate
   challenge: get::self>>from_variable>>current_value
   operator: falsy

@@ -1,0 +1,61 @@
+kind: ManifestVariable
+id: "monolith.deployment.replicas"
+category: id::sdk.variable-category.compute
+title: "Website Replica Count"
+info: "Number of Kubernetes Pod replicas the Ice-Kream store should have.
+Each replica can cost up to 80Mb of memory and 200 CPU millicores. One
+replica is enough for ~200 concurrent users. If you expect traffic to
+fluctuate, you may want to consider enabling the Pod AutoScaler."
+validators:
+  - "id::app.predicate.mono-replicas-non-zero"
+input:
+  kind: SliderInput
+  min: 0
+  max: 15
+
+
+---
+
+kind: ManifestVariable
+id: "monolith.deployment.hpa.enabled"
+category: id::sdk.variable-category.compute
+title: "Website Automatic Compute Scaling Toggle"
+info: "When enabled, the the website's compute is automatically
+scaled 'horizontally', e.g in number of pod replicas, according
+to average CPU/memory. To configure the autoscaling details,
+run the 'Configure Autoscaling' operation, or look for the variables
+related to autoscaling in the variables page."
+input: {kind: OnOffInput}
+
+---
+
+kind: Predicate
+id: app.predicate.mono-replicas-non-zero
+reason: "Zero replicas will take the website down. Make sure this is temporary."
+operator: "greater-than"
+check_against: 0
+
+---
+
+kind: ManifestVariableDependency
+id: "app.variable-dep.hpa_true_prevents_read_replicas"
+title: "Your hardcoded website's pod replica count is ignored because your HPA
+(Horizontal Pod Auto-scaler) is enabled."
+from: ["id::monolith.deployment.hpa.enabled"]
+to: ["id::monolith.deployment.replicas"]
+effect: "prevents_read"
+active_condition:
+  kind: Predicate
+  challenge: "get::self>>from_variable>>value"
+  check_against: true
+
+#---
+#
+#kind: ManifestVariable
+#id: "ingress.enabled"
+#category: id::sdk.variable-category.compute
+#title: "Ingress Toggle"
+#info: "Number of Kubernetes Pod replicas the Ice-Kream store should have.
+#Each replica can cost up to 80Mb of memory and 200 CPU millicores. One
+#replica is enough for ~200 concurent users. If you expect traffic to
+#fluctuate, you may want to consider enabling the Pod AutoScaler."
