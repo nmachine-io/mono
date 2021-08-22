@@ -8,11 +8,13 @@ replica is enough for ~200 concurrent users. If you expect traffic to
 fluctuate, you may want to consider enabling the Pod AutoScaler."
 validators:
   - "id::app.predicate.mono-replicas-non-zero"
+health_predicates:
+  - "id::app.predicate.mono-replicas-non-zero"
+
 input:
   kind: SliderInput
   min: 0
   max: 15
-
 
 ---
 
@@ -33,6 +35,7 @@ kind: Predicate
 id: app.predicate.mono-replicas-non-zero
 reason: "Zero replicas will take the website down. Make sure this is temporary."
 operator: "greater-than"
+challenge: get::self>>value
 check_against: 0
 
 ---

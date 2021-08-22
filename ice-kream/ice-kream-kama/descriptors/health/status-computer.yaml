@@ -1,0 +1,17 @@
+kind: Predicate
+id: "app.predicate.deployments-running"
+title: "Application deployments running"
+info: "Ensures the website and database workloads are running"
+reason: "Got statuses ${get::self>>resolved_challenge}"
+check_against: ["positive", "positive"]
+labels:
+  status_computer: true
+  searchable: true
+challenge:
+  kind: ResourcesSupplier
+  serializer: "native"
+  output: "ternary_status"
+  selector:
+    res_kind: "Deployment"
+    label_selector:
+      microservice: ["monolith", "postgres"]

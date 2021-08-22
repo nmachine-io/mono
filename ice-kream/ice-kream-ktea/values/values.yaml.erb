@@ -5,7 +5,7 @@ env: production
 secrets:
   standard:
     db_creds:
-      db_password: ""
+      db_password: "unsafe"
 
 storage:
   size: 1Gi
@@ -13,7 +13,7 @@ storage:
 
 monolith:
   deployment:
-    image: "<%= img_base %>/ice-kream-app:1.0.0"
+    image: "<%= img_base %>/ice-kream-app:1.0.4"
     image_pull_policy: Always
     admin_email: admin@admin.com
     replicas: 1

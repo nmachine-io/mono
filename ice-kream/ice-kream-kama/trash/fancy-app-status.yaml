@@ -1,0 +1,23 @@
+kind: Predicate
+id: app.predicate.microservice_positive
+check_against: "positive"
+challenge:
+  kind: ResourcesSupplier
+  id: ternary
+  serializer: "native"
+  many: false
+  output: "ternary_status"
+  selector:
+    res_kind: "Deployment"
+    label_selector:
+      microservice: "get::self>>microservice"
+
+---
+
+kind: MultiPredicate
+id: second
+predicates:
+  - inherit: app.predicate.microservice_positive
+    microservice: postgres
+  - inherit: app.predicate.microservice_positive
+    microservice: monolith

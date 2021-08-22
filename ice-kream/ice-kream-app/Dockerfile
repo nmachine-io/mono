@@ -11,10 +11,10 @@ ENV RACK_ENV=production
 
 RUN gem install bundler:2.1.4
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN bundle install --without=test,development
 
 COPY . .
 
 RUN bundle exec rails SECRET_KEY_BASE=dummyvalue assets:precompile
 
-EXPOSE 3000
+EXPOSE 3000y

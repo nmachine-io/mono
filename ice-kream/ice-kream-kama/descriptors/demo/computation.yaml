@@ -1,0 +1,33 @@
+kind: Model
+id: "computation-intro"
+give_me_five:
+  kind: SumSupplier
+  source: [2, 3]
+
+---
+
+kind: Model
+id: "lists"
+strings:
+  - "get::kind::RandomStringSupplier"
+  - "get::kind::RandomStringSupplier"
+
+---
+
+kind: Model
+id: nested
+date:
+  kind: FormattedDateSupplier
+  output: "%b %d at %I:%M%p"
+  source:
+    kind: ConfigSupplier
+    field_key: "last_synced"
+
+---
+
+kind: Model
+id: "supplier-in-dict"
+nesting:
+  separation:
+    kind: Supplier
+    source: "Won't get resolved by default."

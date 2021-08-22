@@ -1,0 +1,17 @@
+kind: Model
+id: "model"
+title: "Ice Kream has ${get::self>>response->. | length} resources"
+info: "First of which is a ${get::self>>response->.[0].kind}"
+cached:
+  response:
+    kind: HttpDataSupplier
+    endpoint: https://api.nmachine.io/ktea/nmachine/ice-kream-ktea/1.0.1
+    output: ".body.data"
+
+---
+
+kind: PatchManifestVariablesAction
+id: virtuals
+title: "Title!"
+info: "Highjacked '${get::self>>resolved_title}' ${get::self>>title}!"
+#title: "Better ${get::self>>foo}"
