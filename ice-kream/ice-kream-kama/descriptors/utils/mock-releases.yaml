@@ -1,0 +1,13 @@
+kind: Supplier
+id: "app.supplier.mock-releases.ktea.2.0.0"
+depth: 100
+labels:
+  supplies: "mock-release"
+source:
+  id: "app.supplier.mock-releases.ktea.2.0.0"
+  type: "ktea"
+  version: "2.0.0"
+  ktea_type: "virtual"
+  ktea_uri: "V2VirtualKtea"
+  note: "assets::mock-release-notes.md"
+  space: "app"
