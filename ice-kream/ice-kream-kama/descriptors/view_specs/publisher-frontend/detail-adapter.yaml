@@ -1,0 +1,68 @@
+kind: ConcernDetailAdapter
+id: detail-adapter.publisher-frontend
+title: Publisher Frontend
+page_adapters:
+  - title: Overview
+    id: overview
+    panel_adapters:
+      - id::panel_adapter.publisher_frontend.site_access
+      - id::ligam
+
+  - title: Variables
+    id: variables
+    panel_adapters:
+      - id::panel_adapter.publisher_frontend.variables
+
+  - title: Action
+    id: actions
+    panel_adapters:
+      - id::foolham
+
+---
+
+kind: ConcernValuePanelAdapter
+id: panel_adapter.publisher_frontend.site_access
+title: Website Access
+info: Changing a variable will lose the context
+value:
+  type: AccessPoints
+  data:
+    kind: SiteAccessNodesSerializer
+    site_access_nodes:
+      - id::site-access-node.publisher-frontend.ingress
+      - id::site-access-node.publisher-frontend.service
+
+---
+
+kind: ManifestVariablesPanelAdapter
+id: panel_adapter.publisher_frontend.variables
+title: Associated Variables
+info: Changing a variable will lose the context
+variables:
+  id:
+    - "publisher_frontend.*"
+    - "ingress.routes.publisher_frontend.*"
+
+---
+
+kind: AsyncPredicatesPanelAdapter
+id: ligam
+title: Health Checks
+info: These predicates check for problems in the publisher frontend service
+predicates:
+  - id::predicate.publisher_frontend.all_green
+  - id::predicate.publisher_frontend_enabled_resource_in_sync
+  - id::predicate.publisher_frontend.redundant_exposure
+  - id::predicate.auth0_secret_exists
+
+---
+
+kind: ActionsPanelAdapter
+id: foolham
+title: Actions & Operations
+info: Run these things if you're brave
+operations:
+  - id::nmachine.telem.operation.storage
+  - id::nmachine.telem.operation.delete-telem-pvc
+actions:
+  - id::nmachine.telem.action.perform_disable

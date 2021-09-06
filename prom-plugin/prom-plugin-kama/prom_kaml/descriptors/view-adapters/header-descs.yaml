@@ -1,0 +1,63 @@
+kind: Provider
+id: nmachine.prom.view-adapter.header.prom
+source:
+  type: ThreePartHeader
+  style: {mb: 20px}
+  title:
+    type: Line
+    elements:
+      - type: Text
+        style: [bold, calm]
+        text: Prometheus
+        action:
+          type: concern_detail
+          uri: {adapter_ref: id::nmachine.prom.concern-detail-adapter.monitoring}
+      - type: AsyncPredicateDots
+        data:
+          - kind::TruePredicate
+          - kind::FalsePredicate
+  subtitle:
+    type: Line
+    elements:
+      - type: Text
+        text: get::self>>concern=>action_preview_str
+        maxChars: 20
+        action: get::self>>concern=>action_spec
+      - type: Icon
+        name: open_in_new
+        style: {emotion: pleasant}
+  graphic:
+    type: Image
+    uri: /services/prometheus/medium
+
+---
+
+kind: Provider
+id: nmachine.prom.view-adapter.header.grafana
+source:
+  type: ThreePartHeader
+  style: {mb: 20px}
+  title:
+    type: Line
+    elements:
+      - type: Text
+        style: [bold, calm]
+        text: Grafana Dashboard
+        action:
+          type: concern_detail
+          uri: {adapter_ref: id::nmachine.prom.concern-detail-adapter.monitoring}
+      - type: AsyncPredicateDots
+        data:
+          - kind::FalsePredicate
+          - kind::FalsePredicate
+  subtitle:
+    type: Line
+    elements:
+      - type: Text
+        text: URL Unavailable
+        style: {emotion: warning2}
+      - type: Icon
+        name: error_outline
+  graphic:
+    type: Image
+    uri: /services/grafana/medium

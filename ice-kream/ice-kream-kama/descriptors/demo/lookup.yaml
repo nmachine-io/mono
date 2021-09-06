@@ -10,8 +10,7 @@ cached:
 
 ---
 
-kind: PatchManifestVariablesAction
+kind: PatchManifestVarsAction
 id: virtuals
 title: "Title!"
 info: "Highjacked '${get::self>>resolved_title}' ${get::self>>title}!"
-#title: "Better ${get::self>>foo}"

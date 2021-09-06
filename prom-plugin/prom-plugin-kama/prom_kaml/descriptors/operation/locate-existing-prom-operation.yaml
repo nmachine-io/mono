@@ -1,0 +1,12 @@
+kind: Operation
+id: nmachine.prom.operation.locate-existing
+title: Locate an existing Prometheus Server
+info: "Point the application to a Prometheus server that is already
+or is capable of monitoring the application"
+synopsis: assets::locate-existing-server.md
+tags: ['monitoring']
+labels:
+  searchable: true
+stages:
+  - id::nmachine.prom.stage.locate-existing-prom
+  - id::nmachine.prom.stage.locate-existing-grafana

@@ -1,0 +1,13 @@
+kind: PodShellExecAction
+id: "app.action.seed_admin_shell_exec"
+params: "${get::self>>email},${get::self>>password}"
+command: "bundle exec rake seed:admin[${get::self>>params}]"
+pod:
+  kind: ResourcesSupplier
+  many: false
+  serializer: "native"
+  resource_selector:
+    kind: ResourceSelector
+    res_kind: "Pod"
+    label_selector:
+      microservice: "monolith"

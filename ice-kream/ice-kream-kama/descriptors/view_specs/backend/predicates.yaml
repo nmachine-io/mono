@@ -1,0 +1,47 @@
+kind: ResourcesSupplier
+id: resources-supplier.secret.db-secret
+selector:
+  res_kind: Secret
+  name: db-creds
+many: false
+serializer: legacy
+
+---
+
+kind: ResourcesSupplier
+id: resources-supplier.secret.auth0-secret
+selector:
+  res_kind: Secret
+  name: auth0
+many: false
+serializer: legacy
+
+---
+
+kind: Predicate
+id: predicate.db_secret_exists
+title: Database Credentials secret exists?
+info: Checks that secrets/db-creds present in the application namespace
+challenge: get::resources-supplier.secret.db-secret
+operator: truthiness
+tone: error
+reason: "The Database Credentials secret (secrets/db-creds) does not exist.
+This means the database cannot start, and the backend will fail to initialize."
+
+---
+
+kind: Predicate
+id: predicate.auth0_secret_exists
+title: Auth0 Credentials secret exists?
+info: Checks that secrets/auth0 present in application namespace
+challenge: get::resources-supplier.secret.auth0-secret
+operator: truthiness
+tone: error
+reason: "Auth0 Credentials secret (secrets/auth0) does not exist.
+NMachine uses Auth0 to handle user authentication. Without credentials
+pointing to a unique Auth0 account, you will not be able to make it
+further than the splash screen."
+
+---
+
+# TODO backups enabled?

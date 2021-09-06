@@ -1,0 +1,56 @@
+kind: Supplier
+id: nmachine.prom.locate_op_summary
+cached:
+  ping_success: get::nmachine.prom.predicate.is_connected_from_input
+  then_msg:
+    kind: IfThenElse
+    source: get::props ping_success
+    if_true:
+      text: "True"
+      style: {emotion: "milGreen", bold: true}
+    if_false:
+      text: "False"
+      style: {emotion: "nectar", bold: true}
+source:
+  kind: IfThenElse
+  source: get::nmachine.prom.has_host_or_svc_inputs
+  if_true:
+    type: Line
+    elements:
+      - type: Text
+        text: "Successful response from Prometheus API at this address:"
+      - kind: MergeSupplier
+        source:
+          - type: ClearTag
+          - get::self>>then_msg
+
+---
+
+kind: MultiPredicate
+id: nmachine.prom.has_host_or_svc_inputs
+operator: or
+predicates:
+  - kind: Predicate
+    operator: truthiness
+    challenge: get::props inputs->.prometheus.url
+  - kind: Predicate
+    operator: truthiness
+    challenge: get::props inputs->.prometheus.service_name
+
+---
+
+kind: Predicate
+id: nmachine.prom.predicate.is_connected
+challenge:
+  kind: PromDataSupplier
+  type: ping
+  print_debug: [type]
+operator: truthiness
+
+---
+
+kind: Predicate
+id: nmachine.prom.predicate.is_connected_from_input
+inherit: nmachine.prom.predicate.is_connected
+client_config: get::props inputs
+print_debug: [challenge, inputs]

@@ -1,0 +1,77 @@
+kind: ConcernCardAdapter
+id: card-adapter.publisher-frontend
+title: Website
+spec:
+  type: Block
+  title: Service Status
+  elements:
+    - type: Section
+      width: 1
+      elements:
+        - get::id::three-stat1
+        - get::id::fckem1
+        - get::id::lalent1
+
+---
+
+kind: Provider
+id: lalent1
+source:
+  type: Line
+  elements:
+    - type: ClearTag
+      text: "Health"
+#      style: [bold, calm]
+    - type: AsyncPredicateDots
+      data:
+        - id::predicate.publisher_frontend.all_green
+        - id::predicate.publisher_frontend_enabled_resource_in_sync
+        - id::predicate.publisher_frontend.redundant_exposure
+
+---
+
+kind: Provider
+id: three-stat1
+source:
+  type: ThreePartHeader
+  title:
+    type: Text
+    text: Publisher Frontend
+    style: [bold, calm]
+    action:
+      type: concern_detail
+      uri:
+        adapter_ref: detail-adapter.publisher-frontend
+        concern_ref: provider.publisher-frontend
+
+  subtitle:
+    type: Line
+    elements:
+      - type: Text
+        text: Pods
+        style: [calm]
+      - type: StatusDots
+        data: get::self>>concern=>pod_statuses
+        shape: square
+        spacing: 1.5px
+  graphic:
+    type: Icon
+    name: personal_video
+
+---
+
+kind: Provider
+id: fckem1
+source:
+  type: Line
+  elements:
+    - type: ClearTag
+      text: Access
+    - type: Text
+      text: get::self>>concern>>site>>resolved_url
+      style: [hov_underline, hov_point]
+      action: get::self>>concern>>site>>resolved_action_descriptor
+    - type: Icon
+      name: open_in_new
+      style:
+        emotion: pleasant

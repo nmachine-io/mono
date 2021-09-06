@@ -1,0 +1,40 @@
+kind: PromStateSupplier
+id: nmachine.prom.concern.minimal-prom-header
+
+---
+
+kind: GrafanaStateSupplier
+id: nmachine.prom.concern.minimal-grafana-header
+
+---
+
+kind: Concern
+id: nmachine.prom.concern.monitoring
+cached:
+  config:
+    kind: ConfigSupplier
+    source: prefs
+    output: .monitoring
+  is_online:
+    kind: PromDataSupplier
+    type: ping
+logo_url:
+  kind: ImageSrcSupplier
+  source: "services/${get::props config->.type}/medium"
+grafana_logo_url:
+  kind: ImageSrcSupplier
+  source: "services/grafana/medium"
+
+svc:
+  kind: ResourcesSupplier
+  many: false
+  selector:
+    res_name: get::props config->.service_name
+    res_kind: services
+    namespace: get::props config->.service_namespace
+type: get::props config->.type
+status:
+  kind: IfThenElse
+  source: get::set>>is_online
+  if_true: Online
+  if_false: Offline

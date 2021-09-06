@@ -1,7 +1,6 @@
 <% root = extras[:root] %>
 <% full_command = "bundle exec #{extras[:command]}" %>
 <% command_parts = full_command.split(" ") %>
-
 <% svc_root = extras[:service_root] %>
 
 name: <%= extras[:name] %>
@@ -9,8 +8,8 @@ image: <%= root[:image] %>
 imagePullPolicy: <%= root[:image_pull_policy] %>
 command:
   <%= embed_in_yaml(command_parts, 1) %>
-
 ports:
   - containerPort: <%= svc_root[:port] %>
-
+resources:
+    <%= embed_in_yaml(root[:resources], 1) %>
 env: <%= embed_in_yaml(extras[:env_vars], 1) %>
