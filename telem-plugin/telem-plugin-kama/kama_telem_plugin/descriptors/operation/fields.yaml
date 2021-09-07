@@ -1,0 +1,8 @@
+kind: Field
+id: nmachine.telem.fields.delete-telem-confirm
+title: I have read and understood the above.
+target: none
+input: kind::CheckboxInput
+validators:
+  - check_against: true
+    reason: "Check to continue"

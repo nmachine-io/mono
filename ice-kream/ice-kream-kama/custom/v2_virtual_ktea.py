@@ -10,7 +10,8 @@ from kama_sdk.utils.utils import deep_set
 class V2VirtualKtea(VirtualKteaClient):
 
   def _default_values(self) -> Dict:
-    return backing_client().load_default_values()
+    result = backing_client().load_default_values()
+    return {**result, 'auto_version': "2.0.0"}
 
   def _template(self, values: Dict) -> List[Dict]:
     res_descs = backing_client().template_manifest(values)

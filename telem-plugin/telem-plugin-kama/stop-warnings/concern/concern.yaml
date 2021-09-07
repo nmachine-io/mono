@@ -1,0 +1,3 @@
+kind: TelemStatusSupplier
+id: nmachine.telem.concern
+config_space: nmachine.telem

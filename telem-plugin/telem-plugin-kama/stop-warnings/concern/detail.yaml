@@ -1,0 +1,68 @@
+kind: ConcernDetailAdapter
+id: nmachine.telem.detail-adapter
+title: KAMA Telemetry
+concern: get::&nmachine.telem.concern
+page_adapters:
+  - id: overview
+    title: Overview
+    panel_adapters:
+      - id::nmachine.telem.attr_panel.intro
+      - id::nmachine.telem.attr_panel.basic-fields
+
+---
+
+kind: ConcernValuePanelAdapter
+title: About this plugin
+id: nmachine.telem.attr_panel.intro
+naked: true
+value:
+  type: Markdown
+  text: assets::telem-detail-info.md
+  style: {bkgEmotion: barelyGrey}
+
+---
+
+kind: ConcernAttrPanelAdapter
+id: nmachine.telem.attr_panel.basic-fields
+title: Basic Settings
+info: Data below read from manifest variables
+config_space: nmachine.telem
+attribute_adapters:
+  kind: Vars2AttrAdaptersSupplier
+  variables:
+    - id::enabled
+    - id::strategy
+under:
+  type: ClearButton
+  style:
+    emotion: nectar
+  text: get::self>>concern=>main_button_text
+  action:
+    type: operation
+    uri:
+      space: nmachine.telem
+      id: get::self>>concern=>main_button_action
+
+---
+
+kind: ConcernAttrPanelAdapter
+id: nmachine.telem.attr_panel.basic-fields
+title: Basic Settings
+info: Data below read from manifest variables
+config_space: nmachine.telem
+attribute_adapters:
+  kind: Vars2AttrAdaptersSupplier
+  variables:
+    - id::enabled
+    - id::strategy
+under:
+  type: ClearButton
+  style:
+    emotion: nectar
+  text: get::self>>concern=>main_button_text
+  action:
+    type: operation
+    uri:
+      space: nmachine.telem
+      id: get::self>>concern=>main_button_action
+
