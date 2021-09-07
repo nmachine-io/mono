@@ -4,7 +4,7 @@ from typing import List, Dict
 from kama_sdk.core.core.plugin_type_defs import PluginManifest
 from kama_sdk.utils.descriptor_utils import load_dir_yamls
 from kama_telem_plugin.models.misc import OnlineIfEnabledPredicate
-from kama_telem_plugin.models.telem_status_supplier import TelemStatusSupplier
+from kama_telem_plugin.models.telem_state_helper import TelemStateHelper
 
 
 def get_manifest() -> PluginManifest:
@@ -21,7 +21,7 @@ def get_manifest() -> PluginManifest:
 
 def classes():
   return [
-    TelemStatusSupplier,
+    TelemStateHelper,
     OnlineIfEnabledPredicate
   ]
 

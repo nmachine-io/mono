@@ -23,15 +23,16 @@ default_value: pvc
 input:
   kind: SelectInput
   options:
-    - id: pvc
-      title: "Managed PVC: in-cluster storage managed by Nectar"
-    - id: nectar_cloud
-      title: "Nectar cloud storage: secure remote database"
-    - id: self_managed
-      title: "Own storage: you supplier a MongoDB database"
+    - id: "pvc"
+      title: "Managed In-Cluster - Plugin creates and manages
+      Kubernetes native resources (PVC, deployment)."
+    - id: "managed_cloud"
+      title: "NMachine Cloud storage - Secure remote database."
+    - id: "self_managed"
+      title: "Own storage - You supply a URL to a MongoDB database."
 validators:
   - operator: in
-    check_against: [pvc, self_managed, cloud]
+    check_against: ["pvc", "self_managed", "managed_cloud"]
 
 ---
 

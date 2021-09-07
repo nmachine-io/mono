@@ -6,27 +6,20 @@ import requests
 from k8kat.res.svc.kat_svc import KatSvc
 
 from kama_sdk.core.core.config_man import config_man
-
 from kama_sdk.core.telem.telem_backend import TelemBackend
-from kama_sdk.utils import utils, env_utils
+from kama_sdk.utils import env_utils, utils
+from kama_telem_plugin.consts import svc_name, enabled_var_key, plugin_id
+from kama_telem_plugin.core import get_svc, is_enabled
 
 
 class NMachineTelemBackend(TelemBackend):
-  _svc: Optional[KatSvc]
 
-  def __init__(self):
-    self._svc = None
+  def is_enabled(self) -> bool:
+    value = config_man.read_var(enabled_var_key, space=plugin_id)
+    return utils.any2bool(value)
 
-  def is_enabled(self) -> bool:  # TODO joke of the century
-    return utils.any2bool(config_man.manifest_variables())
-
-  def is_connected(self) -> bool:
+  def is_online(self) -> bool:
     return self.collection_names() is not None
-
-  def get_svc(self) -> Optional[KatSvc]:
-    if not self._svc:
-      self._svc = KatSvc.find(svc_name, config_man.get_ns())
-    return self._svc
 
   def collection_names(self) -> List[str]:
     endpoint = f"/collections/index"
@@ -53,23 +46,29 @@ class NMachineTelemBackend(TelemBackend):
     args = encode_query_arg(query)
     return self.do_get(endpoint, args)
 
-  def do_get(self, path: str, args: Dict) -> Optional[Union[Dict, List]]:
+  @staticmethod
+  def get_svc() -> Optional[KatSvc]:
+    return KatSvc.find(svc_name, config_man.get_ns())
+
+  @staticmethod
+  def do_get(path: str, args: Dict) -> Optional[Union[Dict, List]]:
     if env_utils.is_in_cluster():
       url = path2in_cluster_url(path)
       return requests.get(url).json()
     else:
-      if svc := self.get_svc():
+      if svc := get_svc():
         result = svc.proxy_get(path, args)
         return parse_proxy_response(result)
       else:
         return None
 
-  def do_post(self, path: str, args: Dict, bod) -> Optional[Union[Dict, List]]:
+  @staticmethod
+  def do_post(path: str, args: Dict, bod) -> Optional[Union[Dict, List]]:
     if env_utils.is_in_cluster():
       url = path2in_cluster_url(path)
       return requests.post(url, json=bod).json()
     else:
-      if svc := self.get_svc():
+      if svc := get_svc():
         result = svc.proxy_post(path, args, bod)
         print(result)
         return parse_proxy_response(result)
@@ -101,6 +100,3 @@ def parse_proxy_response(result: Any) -> Optional[Union[Dict, List]]:
 def path2in_cluster_url(path: str) -> str:
   base = f"http://{svc_name}.{config_man.ns()}:5000"
   return f"{base}/{path}"
-
-
-svc_name = 'telem'
