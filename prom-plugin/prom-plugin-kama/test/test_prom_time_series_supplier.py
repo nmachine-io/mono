@@ -1,8 +1,8 @@
 from kama_sdk.model.humanizer.bytes_humanizer import BytesHumanizer
-from kama_sdk.tests.t_helpers.cluster_test import ClusterTest
-from prom_kaml.models.prom_matrix_to_timeseries_provider import PromMatrixToSeriesSupplier
-from prom_kaml.models.types import PromMatrix
-from prom_kaml.tests import prom_test_helper as my_helper
+from kama_sdk.utils.unittest.base_classes import ClusterTest
+from kama_prom_plugin.models.prom_matrix_to_timeseries_provider import PromMatrixToSeriesSupplier
+from kama_prom_plugin.models.types import PromMatrix
+from test import prom_test_helper as my_helper
 
 
 class TestPromMatrixToSeriesSupplier(ClusterTest):

@@ -1,9 +1,9 @@
 from k8kat.res.ns.kat_ns import KatNs
 
 from kama_sdk.tests.t_helpers import helper
-from kama_sdk.tests.t_helpers.cluster_test import ClusterTest
-from prom_kaml.models.prom_client import prom_client
-from prom_kaml.tests import prom_test_helper as my_helper
+from kama_sdk.utils.unittest.base_classes import ClusterTest
+from kama_prom_plugin.models.prom_client import prom_client
+from test import prom_test_helper as my_helper
 
 
 class TestPromClient(ClusterTest):

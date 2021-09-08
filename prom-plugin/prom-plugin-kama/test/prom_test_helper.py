@@ -3,10 +3,10 @@ from k8kat.res.ns.kat_ns import KatNs
 from kama_sdk.core.core.config_man import config_man
 from kama_sdk.model.base.model import models_man
 from kama_sdk.tests.t_helpers import helper
-from prom_kaml import kaml
-from prom_kaml.models import prom_client as client_module
-from prom_kaml.models import prom_data_supplier as supplier_module
-from prom_kaml.models.prom_data_supplier import PromDataSupplier
+from kama_prom_plugin import kaml
+from kama_prom_plugin.models import prom_client as client_module
+from kama_prom_plugin.models import prom_data_supplier as supplier_module
+from kama_prom_plugin.models.prom_data_supplier import PromDataSupplier
 
 
 def vanilla_setup():

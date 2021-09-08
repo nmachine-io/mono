@@ -4,8 +4,8 @@ from typing import Any, List
 from kama_sdk.model.humanizer.quantity_humanizer import QuantityHumanizer
 
 from kama_sdk.model.supplier.base.supplier import Supplier
-from prom_kaml.models import prom_utils
-from prom_kaml.models.types import PromVectorEntry
+from kama_prom_plugin.models import prom_utils
+from kama_prom_plugin.models.types import PromVectorEntry
 
 
 class PromVectorsToGroupsSupplier(Supplier):

@@ -1,5 +1,5 @@
-from kama_sdk.tests.t_helpers.cluster_test import ClusterTest
-from prom_kaml.models.prom_vector_to_groups_provider import PromVectorsToGroupsSupplier
+from kama_sdk.utils.unittest.base_classes import ClusterTest
+from kama_prom_plugin.models.prom_vector_to_groups_provider import PromVectorsToGroupsSupplier
 
 
 class TestPromDataGroupSupplier(ClusterTest):

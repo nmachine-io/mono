@@ -2,38 +2,41 @@ from k8kat.res.svc.kat_svc import KatSvc
 from werkzeug.utils import cached_property
 
 from kama_sdk.model.supplier.base.supplier import Supplier
-from prom_kaml.models.prom_client import prom_client
-from prom_kaml.models.prom_data_supplier import PromDataSupplier
+from kama_prom_plugin.models.prom_client import prom_client
+from kama_prom_plugin.models.prom_data_supplier import PromDataSupplier
 
 
-class PromStateSupplier(Supplier):
+class GrafanaStateSupplier(Supplier):
 
   @cached_property
-  def is_online(self):
+  def is_configured(self):
     return PromDataSupplier({}).ping()
 
   @cached_property
   def svc(self) -> KatSvc:
-    return prom_client.find_prom_svc()
+    return prom_client.find_grafana_svc()
 
   @cached_property
   def is_in_cluster(self):
-    return prom_client.is_prom_server_in_cluster()
+    return prom_client.is_grafana_server_in_cluster()
 
   @cached_property
   def status(self):
-    return "online" if self.is_online else "offline"
+    return "enabled" if self.is_configured else "disabled"
 
   @cached_property
   def action_preview_str(self):
-    if self.is_in_cluster:
-      return "http://localhost"
+    if self.is_configured:
+      if self.is_in_cluster:
+        return "http://localhost"
+      else:
+        return prom_client.get_grafana_ext_url()
     else:
-      return prom_client.get_prom_ext_url()
+      return 'no access'
 
   @cached_property
   def action_spec(self):
-    if self.is_in_cluster:
+    if self.is_configured:
       return dict(
         type='port_forward',
         uri=dict(
@@ -45,5 +48,5 @@ class PromStateSupplier(Supplier):
     else:
       return dict(
         type='www',
-        uri=prom_client.get_prom_ext_url()
+        uri=prom_client.get_grafana_ext_url()
       )

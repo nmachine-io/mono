@@ -1,7 +1,7 @@
-from prom_kaml.tests import prom_test_helper as my_helper
-from kama_sdk.tests.t_helpers.cluster_test import ClusterTest
-from prom_kaml.models.prom_data_supplier import PromDataSupplier
-from prom_kaml.models import prom_data_supplier as supplier_module
+from test import prom_test_helper as my_helper
+from kama_sdk.utils.unittest.base_classes import ClusterTest
+from kama_prom_plugin.models.prom_data_supplier import PromDataSupplier
+from kama_prom_plugin.models import prom_data_supplier as supplier_module
 
 
 class TestPromDataSupplier(ClusterTest):

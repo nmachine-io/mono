@@ -4,19 +4,19 @@ with open("README.md", "r") as fh:
   long_description = fh.read()
 
 setuptools.setup(
-  name="kama-sdk-py",
+  name="kama-prom-plugin",
   version="0.0.1",
   author="NMachine",
   author_email="xavier@nmachine.io",
   description="Prometheus plugin for KAMA",
   long_description=long_description,
   long_description_content_type="text/markdown",
-  url="https://github.com/nectar-cs/kama-sdk-py",
+  url="https://github.com/nmachine-io/kama-sdk-py",
   packages=setuptools.find_packages(exclude=[]),
   package_data={
-    'prom_kaml': [
+    'kama_sdk': [
       'assets/*.*',
-      'model/**/yamls/**'
+      'descriptors/**'
     ]
   },
   include_package_data=True,

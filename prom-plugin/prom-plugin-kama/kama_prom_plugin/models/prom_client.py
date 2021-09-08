@@ -12,7 +12,7 @@ from k8kat.res.svc.kat_svc import KatSvc
 from kama_sdk.core.core import utils
 from kama_sdk.core.core.config_man import config_man
 from kama_sdk.core.core.utils import pwar
-from prom_kaml.models.types import PromData
+from kama_prom_plugin.models.types import PromData
 
 
 class PromClient:

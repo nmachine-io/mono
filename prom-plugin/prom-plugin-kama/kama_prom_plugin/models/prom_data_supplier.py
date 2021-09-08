@@ -3,8 +3,8 @@ from functools import lru_cache
 from typing import Dict, Optional, Union
 
 from kama_sdk.model.supplier.base.supplier import Supplier
-from prom_kaml.models.prom_client import PromClient, prom_client
-from prom_kaml.models.types import PromMatrix, PromVector
+from kama_prom_plugin.models.prom_client import PromClient, prom_client
+from kama_prom_plugin.models.types import PromMatrix, PromVector
 
 
 class PromDataSupplier(Supplier):
