@@ -1,18 +1,14 @@
 from datetime import datetime
 from typing import Dict, List, Optional
 
-from werkzeug.utils import cached_property
-
-from kama_sdk.model.humanizer.quantity_humanizer import QuantityHumanizer
-from kama_sdk.model.supplier.base.supplier import Supplier
-from kama_prom_plugin.models import prom_utils
 from kama_prom_plugin.models.types import PromMatrixEntry
+from kama_sdk.model.supplier.base.supplier import Supplier
 
 
 class PromMatrixToSeriesSupplier(Supplier):
 
   def source_data(self) -> List[PromMatrixEntry]:
-    return super(PromMatrixToSeriesSupplier, self).source_data()
+    return super(PromMatrixToSeriesSupplier, self).get_source_data()
 
   def _compute(self) -> Optional[List]:
     if data := self.source_data():
@@ -21,24 +17,8 @@ class PromMatrixToSeriesSupplier(Supplier):
     else:
       return None
 
-  @cached_property
-  def humanizer(self) -> QuantityHumanizer:
-    return self.inflate_child(
-      QuantityHumanizer,
-      prop=HUMANIZER_KEY,
-      lookback=False,
-      safely=True
-    )
-
-  @cached_property
-  def with_unit(self) -> bool:
-    return self.resolve_prop(APPEND_UNIT, lookback=False, backup=False)
-
-  # @model_prop('MY_PROP', CACHE=False, ser=humanizer)
-  # def some_prop(self):
-  #   pass
-
-  def matrix2series(self, matrix_entries: List[PromMatrixEntry]) -> List:
+  @staticmethod
+  def matrix2series(matrix_entries: List[PromMatrixEntry]) -> List:
     output = []
     # warn_agg_series(matrix_entries)
     for matrix_entry in matrix_entries:
@@ -47,11 +27,7 @@ class PromMatrixToSeriesSupplier(Supplier):
         if len(datapoint) == 2:
           epoch, computed_val = datapoint
           entry = find_or_create_entry(output, epoch)
-          entry[key] = prom_utils.process_num(
-            computed_val, 
-            self.humanizer, 
-            self.with_unit
-          )
+          entry[key] = float(computed_val)
         else:
           print(f"[kama_sdk:prom_series_computer] !=2 entry val {datapoint}")
 

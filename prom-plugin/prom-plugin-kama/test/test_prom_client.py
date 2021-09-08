@@ -1,29 +1,35 @@
-from k8kat.res.ns.kat_ns import KatNs
-
-from kama_sdk.tests.t_helpers import helper
+from kama_prom_plugin.consts import SVC_NS_KEY
 from kama_sdk.utils.unittest.base_classes import ClusterTest
 from kama_prom_plugin.models.prom_client import prom_client
-from test import prom_test_helper as my_helper
+from test.prom_test_helper import easy_setup, REQUIRED_SVC_NS, REQUIRED_SVC_NAME
 
 
 class TestPromClient(ClusterTest):
 
-  def test_connection(self):
-    if KatNs.find(my_helper.svc_ns):
-      helper.vanilla_setup()
-      my_helper.vanilla_setup()
+  def setUp(self) -> None:
+    super(TestPromClient, self).setUp()
+    easy_setup()
 
-      cli = prom_client
-      svc = cli.find_prom_svc()
-      self.assertIsNotNone(svc)
-      self.assertEqual(my_helper.svc_ns, svc.namespace)
-      self.assertEqual(my_helper.svc_name, svc.name)
-      self.assertTrue(cli.is_prom_server_in_cluster())
+  def test_get_config(self):
+    actual = prom_client.get_config()
+    self.assertEqual(expected_config, actual)
+
+  def test_connection(self):
+    svc = prom_client.find_prom_svc()
+    self.assertIsNotNone(svc)
+    self.assertEqual(REQUIRED_SVC_NS, svc.namespace)
+    self.assertEqual(REQUIRED_SVC_NAME, svc.name)
+    self.assertTrue(prom_client.is_prom_server_in_cluster())
 
   def test_invoke(self):
-    if KatNs.find(my_helper.svc_ns):
-      helper.vanilla_setup()
-      my_helper.vanilla_setup()
       resp = prom_client.compute_vector('up')
-      print(resp)
       self.assertEqual('vector', resp['resultType'])
+
+
+expected_config = {
+  'prometheus': {
+    'access_type': 'kubernetes',
+    'service_namespace': REQUIRED_SVC_NS,
+    'service_name': REQUIRED_SVC_NAME
+  }
+}

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c0e5f58e42d314c5dc0ced1ca21072e6a54a6af5249fed85b288e30f1d98e48f"
+            "sha256": "e867ce2d315e01bbb5f81d4b681c4e0e66403f8d09c7f3ec763c76b0a6c5dbf7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -54,10 +54,6 @@
             ],
             "markers": "python_version >= '3.5'",
             "version": "==5.0.9"
-        },
-        "e1839a8": {
-            "editable": true,
-            "path": "."
         },
         "flask": {
             "hashes": [
@@ -179,10 +175,6 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==0.0.13"
-        },
-        "kama-telem-plugin": {
-            "editable": true,
-            "path": "."
         },
         "kubernetes": {
             "hashes": [

@@ -1,2 +1,4 @@
 kama_sdk
 kama_telem_plugin
+kama_prom_plugin
+reqlib-metadata

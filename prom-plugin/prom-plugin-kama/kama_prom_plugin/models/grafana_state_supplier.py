@@ -10,7 +10,7 @@ class GrafanaStateSupplier(Supplier):
 
   @cached_property
   def is_configured(self):
-    return PromDataSupplier({}).ping()
+    return PromDataSupplier({}).do_ping()
 
   @cached_property
   def svc(self) -> KatSvc:

@@ -1,83 +1,82 @@
 from datetime import datetime, timedelta
-from functools import lru_cache
 from typing import Dict, Optional, Union
 
-from kama_sdk.model.supplier.base.supplier import Supplier
 from kama_prom_plugin.models.prom_client import PromClient, prom_client
 from kama_prom_plugin.models.types import PromMatrix, PromVector
+from kama_sdk.model.base.model_decorators import model_attr
+from kama_sdk.model.supplier.base.supplier import Supplier, SER_NATIVE, SERIALIZER_KEY
+from kama_sdk.utils.logging import lerr
 
 
 class PromDataSupplier(Supplier):
 
-  @lru_cache
-  def client(self) -> Optional[PromClient]:
-    if config := self.client_config_root():
+  def get_client(self) -> Optional[PromClient]:
+    if config := self.get_client_config_root():
       return PromClient(config)
     else:
       return prom_client
 
-  @lru_cache
-  def step(self) -> str:
-    return self.get_prop(STEP_KEY, '1h')
+  def get_client_config_root(self) -> Optional[Dict]:
+    return self.resolve_attr_value(CLIENT_CONFIG, depth=100)
 
-  @lru_cache
-  def client_config_root(self) -> Optional[Dict]:
-    return self.resolve_prop(CLIENT_CONFIG, depth=100)
-
-  @lru_cache
-  def t0(self) -> datetime:
-    offset = self.get_prop(T0_OFFSET_KEY, {'hours': 3})
+  @model_attr(cached=False)
+  def get_t0(self) -> datetime:
+    offset = self.get_local_attr(T0_OFFSET_KEY, backup={'hours': 3})
     return parse_from_now(offset)
 
-  @lru_cache
-  def tn(self) -> datetime:
-    offset = self.get_prop(TN_OFFSET_KEY, {})
+  @model_attr(cached=False)
+  def get_tn(self) -> datetime:
+    offset = self.get_attr(TN_OFFSET_KEY, backup={'minutes': 0})
     return parse_from_now(offset)
 
-  @lru_cache
-  def serializer_type(self) -> str:
-    return self.get_prop('serializer', 'legacy')
+  @model_attr(cached=False)
+  def get_step(self) -> str:
+    return self.get_local_attr(STEP_KEY, backup='1h')
 
-  @lru_cache
-  def _type(self) -> str:
-    return self.resolve_prop(
+  def get_serializer_type(self) -> str:
+    return self.get_attr(SERIALIZER_KEY, backup=SER_NATIVE)
+
+  def get_data_type(self) -> str:
+    return self.get_attr(
       TYPE_KEY,
       backup='matrix',
       lookback=0
     )
 
   def resolve(self) -> Union[PromMatrix, PromVector]:
-    if self._type() == 'matrix':
-      response = self.fetch_matrix()
-    elif self._type() == 'vector':
-      response = self.fetch_vector()
-    elif self._type() == 'ping':
-      response = self.ping()
+    data_type = self.get_data_type()
+
+    if data_type == 'matrix':
+      response = self.do_fetch_matrix()
+    elif data_type == 'vector':
+      response = self.do_fetch_vector()
+    elif data_type == 'ping':
+      response = self.do_ping()
     else:
-      print(f"[kama_sdk:prom_supplier] bad req type {self._type()}")
+      lerr(f"bad req type {data_type}", sig=self.sig())
       response = None
 
     return response
 
-  def fetch_matrix(self) -> Optional[PromMatrix]:
-    prom_data = self.client().compute_matrix(
-      self.source_data(),
-      self.step(),
-      self.t0(),
-      self.tn()
+  def do_fetch_matrix(self) -> Optional[PromMatrix]:
+    prom_data = self.get_client().compute_matrix(
+      self.get_source_data(),
+      self.get_step(),
+      self.get_t0(),
+      self.get_tn()
     )
     # print("RAW")
     # print(prom_data)
     return prom_data['result'] if prom_data else None
 
-  def ping(self) -> bool:
-    response = self.client().compute_vector("up")
+  def do_ping(self) -> bool:
+    response = self.get_client().compute_vector("up")
     return response is not None
 
-  def fetch_vector(self) -> Optional[PromVector]:
-    prom_data = self.client().compute_vector(
-      self.source_data(),
-      self.tn()
+  def do_fetch_vector(self) -> Optional[PromVector]:
+    prom_data = self.get_client().compute_vector(
+      self.get_source_data(),
+      self.get_tn()
     )
     return prom_data['result'] if prom_data else None
 

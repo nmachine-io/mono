@@ -1,6 +1,7 @@
 import os
 from typing import List, Dict, Type
 
+from kama_prom_plugin.consts import PLUGIN_ID
 from kama_sdk.core.core.plugin_type_defs import PluginManifest
 from kama_sdk.model.base.model import Model
 from kama_prom_plugin.models.grafana_state_supplier import GrafanaStateSupplier
@@ -11,9 +12,9 @@ from kama_prom_plugin.models.prom_vector_to_groups_provider import PromVectorsTo
 from kama_sdk.utils.descriptor_utils import load_dir_yamls
 
 
-def describe_self():
+def get_manifest():
   return PluginManifest(
-    id='nmachine.prom',
+    id=PLUGIN_ID,
     publisher_identifier='nmachine',
     app_identifier='prom-plugin',
     model_descriptors=gather_model_descriptors(),

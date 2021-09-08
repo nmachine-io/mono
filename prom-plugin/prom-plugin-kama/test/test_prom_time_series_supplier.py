@@ -1,6 +1,5 @@
-from kama_sdk.model.humanizer.bytes_humanizer import BytesHumanizer
+from kama_prom_plugin.models.prom_matrix_to_timeseries_supplier import PromMatrixToSeriesSupplier
 from kama_sdk.utils.unittest.base_classes import ClusterTest
-from kama_prom_plugin.models.prom_matrix_to_timeseries_provider import PromMatrixToSeriesSupplier
 from kama_prom_plugin.models.types import PromMatrix
 from test import prom_test_helper as my_helper
 
@@ -15,14 +14,9 @@ class TestPromMatrixToSeriesSupplier(ClusterTest):
     actual = subject().matrix2series(prom_matrix_explicit_keys)
     self.assertEqual(expected_explicit, actual)
 
-  def test_with_humanizer(self):
-    sup = subject(humanizer=f"kind::{BytesHumanizer.__name__}")
-    actual = sup.matrix2series(prom_matrix_explicit_keys)
-    self.assertIsNotNone(actual)
-
   def test_with_real_data_source(self):
     if my_helper.easy_setup():
-      config = my_helper.vanilla_matrix_supplier().config
+      config = my_helper.create_simple_matrix_supplier().get_config
       result = subject(source=config).resolve()
       self.assertIsNotNone(result)
       self.assertGreater(len(result), 0)

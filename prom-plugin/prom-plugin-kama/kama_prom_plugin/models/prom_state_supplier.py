@@ -10,7 +10,7 @@ class PromStateSupplier(Supplier):
 
   @cached_property
   def is_online(self):
-    return PromDataSupplier({}).ping()
+    return PromDataSupplier({}).do_ping()
 
   @cached_property
   def svc(self) -> KatSvc:

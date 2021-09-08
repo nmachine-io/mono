@@ -3,22 +3,142 @@ id: "app.card-grid.home"
 title: "Home"
 cell_specs:
   - "id::app.view-spec.hello"
+  - "id::app.view-spec.two"
+  - "id::app.view-spec.three"
+
 labels:
   searchable: true
 
 ---
 
 kind: ViewSpec
+id: "app.view-spec.two"
+title: "Store Website"
+spec:
+  type: Card
+  width: 2
+  height: 2
+  elements:
+    - type: Block
+      elements:
+        - type: SmallHeader
+          style:
+            mb: "4px"
+          title:
+            type: Text
+            text: Memory Consumption
+            style: [bold, fair]
+          subtitle:
+            type: Block
+            orientation: horizontal
+            elements:
+              - type: Image
+                uri: "/services/prometheus/small.png"
+                style:
+                  height: "12px"
+              - type: Text
+                text: "Prometheus Plugin"
+                style: [calm]
+        - type: Timeseries
+          style:
+            height: "130px"
+    - type: Block
+      style:
+        mt: "19px"
+      elements:
+        - type: SmallHeader
+          style:
+            mb: "4px"
+          title:
+            type: Text
+            text: CPU Consumption
+            style: [bold, fair]
+          subtitle:
+            type: Block
+            orientation: horizontal
+            elements:
+              - type: Image
+                uri: "/services/prometheus/small.png"
+                style:
+                  height: "12px"
+              - type: Text
+                text: "Prometheus Plugin"
+                style: [calm]
+        - type: Timeseries
+          style:
+            height: "130px"
+
+---
+
+kind: ViewSpec
+id: "app.view-spec.three"
+title: "Store Website"
+spec:
+  type: Card
+  width: 2
+  height: 1
+  elements:
+    - type: Block
+      orientation: horizontal
+      elements:
+        - type: Block
+          elements:
+            - type: SmallHeader
+              style:
+                mt: "0px"
+                mb: "5px"
+              title:
+                type: Text
+                text: "Configuration Backups"
+                style:
+                  bold: true
+                  fair: true
+              subtitle:
+                type: Block
+                orientation: horizontal
+                elements:
+                  - type: Icon
+                    name: folder
+                    size: ".68"
+                  - type: Text
+                    text: Managed by Telem plugin
+                    style: [calm]
+            - type: Calendar
+        - type: Block
+          elements:
+            - type: SmallHeader
+              style:
+                mt: "0px"
+                mb: "5px"
+              title:
+                type: Text
+                text: "Database Backups"
+                style:
+                  bold: true
+                  fair: true
+              subtitle:
+                type: Block
+                orientation: horizontal
+                elements:
+                  - type: Icon
+                    name: folder
+                    size: ".68"
+                  - type: Text
+                    text: Managed by Telem plugin
+                    style: [calm]
+            - type: Calendar
+
+---
+
+kind: ViewSpec
 id: app.view-spec.hello
 title: "Store Website"
-cache:
-  deployment: "get::id::app.supplier.get_mono_dep"
+#cache:
+deployment: "get::id::app.supplier.get_mono_dep"
 spec:
   type: Card
   width: 2
   orientation: horizontal
-  style:
-    sexyShadow: false
   elements:
     - type: Block
       elements:
@@ -141,11 +261,12 @@ source:
         text: Ice Kream Website
         style:
           bold: true
-          fontSize: 14.5px
+          humane: true
       - type: Tag
         text: "RUNNING"
         style:
           compact: true
+          fontSize: 9px
   subtitle:
     type: Block
     orientation: horizontal

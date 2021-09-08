@@ -6,8 +6,6 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-kama-telem-plugin = {editable = true,path = "."}
-e1839a8 = {editable = true,path = "."}
 kama-prom-plugin = {editable = true, path = "."}
 
 [requires]

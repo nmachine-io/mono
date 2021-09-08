@@ -1,7 +1,6 @@
 import time
 import traceback
 from datetime import datetime, timedelta
-from functools import lru_cache
 from json import JSONDecodeError
 from typing import Optional, Dict, Tuple, Any
 from urllib.parse import quote
@@ -9,17 +8,20 @@ from urllib.parse import quote
 import requests
 from k8kat.res.svc.kat_svc import KatSvc
 
-from kama_sdk.core.core import utils
+from kama_prom_plugin.consts import PLUGIN_ID, GRAFANA_SVC_NAME_KEY, GRAFANA_SVC_NS_KEY, SVC_NS_KEY, SVC_NAME_KEY, \
+  ACCESS_TYPE_KEY, GRAFANA_ACCESS_TYPE_KEY, URL_KEY, GRAFANA_URL_KEY
 from kama_sdk.core.core.config_man import config_man
-from kama_sdk.core.core.utils import pwar
 from kama_prom_plugin.models.types import PromData
+from kama_sdk.utils import env_utils, utils
+from kama_sdk.utils.logging import lwar
 
 
 class PromClient:
-  _config: Optional[Dict]
-
+  # _config: Optional[Dict]
+  #
   def __init__(self, config: Optional[Dict] = None):
-    self._config = config
+    # self._config = config
+    pass
 
   def compute_vector(self, *args) -> Optional[PromData]:
     path, args = instant_path_and_args(*args)
@@ -32,7 +34,7 @@ class PromClient:
   def do_invoke(self, path: str, url_args: Dict) -> Optional[PromData]:
     if self.is_prom_server_in_cluster():
       if svc := self.find_prom_svc():
-        if utils.is_in_cluster():
+        if env_utils.is_in_cluster():
           base_url = self.get_base_in_cluster_url()
           response = invoke_normal_url(base_url, path, url_args)
         else:
@@ -46,28 +48,27 @@ class PromClient:
     if response:
       return response.get('data')
 
-  @lru_cache(maxsize=1)
   def find_prom_svc(self) -> Optional[KatSvc]:
-    if self.config():
-      prom_ns = self.read_config(SVC_NS_KEY)
-      prom_name = self.read_config(SVC_NAME_KEY)
+    if self.get_config():
+      prom_ns = self.get_config_value(SVC_NS_KEY)
+      prom_name = self.get_config_value(SVC_NAME_KEY)
       return KatSvc.find(prom_name, prom_ns)
 
-  @lru_cache(maxsize=1)
   def find_grafana_svc(self) -> Optional[KatSvc]:
-    if self.config():
-      svc_ns = self.read_config(GRAFANA_SVC_NS_KEY)
-      svc_name = self.read_config(GRAFANA_SVC_NAME_KEY)
+    if self.get_config():
+      svc_ns = self.get_config_value(GRAFANA_SVC_NS_KEY)
+      svc_name = self.get_config_value(GRAFANA_SVC_NAME_KEY)
       return KatSvc.find(svc_name, svc_ns)
 
-  def read_config(self, deep_key: str) -> Optional[Any]:
-    return utils.deep_get2(self.config(), deep_key)
+  def get_config_value(self, deep_key: str) -> Optional[Any]:
+    return utils.deep_get(self.get_config(), deep_key)
 
-  def config(self) -> Optional[Dict]:
-    if self._config is None:
-      root = config_man.manifest_variables(space='nmachine.prom')
-      self._config = root
-    return self._config
+  def get_config(self) -> Optional[Dict]:
+    return config_man.get_merged_vars(space=PLUGIN_ID)
+    # if self._config is None:
+    #   root = config_man.get_merged_vars(space=PLUGIN_ID)
+    #   self._config = root
+    # return self._config
 
   def is_grafana_configured(self):
     if self.is_grafana_server_in_cluster():
@@ -76,10 +77,10 @@ class PromClient:
       return self.get_prom_ext_url()
 
   def is_prom_server_in_cluster(self) -> bool:
-    return self.read_config(ACCESS_TYPE_KEY) == access_type_k8s
+    return self.get_config_value(ACCESS_TYPE_KEY) == access_type_k8s
 
   def is_grafana_server_in_cluster(self) -> bool:
-    return self.read_config(GRAFANA_ACCESS_TYPE_KEY) == access_type_k8s
+    return self.get_config_value(GRAFANA_ACCESS_TYPE_KEY) == access_type_k8s
 
   def get_base_in_cluster_url(self) -> str:
     if svc := self.find_prom_svc():
@@ -87,10 +88,10 @@ class PromClient:
       return f"http://{svc.name}.{svc.namespace}:{port}"
 
   def get_prom_ext_url(self) -> str:
-    return self.read_config(URL_KEY)
+    return self.get_config_value(URL_KEY)
 
   def get_grafana_ext_url(self) -> str:
-    return self.read_config(GRAFANA_URL_KEY)
+    return self.get_config_value(GRAFANA_URL_KEY)
 
 
 def instant_path_and_args(query: str, ts: datetime = None) -> Tuple:
@@ -126,22 +127,20 @@ def invoke_proxy_url(svc: KatSvc, path: str, url_args: Dict) -> Optional[Dict]:
     try:
       body = resp.get('body')
       return body
-    except:
-      pwar(__name__, f"prom decode failed for resp {resp}", True)
+    except Exception as e:
+      lwar(f"prom decode failed for resp {resp}", exc=e)
       return None
 
 
 def invoke_normal_url(base_url, path, args: Dict) -> Optional[Dict]:
   full_url = f"{base_url}{path}?{dict_args2str(args)}"
   resp = requests.get(full_url)
-  if resp.ok:
+  if resp and resp.ok:
     try:
       return resp.json()
-    except JSONDecodeError:
-      print(traceback.format_exc())
-      print(resp)
-      print(f"[kama_sdk:prom_client] svc resp decode ^^ fail")
-      return None
+    except JSONDecodeError as e:
+      lwar("svc resp decode", exc=e)
+  return None
 
 
 def dict_args2str(args: Dict) -> str:
@@ -166,12 +165,3 @@ prom_client = PromClient()
 access_type_k8s = 'kubernetes'
 access_type_generic = 'generic'
 
-URL_KEY = 'prometheus.url'
-SVC_NS_KEY = 'prometheus.service_namespace'
-SVC_NAME_KEY = 'prometheus.service_name'
-ACCESS_TYPE_KEY = 'prometheus.access_type'
-
-GRAFANA_URL_KEY = 'grafana.url'
-GRAFANA_SVC_NS_KEY = 'grafana.service_namespace'
-GRAFANA_SVC_NAME_KEY = 'grafana.service_name'
-GRAFANA_ACCESS_TYPE_KEY = 'grafana.access_type'

@@ -21,7 +21,7 @@ setuptools.setup(
   },
   include_package_data=True,
   install_requires=[
-    'kama-sdk-py',
+    'kama-sdk-py'
   ],
   classifiers=[
     "Programming Language :: Python :: 3",

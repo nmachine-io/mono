@@ -1,39 +1,23 @@
-from functools import lru_cache
 from typing import Any, List
 
-from kama_sdk.model.humanizer.quantity_humanizer import QuantityHumanizer
-
-from kama_sdk.model.supplier.base.supplier import Supplier
-from kama_prom_plugin.models import prom_utils
 from kama_prom_plugin.models.types import PromVectorEntry
+from kama_sdk.model.supplier.base.supplier import Supplier
 
 
 class PromVectorsToGroupsSupplier(Supplier):
 
-  def source_data(self) -> List[PromVectorEntry]:
-    return super(PromVectorsToGroupsSupplier, self).source_data()
+  def get_source_data(self) -> List[PromVectorEntry]:
+    return super(PromVectorsToGroupsSupplier, self).get_source_data()
 
   def _compute(self) -> Any:
-    if data := self.source_data():
+    if data := self.get_source_data():
       grouped = self.vector2groups(data)
       return grouped
     else:
       return None
 
-  @lru_cache
-  def humanizer(self) -> QuantityHumanizer:
-    return self.inflate_child(
-      QuantityHumanizer,
-      prop=HUMANIZER_KEY,
-      lookback=False,
-      safely=True
-    )
-
-  @lru_cache
-  def with_unit(self) -> bool:
-    return self.resolve_prop(APPEND_UNIT, lookback=False, backup=False)
-
-  def vector2groups(self, vectors: List[PromVectorEntry]):
+  @staticmethod
+  def vector2groups(vectors: List[PromVectorEntry]):
     result = []
     for i, vector in list(enumerate(vectors)):
       metric = vector.get('metric')
@@ -47,15 +31,7 @@ class PromVectorsToGroupsSupplier(Supplier):
 
       result.append({
         'name': metric_name or f"group {i + 1}",
-        'value': prom_utils.process_num(
-          num_value,
-          self.humanizer(),
-          self.with_unit()
-        )
+        'value': float(num_value)
       })
 
     return result
-
-
-HUMANIZER_KEY = 'humanizer'
-APPEND_UNIT = 'with_unit'

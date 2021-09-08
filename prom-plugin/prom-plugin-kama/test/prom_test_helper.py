@@ -1,41 +1,38 @@
-from k8kat.res.ns.kat_ns import KatNs
-
+from kama_prom_plugin import plugin
+from kama_prom_plugin.consts import PLUGIN_ID
+from kama_prom_plugin.models.prom_client import ACCESS_TYPE_KEY, SVC_NS_KEY, SVC_NAME_KEY
 from kama_sdk.core.core.config_man import config_man
-from kama_sdk.model.base.model import models_man
-from kama_sdk.tests.t_helpers import helper
-from kama_prom_plugin import kaml
+from kama_sdk.model.base.mc import KIND_KEY
 from kama_prom_plugin.models import prom_client as client_module
 from kama_prom_plugin.models import prom_data_supplier as supplier_module
 from kama_prom_plugin.models.prom_data_supplier import PromDataSupplier
+from kama_sdk.model.base.models_manager import models_manager
+from kama_sdk.model.supplier.base.supplier import SRC_DATA_KEY
 
 
 def vanilla_setup():
   config_man.patch_user_vars({
-    client_module.ACCESS_TYPE_KEY: client_module.access_type_k8s,
-    client_module.SVC_NS_KEY: svc_ns,
-    client_module.SVC_NAME_KEY: svc_name
-  }, space='nmachine.prom')
+    ACCESS_TYPE_KEY: client_module.access_type_k8s,
+    SVC_NS_KEY: REQUIRED_SVC_NS,
+    SVC_NAME_KEY: REQUIRED_SVC_NAME
+  }, space=PLUGIN_ID)
 
 
-def vanilla_matrix_supplier():
+def create_simple_matrix_supplier() -> PromDataSupplier:
   return PromDataSupplier.inflate({
-    'kind': PromDataSupplier.__name__,
+    KIND_KEY: PromDataSupplier.__name__,
     supplier_module.TYPE_KEY: 'matrix',
     supplier_module.STEP_KEY: '15m',
-    'source': "container_memory_usage_bytes{namespace=\"monitoring\"}"
+    SRC_DATA_KEY: "container_memory_usage_bytes{namespace=\"monitoring\"}"
   })
 
 
-def easy_setup() -> bool:
-  if KatNs.find(svc_ns):
-    helper.vanilla_setup()
-    vanilla_setup()
-    models_man.add_classes(kaml.model_classes())
-    models_man.add_descriptors(kaml.model_descriptors())
-    return True
-  else:
-    return False
+def easy_setup():
+  vanilla_setup()
+  descriptors = plugin.gather_model_descriptors()
+  models_manager.add_models(plugin.gather_custom_models())
+  models_manager.add_any_descriptors(descriptors, space=PLUGIN_ID)
 
 
-svc_ns = 'monitoring'
-svc_name = 'monitoring-kube-prometheus-prometheus'
+REQUIRED_SVC_NS = 'monitoring'
+REQUIRED_SVC_NAME = 'monitoring-prometheus-server'
