@@ -8,18 +8,21 @@ from k8kat.res.svc.kat_svc import KatSvc
 from kama_sdk.core.core.config_man import config_man
 from kama_sdk.core.telem.telem_backend import TelemBackend
 from kama_sdk.utils import env_utils, utils
-from kama_telem_plugin.consts import svc_name, enabled_var_key, plugin_id
-from kama_telem_plugin.core import get_svc, is_enabled
+from kama_telem_plugin.consts import SVC_NAME, ENABLED_KEY, PLUGIN_ID, STRATEGY_KEY
 
 
 class NMachineTelemBackend(TelemBackend):
 
   def is_enabled(self) -> bool:
-    value = config_man.read_var(enabled_var_key, space=plugin_id)
+    value = config_man.read_var(ENABLED_KEY, space=PLUGIN_ID)
     return utils.any2bool(value)
 
   def is_online(self) -> bool:
     return self.collection_names() is not None
+
+  @staticmethod
+  def get_strategy() -> str:
+    return config_man.read_var(STRATEGY_KEY, space=PLUGIN_ID)
 
   def collection_names(self) -> List[str]:
     endpoint = f"/collections/index"
@@ -27,11 +30,10 @@ class NMachineTelemBackend(TelemBackend):
 
   def drop_collection(self, coll_id: str):
     endpoint = f"/collections/{coll_id}/drop"
-    return self.do_get(endpoint, {})
+    return self.do_post(endpoint, {}, {})
 
   def create_record(self, coll_id: str, record: Dict):
     endpoint = f"/collections/{coll_id}/insert"
-    print(f"post to {endpoint}: {record}")
     self.do_post(endpoint, {}, {'data': record})
 
   def update_record(self, coll_id: str, record: Dict):
@@ -48,7 +50,7 @@ class NMachineTelemBackend(TelemBackend):
 
   @staticmethod
   def get_svc() -> Optional[KatSvc]:
-    return KatSvc.find(svc_name, config_man.get_ns())
+    return KatSvc.find(SVC_NAME, config_man.get_ns())
 
   @staticmethod
   def do_get(path: str, args: Dict) -> Optional[Union[Dict, List]]:
@@ -56,7 +58,7 @@ class NMachineTelemBackend(TelemBackend):
       url = path2in_cluster_url(path)
       return requests.get(url).json()
     else:
-      if svc := get_svc():
+      if svc := NMachineTelemBackend.get_svc():
         result = svc.proxy_get(path, args)
         return parse_proxy_response(result)
       else:
@@ -68,9 +70,9 @@ class NMachineTelemBackend(TelemBackend):
       url = path2in_cluster_url(path)
       return requests.post(url, json=bod).json()
     else:
-      if svc := get_svc():
+      if svc := NMachineTelemBackend.get_svc():
         result = svc.proxy_post(path, args, bod)
-        print(result)
+        # print(result)
         return parse_proxy_response(result)
       else:
         return None
@@ -98,5 +100,5 @@ def parse_proxy_response(result: Any) -> Optional[Union[Dict, List]]:
 
 
 def path2in_cluster_url(path: str) -> str:
-  base = f"http://{svc_name}.{config_man.ns()}:5000"
+  base = f"http://{SVC_NAME}.{config_man.ns()}:5000"
   return f"{base}/{path}"

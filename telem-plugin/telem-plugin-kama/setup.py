@@ -13,14 +13,14 @@ setuptools.setup(
   long_description_content_type="text/markdown",
   url="https://github.com/nmachine-io/kama-sdk-py",
   package_data={
-    'kama_sdk': [
+    'kama_telem_plugin': [
       'assets/*.*',
       'descriptors/**'
     ]
   },
   include_package_data=True,
   install_requires=[
-    'kama-sdk-py>=0.0.245',
+    'kama-sdk-py',
   ],
   classifiers=[
     "Programming Language :: Python :: 3",

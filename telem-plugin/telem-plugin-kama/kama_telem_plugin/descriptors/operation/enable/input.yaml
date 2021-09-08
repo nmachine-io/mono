@@ -5,20 +5,17 @@ variable: id::strategy
 ---
 
 kind: Field
-id: deployment.mongo.host
-variable: id::deployment.mongo.host
-visible: get::nmachine.prom.helpers.is_pvc_selected
+id: "deployment.mongo.host"
+variable: "id::deployment.mongo.host"
+visible:
+  challenge: "get::self>>inputs->.strategy"
+  check_against: "self_managed"
 
 ---
 
 kind: Field
 id: deployment.mongo.port
 variable: id::deployment.mongo.port
-visible: get::nmachine.prom.helpers.is_pvc_selected
-
----
-
-kind: Predicate
-id: nmachine.prom.helpers.is_pvc_selected
-challenge: "get::props inputs->.strategy"
-check_against: self_managed
+visible:
+  challenge: "get::self>>inputs->.strategy"
+  check_against: "self_managed"

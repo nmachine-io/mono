@@ -7,8 +7,6 @@ __pycache__/
 # C extensions
 *.so
 
-kama_sdk
-
 # Distribution / packaging
 .Python
 build/
@@ -117,8 +115,7 @@ dmypy.json
 .idea
 logs/
 *.log.*
-k8_kat
-k8-kat
-.env
 
+kama_sdk
 requirements.txt
+reqlib-metadata

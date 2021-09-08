@@ -33,9 +33,14 @@ class TelemStateHelper(Model):
     return not self.is_enabled()
 
   @model_attr(key='svc', cached=True)
-  def svc(self) -> Optional[KatSvc]:
+  def get_svc(self) -> Optional[KatSvc]:
     if backend := get_backend():
       return backend.get_svc()
+
+  @model_attr(key='strategy')
+  def get_strategy(self) -> Optional[str]:
+    if backend := get_backend():
+      return backend.get_strategy()
 
   @model_attr(key='status', cached=True)
   def status(self):

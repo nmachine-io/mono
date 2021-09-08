@@ -1,10 +1,10 @@
 kind: ManifestVariable
-id: enabled
+id: "enabled"
 title: Enabled Switch
 info: "Master on/off switch for Telemetry plugin. If the plugin is enabled
 and you want to disable it, do NOT change this value; instead, use the
 'Disable Telemetry' operation."
-level: default_vars
+#level: default_vars
 default_value: 27017
 input: kind::OnOffInput
 validators:
@@ -14,12 +14,12 @@ validators:
 ---
 
 kind: ManifestVariable
-id: strategy
-title: Storage Strategy
-level: default_vars
+id: "strategy"
+title: "Storage Strategy"
+level: "default_vars"
 info: "Where the database lives. Either an in-cluster PVC (default) or an
 arbitrary MongoDB database you manage yourself and point to."
-default_value: pvc
+default_value: "pvc"
 input:
   kind: SelectInput
   options:
@@ -37,7 +37,7 @@ validators:
 ---
 
 kind: ManifestVariable
-id: mongo.port
+id: "mongo.port"
 title: Self-managed Database Port
 info: "Only set if using a self-managed database. Port on which
 your database is running. Value will be ignored if strategy is PVC."
@@ -48,26 +48,17 @@ validators:
 ---
 
 kind: ManifestVariable
-id: mongo.host
+id: "mongo.host"
 title: Self-managed Database Host
 info: "Only set if using a self-managed database. Port on which
 your database is running. Value will be ignored if strategy is PVC. For
  formatting information, like
 how to include the password, refer to the MongoDB docs."
-validators:
-  kind: ListFlattener
-  source:
-    kind: IfThenElse
-    source: kind::TruePredicate
-    if_true:
-      - kind: Predicate
-        check_against: localhost
-    if_false: []
 
 ---
 
 kind: ManifestVariable
-id: server.replicas
+id: "server.replicas"
 title: Telemetry Service Replica Count
 info: "When enabled, the telemetry plugin uses a light Flask-based
 API to delegate calls. A replica count above 2 is generally sufficient
@@ -75,6 +66,7 @@ for even large organizations."
 validators:
   - kind: FormatPredicate
     check_against: integer
+
 input:
   kind: SliderInput
   min: 0
