@@ -3,8 +3,8 @@ id: sdk.supplier.concern.dep.prom_mem_dump
 step: 15m
 source: "sum(
           container_memory_usage_bytes{
-            namespace=\"${get::props kat_res=>namespace}\",
-            pod=~'${get::props kat_res=>name}-.*',
+            namespace=\"${get::self>>kat_res=>namespace}\",
+            pod=~'${get::self>>kat_res=>name}-.*',
             image!='',
             container_name!='POD'
           }
@@ -16,8 +16,8 @@ kind: PromDataSupplier
 step: 15m
 id: sdk.supplier.concern.dep.prom_mem_dump_by_pod
 source: "sum by(pod) (container_memory_usage_bytes{
-                          namespace=\"${get::props kat_res=>namespace}\",
-                          pod=~'${get::props kat_res=>name}-.*',
+                          namespace=\"${get::self>>kat_res=>namespace}\",
+                          pod=~'${get::self>>kat_res=>name}-.*',
                           image!='',
                           container_name!='POD'
                         }
@@ -29,8 +29,8 @@ kind: PromDataSupplier
 step: 15m
 id: sdk.supplier.concern.dep.prom_cpu_dump_by_pod
 source: "sum by(pod) (container_memory_usage_bytes{
-                          namespace=\"${get::props kat_res=>namespace}\",
-                          pod=~'${get::props kat_res=>name}-.*',
+                          namespace=\"${get::self>>kat_res=>namespace}\",
+                          pod=~'${get::self>>kat_res=>name}-.*',
                           image!='',
                           container_name!='POD'
                         }
@@ -42,8 +42,8 @@ kind: PromDataSupplier
 id: sdk.supplier.concern.pod.prom_mem_dump
 source: "sum(
           container_memory_usage_bytes{
-            namespace=\"${get::props kat_res=>namespace}\",
-            pod='${get::props kat_res=>name}',
+            namespace=\"${get::self>>kat_res=>namespace}\",
+            pod='${get::self>>kat_res=>name}',
             image!='',
             container_name!='POD'
           }
@@ -54,8 +54,8 @@ source: "sum(
 kind: PromDataSupplier
 id: sdk.supplier.concern.pod.prom_mem_dump_by_container
 source: "sum by(container) (container_memory_usage_bytes{
-                          namespace=\"${get::props kat_res=>namespace}\",
-                          pod='${get::props kat_res=>name}',
+                          namespace=\"${get::self>>kat_res=>namespace}\",
+                          pod='${get::self>>kat_res=>name}',
                           image!='',
                           container_name!='POD'
                         }

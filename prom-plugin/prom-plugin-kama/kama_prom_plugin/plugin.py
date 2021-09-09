@@ -1,7 +1,7 @@
 import os
 from typing import List, Dict, Type
 
-from kama_prom_plugin.consts import PLUGIN_ID
+from kama_prom_plugin.consts import PLUGIN_ID, PROTOTYPE_MODE_KTEA
 from kama_sdk.core.core.plugin_type_defs import PluginManifest
 from kama_sdk.model.base.model import Model
 from kama_prom_plugin.models.grafana_state_supplier import GrafanaStateSupplier
@@ -20,7 +20,8 @@ def get_manifest():
     model_descriptors=gather_model_descriptors(),
     asset_paths=[assets_path],
     model_classes=gather_custom_models(),
-    virtual_kteas=[]
+    virtual_kteas=[],
+    prototype_mode_ktea=PROTOTYPE_MODE_KTEA
   )
 
 

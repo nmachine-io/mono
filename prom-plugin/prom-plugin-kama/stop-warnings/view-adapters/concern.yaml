@@ -20,7 +20,7 @@ cached:
     type: ping
 logo_url:
   kind: ImageSrcSupplier
-  source: "services/${get::props config->.type}/medium"
+  source: "services/${get::self>>config->.type}/medium"
 grafana_logo_url:
   kind: ImageSrcSupplier
   source: "services/grafana/medium"
@@ -29,10 +29,10 @@ svc:
   kind: ResourcesSupplier
   many: false
   selector:
-    res_name: get::props config->.service_name
+    res_name: get::self>>config->.service_name
     res_kind: services
-    namespace: get::props config->.service_namespace
-type: get::props config->.type
+    namespace: get::self>>config->.service_namespace
+type: get::self>>config->.type
 status:
   kind: IfThenElse
   source: get::set>>is_online

@@ -23,47 +23,39 @@ spec:
       elements:
         - type: SmallHeader
           style:
-            mb: "4px"
+            mb: "12px"
           title:
-            type: Text
-            text: Memory Consumption
-            style: [bold, fair]
-          subtitle:
             type: Block
             orientation: horizontal
             elements:
               - type: Image
                 uri: "/services/prometheus/small.png"
                 style:
-                  height: "12px"
+                  height: "18px"
               - type: Text
-                text: "Prometheus Plugin"
-                style: [calm]
+                text: Memory Consumption
+                style: [bold, fair]
         - type: Timeseries
           style:
             height: "130px"
     - type: Block
       style:
-        mt: "19px"
+        mt: "34px"
       elements:
         - type: SmallHeader
           style:
-            mb: "4px"
+            mb: "12px"
           title:
-            type: Text
-            text: CPU Consumption
-            style: [bold, fair]
-          subtitle:
             type: Block
             orientation: horizontal
             elements:
               - type: Image
                 uri: "/services/prometheus/small.png"
                 style:
-                  height: "12px"
+                  height: "18px"
               - type: Text
-                text: "Prometheus Plugin"
-                style: [calm]
+                text: Memory Consumption
+                style: [bold, fair]
         - type: Timeseries
           style:
             height: "130px"

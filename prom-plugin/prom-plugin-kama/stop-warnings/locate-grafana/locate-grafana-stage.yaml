@@ -13,11 +13,6 @@ steps:
     the cluster, and point to it."
     synopsis: assets::locate-existing-grafana.md
 
-    commit:
-      standard:
-        kind: MergeSupplier
-        source: [get::props default_commit->.standard, {enabled: true}]
-
     action:
       kind: MultiAction
       inherit: sdk.action.step_apply_application_manifest_e2e_action
@@ -44,7 +39,7 @@ id: grafana.url
 variable: id::grafana.url
 visible:
   kind: Predicate
-  challenge: get::props inputs->.grafana.access_type
+  challenge: get::self>>inputs->.grafana.access_type
   check_against: generic
 
 ---
@@ -54,7 +49,7 @@ id: grafana.service_namespace
 variable: id::grafana.service_namespace
 visible:
   kind: Predicate
-  challenge: get::props inputs->.grafana.access_type
+  challenge: get::self>>inputs->.grafana.access_type
   check_against: kubernetes
 
 ---
@@ -63,7 +58,7 @@ kind: Field
 id: grafana.service_name
 visible:
   kind: Predicate
-  challenge: get::props inputs->.grafana.service_namespace
+  challenge: get::self>>inputs->.grafana.service_namespace
   operator: presence
 variable:
   kind: ManifestVariable
@@ -75,6 +70,6 @@ variable:
       many: true
       selector:
         res_kind: Service
-        namespace: "get::props inputs->.grafana.service_namespace"
+        namespace: "get::self>>inputs->.grafana.service_namespace"
       output: options_format
-      serializer: legacy
+      serializer: "native"

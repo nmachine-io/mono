@@ -1,7 +1,6 @@
 kind: ManifestVariable
-id: prometheus.access_type
-config_space: nmachine.prom
-title: Prometheus API Access type
+id: grafana.access_type
+title: Grafana access type
 input: kind::SelectInput
 options:
   - id: kubernetes
@@ -12,11 +11,10 @@ options:
 ---
 
 kind: ManifestVariable
-id: prometheus.url
+id: grafana.url
 title: Prometheus' Base URL
 info: "Include http:// or https:// as well as port numbers.
 Include any part of the path that non-standard"
-config_space: nmachine.prom
 validators:
   - kind: FormatPredicate
     check_against: domain
@@ -24,10 +22,9 @@ validators:
 ---
 
 kind: ManifestVariable
-id: prometheus.service_namespace
+id: grafana.service_namespace
 title: Server Workload Namespace
 info: Kubernetes namespace
-config_space: nmachine.prom
 input:
   kind: SelectInput
   options:
@@ -35,26 +32,25 @@ input:
     selector: "expr::Namespace:*"
     many: true
     output: options_format
-    serializer: legacy
+    serializer: "native"
 
 ---
 
 kind: ManifestVariable
-id: prometheus.service_name
+id: grafana.service_name
 title: Server Service Name
 info: "Name of service exposing the Prometheus server in your cluster."
-config_space: nmachine.prom
 cached:
-  thing: sdk.supplier.config.variables->.prometheus.namespace
+  thing: sdk.supplier.config.variables->.grafana.namespace
   service_ns:
     kind: Supplier
     inherit: sdk.supplier.config.variables
-    output: .prometheus.namespace
+    output: .grafana.namespace
 input:
   kind: IfThenElse
   source:
     kind: Predicate
-    challenge: get::props service_ns
+    challenge: get::self>>service_ns
     operator: truthiness
   if_true:
     kind: SelectInput
@@ -63,7 +59,7 @@ input:
       many: true
       selector:
         res_kind: Service
-        namespace: get::self>>inputs->.prometheus.service_namespace
+        namespace: get::self>>service_ns
       output: options_format
-      serializer: legacy
+      serializer: "native"
   if_false: kind::GenericInput
