@@ -1,0 +1,40 @@
+################## VARIABLES ###################
+
+kind: ManifestVariable
+id: "ingress.enabled"
+category: "id::sdk.variable-category.networking"
+title: Application Ingress Toggle
+info: "If enabled, Ingress resource is provisioned to route out-of-cluster
+traffic to the application's various services. Note that you must have
+a DNS solution"
+input: {kind: OnOffInput}
+health_predicates:
+  - "id::app.predicate.ingress_in_sync"
+
+---
+
+kind: ManifestVariable
+id: "ingress.routes.monolith.host"
+title: "Ice Kream Site Domain Name"
+info: "Routes requests from this domain to the Ice Kream Store. Has
+no effect if ingress.enabled is false/null Has no effect if
+cluster does not have an ingress backend."
+category: "id::sdk.variable-category.networking"
+validators:
+  - kind: FormatPredicate
+    check_against: domain
+health_predicates:
+  - "id::app.predicate.consistent_exposure_strategies"
+
+---
+
+################## DEPENDENCIES ###################
+
+kind: ManifestVariableDependency
+id: "variable-dependency.when-ingress-is-disabled"
+title: "Value ignored when ingress.enabled is false"
+from: [id::ingress.enabled]
+to: {id: [ingress.class, ingress.routes.*]}
+active:
+  kind: Predicate
+  operator: falsy

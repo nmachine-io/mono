@@ -48,7 +48,7 @@ source:
     elements:
       - type: Text
         text: Workloads
-      - type: StatusDots
+      - type: StatusDotLine
         data: get::self>>concern=>pod_statuses
         shape: square
         spacing: 1.5px
@@ -61,7 +61,7 @@ source:
 kind: Provider
 id: nukem
 source:
-  type: StatusDots
+  type: StatusDotLine
   spacing: 1.99px
   data:
     - name: foo
@@ -103,7 +103,7 @@ source:
     - type: Text
       text: Pods
       style: [bold, calm]
-    - type: StatusDots
+    - type: StatusDotLine
       data: get::self>>concern=>pod_statuses
       shape: square
       spacing: 1.5px

@@ -1,0 +1,327 @@
+kind: ViewSpec
+id: "app.view-spec.two"
+title: "Store Website"
+deployment_name: "monolith"
+spec:
+  type: Card
+  width: 2
+  height: 2
+  elements:
+    - type: Block
+      elements:
+        - type: SmallHeader
+          style:
+            mb: "12px"
+          title:
+            type: Block
+            orientation: horizontal
+            elements:
+              - type: Image
+                uri: "/services/prometheus/small.png"
+                style:
+                  height: "18px"
+              - type: Text
+                text: Memory Consumption
+                style: [bold, fair]
+        - type: Timeseries
+          data: "get::id::nmachine.prom.supplier.deployment_memory_timeseries"
+          unit: "bytes"
+          keyTransforms:
+            value: "Application Total"
+          style:
+            height: "130px"
+    - type: Block
+      style:
+        mt: "40px"
+      elements:
+        - type: SmallHeader
+          style:
+            mb: "12px"
+          title:
+            type: Block
+            orientation: horizontal
+            elements:
+              - type: Image
+                uri: "/services/prometheus/small.png"
+                style:
+                  height: "18px"
+              - type: Text
+                text: CPU Consumption
+                style: [bold, fair]
+        - type: Timeseries
+          data: "get::id::nmachine.prom.supplier.deployment_cpu_timeseries"
+          unit: cores
+          keyTransformations:
+            value: "CPU"
+          style:
+            height: "130px"
+
+---
+
+kind: ViewSpec
+id: "app.view-spec.three"
+title: "Store Website"
+spec:
+  type: Card
+  width: 2
+  height: 1
+  elements:
+    - type: Block
+      orientation: horizontal
+      elements:
+        - type: Block
+          elements:
+            - type: SmallHeader
+              style:
+                mt: "0px"
+                mb: "5px"
+              title:
+                type: Text
+                text: "Configuration Backups"
+                style:
+                  bold: true
+                  fair: true
+              subtitle:
+                type: Block
+                orientation: horizontal
+                elements:
+                  - type: Icon
+                    name: folder
+                    size: ".68"
+                  - type: Text
+                    text: Managed by Telem plugin
+                    style: [calm]
+            - type: Calendar
+        - type: Block
+          elements:
+            - type: SmallHeader
+              style:
+                mt: "0px"
+                mb: "5px"
+              title:
+                type: Text
+                text: "Database Backups"
+                style:
+                  bold: true
+                  fair: true
+              subtitle:
+                type: Block
+                orientation: horizontal
+                elements:
+                  - type: Icon
+                    name: folder
+                    size: ".68"
+                  - type: Text
+                    text: Managed by Telem plugin
+                    style: [calm]
+            - type: Calendar
+
+---
+
+kind: ViewSpec
+id: app.view-spec.hello
+title: "Store Website"
+deployment: "get::id::app.supplier.get_mono_dep"
+spec:
+  type: Card
+  width: 2
+  orientation: horizontal
+  elements:
+    - type: Block
+      elements:
+        - "get::app.view-supplier.header"
+        - "get::app.view-supplier.service-endpoint"
+    - type: Block
+      elements:
+        - "get::app.view-supplier.gauges"
+        - "get::app.view-supplier.pod-statuses"
+        - "get::app.view-supplier.pod-statuses2"
+
+---
+
+kind: Supplier
+id: "app.view-supplier.pod-statuses"
+depth: 100
+source:
+  type: StatusDotLine
+  shape: "hexagon"
+  shapeSize: "9px"
+  title:
+    type: Text
+    text: "Pods"
+    style:
+      width: "50px"
+  style:
+    ml: "14px"
+    mt: "16px"
+  data:
+    kind: Supplier
+    inherit: sdk.supplier.pods_to_dots_format
+    pods: "get::self>>deployment=>pods"
+
+---
+
+kind: Supplier
+id: "app.view-supplier.pod-statuses2"
+depth: 100
+source:
+  type: AsyncPredicateDots
+  data: ["id::app.predicate.deployments-running"]
+  shape: "square"
+  shapeSize: "9px"
+  title:
+    type: Text
+    text: "Health"
+    style:
+      width: "50px"
+  style:
+    ml: "14px"
+    mt: "7px"
+
+---
+
+kind: Supplier
+id: "app.view-supplier.gauges"
+gauge_size: 77px
+depth: 100
+memory:
+  kind: ResourceUsageSupplier
+  inherit: "app.supplier.site-usage-supplier"
+  metric_type: memory
+cpu:
+  kind: ResourceUsageSupplier
+  inherit: "app.supplier.site-usage-supplier"
+  metric_type: cpu
+source:
+  type: Block
+  style:
+    mt: "-15px"
+  elements:
+    - type: Block
+      orientation: horizontal
+      elements:
+        - type: Block
+          orientation: horizontal
+          style: {jc: center}
+          elements:
+            - type: Gauge
+              size: "get::self>>gauge_size"
+              template:
+                type: Usage
+                data: "get::self>>memory"
+                unit: "bytes"
+                label: "Mem / Lim"
+        - type: Block
+          orientation: horizontal
+          style: {jc: center}
+          elements:
+            - type: Gauge
+              size: "get::self>>gauge_size"
+              template:
+                type: Usage
+                data: "get::self>>cpu"
+                unit: cores
+                label: "Cores / Lim"
+
+---
+
+kind: ResourcesSupplier
+id: "app.supplier.get_mono_dep"
+resource_selector: "expr::Deployment:monolith"
+many: false
+serializer: "native"
+
+---
+
+kind: Supplier
+id: "app.view-supplier.header"
+depth: 100
+action:
+  type: "goto_detail_page"
+source:
+  type: SmallHeader
+  style:
+    mb: 22px
+    hov_point: true
+  title:
+    type: Block
+    orientation: horizontal
+    elements:
+      - type: Text
+        text: Ice Kream Website
+        style:
+          bold: true
+          humane: true
+      - type: Tag
+        text: "RUNNING"
+        style:
+          compact: true
+          fontSize: 9px
+  subtitle:
+    type: Block
+    orientation: horizontal
+    elements:
+      - type: Icon
+        name: lock_open
+        style:
+          color: nectar
+      - type: Text
+        text: Insecure Image
+        style:
+          ml: "0px"
+      - type: CleanStatus
+        text: "1.10.4"
+
+---
+
+kind: Supplier
+id: "app.view-supplier.service-endpoint"
+depth: 100
+source:
+  type: AccessPointsBlock
+  style:
+    mt: "2px"
+  data:
+    kind: SiteAccessNodesSerializer
+    site_access_nodes:
+      - kind: SimpleIngressSiteAccessNode
+        id: "ingress-node"
+        ingress_selector: "expr::Ingress:ice-kream-ingress"
+
+      - kind: SimpleServiceSiteAccessNode
+        id: "service-node"
+        service_selector: "expr::Service:monolith"
+
+#    - type: ClearTag
+#      text: Internal Access
+#    - type: Text
+#      text: foo
+#      action: "www.google.com"
+#    - type: Icon
+#      name: "open_in_new"
+
+---
+
+kind: SimpleServiceSiteAccessNode
+id: "access-node"
+service_selector: "expr::Service:monolith"
+
+---
+
+kind: Supplier
+id: the-preds
+type: Block
+orientation: horizontal
+elements:
+  - type: Text
+    text: Health Checks
+  - type: AsyncPredicateDots
+    shape: square
+    data: ["id::app.predicate.deployments-running"]
+
+---
+
+kind: ResourceUsageSupplier
+id: "app.supplier.site-usage-supplier"
+workloads: [get::parent>>deployment]
+upper_bound_type: "${get::self>>metric_type}_limit"

@@ -1,0 +1,39 @@
+kind: Predicate
+id: "app.predicate.ingress_in_sync"
+title: "Ingress variables and resource In-sync?"
+info: "Ensure that Ingress resources exist if and only if the ingress
+manifest variable 'ingress.enabled' is true."
+reason: "The variable 'ingress.enabled' and the corresponding
+Kubernetes resource are out of sync. The variable is set to
+'false' but the resource exists. This is a normal occurrence when
+you change the 'ingress.enabled' variable directly instead of
+running the operation."
+challenge:
+  kind: ResourcesSupplier
+  resource_selector: "expr::Ingress:ice-kream-ingress"
+  output: ". | length"
+
+check_against:
+  kind: IfThenElse
+  predicate:
+    challenge: "get::kind::MergedVariablesSupplier->.ingress.enabled"
+    operator: "truthiness"
+  if_true: 1
+  if_false: 0
+
+---
+
+kind: MultiPredicate
+id: "app.predicate.consistent_exposure_strategies"
+title: "Service and Ingress consistent with each other?"
+info: "If ingress is enabled, ensure the service type is ClusterIP."
+reason: "The service type is made redundant by your ingress configuration.
+If you wish to expose your service via Ingress, the service type should
+be trivial, that is 'ClusterIP', otherwise, you might be unintentionally
+double-serving this service."
+predicates:
+  - operator: truthiness
+    challenge: get::kind::MergedVariablesSupplier->.publisher_frontend.service_type
+  - operator: in
+    challenge: get::self>>svc_type
+    check_against: [NodePort, LoadBalancer]

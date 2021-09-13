@@ -1,6 +1,6 @@
 kind: ManifestVariable
 id: "monolith.deployment.replicas"
-category: id::sdk.variable-category.compute
+category: "id::sdk.variable-category.compute"
 title: "Website Replica Count"
 info: "Number of Kubernetes Pod replicas the Ice-Kream store should have.
 Each replica can cost up to 80Mb of memory and 200 CPU millicores. One

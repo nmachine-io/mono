@@ -50,7 +50,7 @@ source:
       - type: Text
         text: Pods
         style: [calm]
-      - type: StatusDots
+      - type: StatusDotLine
         data: get::self>>concern=>pod_statuses
         shape: square
         spacing: 1.5px
