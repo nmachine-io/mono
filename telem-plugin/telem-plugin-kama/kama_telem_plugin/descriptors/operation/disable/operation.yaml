@@ -17,4 +17,4 @@ stages:
          to updates, variable assignments, and operations."
         synopsis: assets::delete-telem-storage-info.md
         action: id::nmachine.telem.action.perform_disable
-        fields: [id::nmachine.telem.fields.delete-telem-confirm]
+        fields: [id::nmachine.telem.field.delete-telem-confirm]

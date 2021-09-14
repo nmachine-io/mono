@@ -2,7 +2,6 @@ from kama_sdk.core.core.consts import KTEA_TYPE_SERVER
 from kama_sdk.core.core.types import KteaDict
 
 PLUGIN_ID = 'nmachine.telem'
-ENABLED_KEY = "enabled"
 STRATEGY_KEY = "strategy"
 SVC_NAME = 'telem'
 

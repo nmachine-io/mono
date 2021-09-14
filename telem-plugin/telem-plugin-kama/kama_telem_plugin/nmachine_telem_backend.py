@@ -8,13 +8,13 @@ from k8kat.res.svc.kat_svc import KatSvc
 from kama_sdk.core.core.config_man import config_man
 from kama_sdk.core.telem.telem_backend import TelemBackend
 from kama_sdk.utils import env_utils, utils
-from kama_telem_plugin.consts import SVC_NAME, ENABLED_KEY, PLUGIN_ID, STRATEGY_KEY
+from kama_telem_plugin.consts import SVC_NAME, PLUGIN_ID, STRATEGY_KEY
 
 
 class NMachineTelemBackend(TelemBackend):
 
   def is_enabled(self) -> bool:
-    value = config_man.read_var(ENABLED_KEY, space=PLUGIN_ID)
+    value = config_man.read_var(STRATEGY_KEY, space=PLUGIN_ID)
     return utils.any2bool(value)
 
   def is_online(self) -> bool:

@@ -1,9 +1,9 @@
 kind: Operation
 id: "nmachine.telem.operation.storage"
 title: "Setup Telemetry Storage"
+synopsis: "assets::enable-synopsis.md"
 labels:
   searchable: true
-synopsis: "assets::delete-telem-storage-info.html"
 info: "Choose and implement a persistent storage solution for telemetry data."
 preflight_predicate:
   kind: MultiPredicate
@@ -25,20 +25,22 @@ steps:
   - kind: Step
     id: "nmachine.telem.step.telem-storage-step-1"
     title: "Telemetry Persistence"
-    info: "Nectar saves telemetry for important events so that users
+    info: "NMachine saves telemetry for important events so that users
      can later audit their application. For this, a persistent database
      is required. This step helps you decide where and how to host it."
-    commit:
-      standard:
-        kind: MergeSupplier
-        source:
-          - "get::self>>default_commit->.standard"
-          - {enabled: true}
-    action:
-      kind: MultiAction
-      inherit: "sdk.action.step_apply_application_manifest_e2e_action"
-      config_space: "nmachine.telem"
+    synopsis: "assets::enable-synopsis.md"
+    action: "id::sdk.action.commit_template_apply_step"
     fields:
-      - id::strategy
-      - id::deployment.mongo.host
-      - id::deployment.mongo.port
+      - variable: "id::nmachine.telem.variable.strategy"
+
+      - variable: "id::nmachine.telem.variable.mongo.host"
+        visible: "id::nmachine.telem.predicate.input_strategy_self_managed"
+
+      - variable: "id::nmachine.telem.variable.mongo.port"
+        visible: "id::nmachine.telem.predicate.input_strategy_self_managed"
+
+      - variable: "id::nmachine.telem.variable.pvc.size"
+        visible: "id::nmachine.telem.predicate.input_strategy_pvc"
+
+      - variable: "id::nmachine.telem.variable.pvc.storage_class_name"
+        visible: "id::nmachine.telem.predicate.input_strategy_pvc"
