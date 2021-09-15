@@ -27,5 +27,9 @@ class Constants
     def backend_secret_name
       "#{self.app_name}-secret"
     end
+
+    def issuer_name
+      "letsencrypt"
+    end
   end
 end

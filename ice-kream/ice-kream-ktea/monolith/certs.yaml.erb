@@ -3,7 +3,7 @@
 apiVersion: cert-manager.io/v1alpha2
 kind: Issuer
 metadata:
-  name: letsencrypt-prod
+  name: <%= consts.issuer_name %>
   namespace: <%= release_name %>
   labels:
     app: <%= consts.app_name %>
@@ -12,8 +12,8 @@ spec:
     server: <%= root[:server] %>
     email: <%= root[:email] %>
     privateKeySecretRef:
-      name: letsencrypt-prod
+      name: "<%= consts.issuer_name %>"
     solvers:
     - http01:
         ingress:
-          class: <%= values.dig(:ingress, :class) %>
+          class: "<%= values.dig(:ingress, :class) %>"

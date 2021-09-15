@@ -292,14 +292,6 @@ source:
         id: "service-node"
         service_selector: "expr::Service:monolith"
 
-#    - type: ClearTag
-#      text: Internal Access
-#    - type: Text
-#      text: foo
-#      action: "www.google.com"
-#    - type: Icon
-#      name: "open_in_new"
-
 ---
 
 kind: SimpleServiceSiteAccessNode

@@ -1,0 +1,7 @@
+kind: CardGridViewSpec
+id: "app.card-grid.home"
+title: "Home"
+cell_specs:
+  - "id::nmachine.cmp.view_spec.card.small.issuer"
+labels:
+  searchable: true

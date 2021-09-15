@@ -3,6 +3,7 @@ from typing import Dict, List, Optional
 
 from kama_prom_plugin.models.types import PromMatrixEntry
 from kama_sdk.model.supplier.base.supplier import Supplier
+from kama_sdk.utils.logging import lwar
 
 
 class PromMatrixToSeriesSupplier(Supplier):
@@ -46,7 +47,7 @@ def infer_series_key(metric: Dict) -> str:
   elif len(as_items) == 0:
     return 'value'
   else:
-    print(f"[kama_sdk:prom_series_computer] can't handle n-dim metric {metric}")
+    lwar(f"can't handle n-dim metric {metric}")
     return 'value'
 
 

@@ -28,6 +28,35 @@ health_predicates:
 
 ---
 
+kind: ManifestVariable
+id: cert_manager.server
+title: Server URL for Certificate Manager
+info: "Most likely a 'letsencrypt' endpoint. For the certificate
+manager to consume."
+level: default_vars
+category: id::variable-category.security
+#health_predicates:
+#  - id::predicate.cert_manager_server_is_endpoint
+
+
+---
+
+kind: ManifestVariable
+id: "cert_manager.email"
+title: Email for Certificate Manager
+info: "Any domains referenced by the ingress must be registered
+to this email address. Should not be nil if the certificate manager
+is nil."
+category: id::variable-category.security
+#health_predicates:
+#  - id::predicate.cert_email_defined_if_cert_enabled
+validators:
+  - kind: FormatPredicate
+    check_against: email
+
+
+---
+
 ################## DEPENDENCIES ###################
 
 kind: ManifestVariableDependency
