@@ -6,37 +6,33 @@ info: "Add a credentialed Admin user to the database."
 tags: ["Seeding"]
 labels:
   searchable: true
-stages:
-  - kind: Stage
-    id: "app.stage.seed_admin.main"
-    title: Credentials
-    steps:
-      - kind: Step
-        title: "Set Admin Credentials"
-        info: "Choose an email and password for the principal admin."
-        id: "app.step.seed_admin.main.main"
-        synopsis: "assets::seed-admin-synopsis.md"
-        fields:
-          - kind: Field
-            id: "email"
-            target: "state"
-            title: "Admin Email"
-            validators:
-              - kind: FormatPredicate
-                check_against: "email"
+steps:
+  - kind: Step
+    title: "Set Admin Credentials"
+    info: "Choose an email and password for the principal admin."
+    id: "app.step.seed_admin.main.main"
+    synopsis: "assets::seed-admin-synopsis.md"
+    fields:
+      - kind: Field
+        id: "email"
+        target: "state"
+        title: "Admin Email"
+        validators:
+          - kind: FormatPredicate
+            check_against: "email"
 
-          - kind: Field
-            id: "password"
-            target: "state"
-            title: Admin Password
-            info: "This password will be encrypted in the application database;
-            it will not be saved by NMachine; you are responsible for it."
-            validators:
-              - kind: FormatPredicate
-                check_against: "password"
-                tone: "warning"
+      - kind: Field
+        id: "password"
+        target: "state"
+        title: Admin Password
+        info: "This password will be encrypted in the application database;
+        it will not be saved by NMachine; you are responsible for it."
+        validators:
+          - kind: FormatPredicate
+            check_against: "password"
+            tone: "warning"
 
-        action:
-          inherit: "app.action.seed_admin_shell_exec"
-          email: "get::self>>op_state->.email"
-          password: "get::self>>op_state->.password"
+    action:
+      inherit: "app.action.seed_admin_shell_exec"
+      email: "get::self>>op_state->.email"
+      password: "get::self>>op_state->.password"
