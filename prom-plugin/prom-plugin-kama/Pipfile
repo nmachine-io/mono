@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+kama-sdk-py = {editable = true, path = "/home/xavier/workspace/kama-sdk-py"}
 
 [packages]
 kama-prom-plugin = {editable = true, path = "."}

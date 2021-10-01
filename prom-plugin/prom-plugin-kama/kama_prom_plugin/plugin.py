@@ -24,7 +24,6 @@ def get_manifest():
     prototype_mode_ktea=PROTOTYPE_MODE_KTEA
   )
 
-
 def gather_custom_models() -> List[Type[Model]]:
   return [
     PromDataSupplier,

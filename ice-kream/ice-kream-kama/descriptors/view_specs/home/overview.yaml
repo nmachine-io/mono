@@ -10,6 +10,9 @@ spec:
     - type: Block
       elements:
         - type: SmallHeader
+          action:
+            type: goto_detail_page
+
           style:
             mb: "12px"
           title:

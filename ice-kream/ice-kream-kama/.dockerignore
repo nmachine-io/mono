@@ -3,5 +3,6 @@ kama_telem_plugin
 kama_prom_plugin
 reqlib-metadata
 .idea
+.idea
 .venv
 .env

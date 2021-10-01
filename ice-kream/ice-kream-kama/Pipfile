@@ -3,9 +3,19 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
+#[dev-packages]
+#kama-sdk-py = {editable = true, path = "/home/xavier/workspace/kama-sdk-py"}
+#kama-telem-plugin = {editable = true, path = "/home/xavier/workspace/mono/telem-plugin/telem-plugin-kama"}
+#kama-prom-plugin = {editable = true, path = "/home/xavier/workspace/mono/prom-plugin/prom-plugin-kama"}
+
 [packages]
 python-engineio = "*"
-kama-sdk-py="*"
+#kama-sdk-py="*"
+#kama-prom-plugin="*"
+#kama-telem-plugin="*"
+kama-sdk-py = {editable = true, path = "/home/xavier/workspace/kama-sdk-py"}
+kama-telem-plugin = {editable = true, path = "/home/xavier/workspace/mono/telem-plugin/telem-plugin-kama"}
+kama-prom-plugin = {editable = true, path = "/home/xavier/workspace/mono/prom-plugin/prom-plugin-kama"}
 
 [requires]
 python_version = "3.8"
