@@ -1,0 +1,8 @@
+kind: Preset
+id: "app.presets.main"
+title: "No-DNS setup"
+info: "Disables ingress and SSL for the time being."
+variable_assignments:
+  "ingress.enabled": false
+  "cert_manager.enabled": false
+  "monolith.service.type": LoadBalancer

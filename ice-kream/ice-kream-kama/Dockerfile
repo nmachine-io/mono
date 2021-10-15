@@ -1,4 +1,4 @@
-FROM python:3.6.1
+FROM python:3.8.12
 
 RUN apt-get update && apt-get install -y curl apt-transport-https
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
@@ -10,7 +10,7 @@ RUN pip3 install pipenv
 ADD Pipfile Pipfile.lock /app/
 RUN pipenv lock --clear -r > requirements.txt
 RUN pip3 install -r requirements.txt
-ENV HUB_HOST=http://necthub.com.ngrok.io
+
 ENV CONNECT_TYPE=in
 ADD . /app/
 

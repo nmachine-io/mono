@@ -8,6 +8,7 @@ then
   ln -s "$HOME/workspace/mono/telem-plugin/telem-plugin-kama/kama_telem_plugin" kama_telem_plugin
 elif [ "$1" == "delete" ]
 then
+  echo "deleting"
   rm kama_sdk
   rm kama_prom_plugin
   rm kama_telem_plugin

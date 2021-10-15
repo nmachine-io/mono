@@ -3,7 +3,7 @@ import os
 from custom.v2_virtual_ktea import V2VirtualKtea
 from kama_sdk.cli import entrypoint
 from kama_sdk.core.core.plugins_manager import plugins_manager
-from kama_sdk.core.ktea.virtual_ktea_client import vktea_clients_manager
+from kama_sdk.core.ktea.vktea_clients_manager import vktea_clients_manager
 from kama_sdk.core.telem.telem_manager import telem_manager
 from kama_sdk.model.base.model import models_manager
 from kama_sdk.utils.descriptor_utils import load_dir_yamls
@@ -20,9 +20,12 @@ def register_own_artifacts():
 
 
 def register_examples():
-  hack_root_dir = os.path.expanduser("~/workspace/kama-sdk-py")
-  descriptors = load_dir_yamls(f'{hack_root_dir}/examples/descriptors')
-  models_manager.add_descriptors(descriptors)
+  try:
+    hack_root_dir = os.path.expanduser("~/workspace/kama-sdk-py")
+    descriptors = load_dir_yamls(f'{hack_root_dir}/examples/descriptors')
+    models_manager.add_descriptors(descriptors)
+  except:
+    pass
 
 
 def register_plugins():

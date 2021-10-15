@@ -1,0 +1,8 @@
+kind: Predicate
+id: app.predicates.preflight.foo
+title: "Foo Test"
+info: "1 + 3 = Infinity?"
+labels:
+  preflight: true
+challenge: foo
+check_against: foo

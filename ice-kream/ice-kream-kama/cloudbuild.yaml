@@ -1,15 +1,29 @@
 substitutions:
-  _IMG_FQDN: us-central1-docker.pkg.dev/nectar-bazaar/public/ice-cream-kama:1.0.0
+  _IMG_BASE: us-central1-docker.pkg.dev/nectar-bazaar/public/ice-cream-kama
 
 images:
-  - "${_IMG_FQDN}"
+  - "${_IMG_BASE}:latest"
+  - "${_IMG_BASE}:1.0.0"
 
 steps:
-  - id: "Build image"
+  - id: "Pull previous ice-kream image"
+    name: "gcr.io/cloud-builders/docker"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |-
+        docker pull ${_IMG_BASE}:latest || exit 0
     waitFor: []
+
+  - id: "Build image"
+    waitFor: ["Pull previous ice-kream image"]
     name: gcr.io/cloud-builders/docker
     args:
       - "build"
       - "."
+      - "--cache-from"
+      - "${_IMG_BASE}:latest"
       - "-t"
-      - "${_IMG_FQDN}"
+      - "${_IMG_BASE}:1.0.0"
+      - "-t"
+      - "${_IMG_BASE}:latest"
