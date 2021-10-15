@@ -10,7 +10,7 @@ metadata:
     app: <%= consts.app_name %>
     microservice: <%= microservice %>
 spec:
-  type: <%= root[:service_type] || 'ClusterIP' %>
+  type: <%= root[:type] || root[:service_type] || 'ClusterIP' %>
   selector:
     app: <%= consts.app_name %>
     microservice: <%= microservice %>

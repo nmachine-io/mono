@@ -1,6 +1,19 @@
 ################## VARIABLES ###################
 
 kind: ManifestVariable
+id: "monolith.service.type"
+title: "Website Service Type"
+info: "Kubernetes service type for deciding how microservice
+is exposed inside and outside the cluster."
+#health_predicates:
+#  - id::predicate.publisher_frontend.redundant_exposure
+input:
+  kind: SelectInput
+  options: [ClusterIP, NodePort, LoadBalancer]
+
+---
+
+kind: ManifestVariable
 id: "ingress.enabled"
 category: "id::sdk.variable-category.networking"
 title: Application Ingress Toggle
