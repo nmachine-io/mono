@@ -1,7 +1,7 @@
 kind: ManifestVariable
 id: "prometheus.access_type"
 title: "Prometheus API Access type"
-input: kind::SelectInput
+input: "kind::LargeSelectInput"
 options:
   - id: "kubernetes"
     title: "Inside the cluster"

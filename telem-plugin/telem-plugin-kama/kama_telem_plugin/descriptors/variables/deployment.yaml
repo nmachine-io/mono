@@ -3,19 +3,25 @@ id: "nmachine.telem.variable.strategy"
 flat_key: "strategy"
 title: "Storage Strategy"
 level: "default_vars"
-info: "Where the database lives. Either an in-cluster PVC (default) or an
-arbitrary MongoDB database you manage yourself and point to."
+info: "Where the database lives. Your choice should take into account
+your data ownership needs."
 default_value: "pvc"
 input:
-  kind: SelectInput
+  kind: LargeSelectInput
   options:
     - id: "pvc"
-      title: "In-Cluster Managed Database - Plugin creates and manages
-      Kubernetes resources (PVC, deployment, etc...)."
+      title: "In-Cluster Managed Database"
+      info: "Your NMachine's telemetry database and its related workloads/configs
+      live in your cluster, managed by the plugin. Total data ownership."
     - id: "managed_cloud"
-      title: "NMachine Cloud - Secure remote database."
+      title: "NMachine Cloud"
+      info: "Your NMachine's telemetry database lives at api.nmachine.io.
+      You can port data across NMachine instances in case
+      one goes down, or team members need exact clones."
     - id: "self_managed"
-      title: "Bring your own Database - You supply a URL to a MongoDB database."
+      title: "Bring your own Infrastructure"
+      info: "You supply a URL to a MongoDB database, which you are responsible
+      for maintaining and securing. A good option for starting out cheaply."
 validators:
   - operator: in
     check_against: ["pvc", "self_managed", "managed_cloud"]
