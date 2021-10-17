@@ -70,8 +70,11 @@ class PromDataSupplier(Supplier):
     return prom_data['result'] if prom_data else None
 
   def do_ping(self) -> bool:
-    response = self.get_client().compute_vector("up")
-    return response is not None
+    try:
+      response = self.get_client().compute_vector("up")
+      return response is not None
+    except:
+      return False
 
   def do_fetch_vector(self) -> Optional[PromVector]:
     prom_data = self.get_client().compute_vector(

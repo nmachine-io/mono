@@ -76,6 +76,10 @@ class PromClient:
     else:
       return self.get_prom_ext_url()
 
+  def is_enabled(self) -> bool:
+    access_type = self.get_config_value(ACCESS_TYPE_KEY) or False
+    return access_type
+
   def is_prom_server_in_cluster(self) -> bool:
     return self.get_config_value(ACCESS_TYPE_KEY) == access_type_k8s
 

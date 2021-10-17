@@ -1,5 +1,5 @@
 from k8kat.res.svc.kat_svc import KatSvc
-from werkzeug.utils import cached_property
+from kama_sdk.model.base.model_decorators import model_attr
 
 from kama_sdk.model.supplier.base.supplier import Supplier
 from kama_prom_plugin.models.prom_client import prom_client
@@ -8,30 +8,34 @@ from kama_prom_plugin.models.prom_data_supplier import PromDataSupplier
 
 class PromStateSupplier(Supplier):
 
-  @cached_property
+  @model_attr()
   def is_online(self):
     return PromDataSupplier({}).do_ping()
 
-  @cached_property
+  @model_attr()
   def svc(self) -> KatSvc:
     return prom_client.find_prom_svc()
 
-  @cached_property
+  @model_attr()
   def is_in_cluster(self):
     return prom_client.is_prom_server_in_cluster()
 
-  @cached_property
+  @model_attr()
   def status(self):
-    return "online" if self.is_online else "offline"
+    return "online" if self.is_online() else "offline"
 
-  @cached_property
+  @model_attr()
+  def is_enabled(self) -> bool:
+    return prom_client.is_enabled()
+
+  @model_attr()
   def action_preview_str(self):
     if self.is_in_cluster:
       return "http://localhost"
     else:
       return prom_client.get_prom_ext_url()
 
-  @cached_property
+  @model_attr()
   def action_spec(self):
     if self.is_in_cluster:
       return dict(

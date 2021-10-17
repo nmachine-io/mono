@@ -1,0 +1,106 @@
+kind: ViewSpec
+id: "app.view-spec.card.metrics"
+title: "Store Website"
+deployment_name: "monolith"
+fallback_spec: "get::id::app.view-spec.metrics-card.rescue"
+spec:
+  type: Card
+  width: 2
+  height: 2
+  elements:
+    kind: IfThenElseSupplier
+    predicate:
+      kind: Predicate
+      challenge: "get::&kind::PromStateSupplier=>is_enabled"
+      check_against: true
+    on_true: "get::id::app.view-spec.metrics-card.main"
+    on_false: "get::id::app.view-spec.metrics-card.disabled"
+
+---
+
+kind: Supplier
+id: "app.view-spec.metrics-card.main"
+source:
+  - type: Block
+    elements:
+      - type: SmallHeader
+        action:
+          type: goto_detail_page
+        style:
+          mb: "12px"
+        title:
+          type: Block
+          orientation: horizontal
+          elements:
+            - type: Image
+              uri: "/services/prometheus/small.png"
+              style:
+                height: "18px"
+            - type: Text
+              text: Memory Consumption
+              style: [bold, fair]
+      - type: Timeseries
+        data: "get::id::nmachine.prom.supplier.deployment_memory_timeseries"
+        unit: "bytes"
+        keyTransforms:
+          value: "Application Total"
+        style:
+          height: "130px"
+  - type: Block
+    style:
+      mt: "40px"
+    elements:
+      - type: SmallHeader
+        style:
+          mb: "12px"
+        title:
+          type: Block
+          orientation: horizontal
+          elements:
+            - type: Image
+              uri: "/services/prometheus/small.png"
+              style:
+                height: "18px"
+            - type: Text
+              text: CPU Consumption
+              style: [bold, fair]
+      - type: Timeseries
+        data: "get::id::nmachine.prom.supplier.deployment_cpu_timeseries"
+        unit: cores
+        keyTransformations:
+          value: "CPU"
+        style:
+          height: "130px"
+
+---
+
+kind: Supplier
+id: "app.view-spec.metrics-card.disabled"
+source:
+  - type: CallToAction
+    title: "Prometheus is not Connected"
+    subtitle: "Use the Prometheus plugin to get metrics in your NMachine."
+    button:
+      type: "ClearButton"
+      text: "Setup"
+    style:
+      mt: 150px
+
+
+---
+
+kind: Supplier
+id: "app.view-spec.metrics-card.rescue"
+source:
+  type: Card
+  width: 2
+  height: 2
+  elements:
+    - type: CallToAction
+      title: "Prometheus is not Connected"
+      subtitle: "Use the Prometheus plugin to get metrics in your NMachine."
+      button:
+        type: "ClearButton"
+        text: "Setup"
+      style:
+        mt: 150px
