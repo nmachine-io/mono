@@ -1,0 +1,32 @@
+org: nmachine
+name: telem
+enabled: true
+strategy: pvc
+
+mongo:
+  image: mongo
+  host: ''
+  port: 27017
+
+server:
+  replicas: 1
+  image: us-central1-docker.pkg.dev/nectar-bazaar/public/telem-server:1.0.0
+  port: 5000
+
+pvc:
+  size: 1Gi
+  storageClassName: ''
+  annotations: {foo: bar}
+  volumeBindingModeName: ''
+  finalizers: []
+
+backups:
+  enabled: true
+  job:
+    image: us-central1-docker.pkg.dev/nectar-bazaar/public/run-telem-backup:1.0.0
+  pvc:
+    size: 1Gi
+    storageClassName: ''
+    annotations: {}
+    volumeBindingModeName: ''
+    finalizers: []

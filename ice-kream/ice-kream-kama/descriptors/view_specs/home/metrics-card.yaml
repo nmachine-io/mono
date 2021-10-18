@@ -13,69 +13,83 @@ spec:
       kind: Predicate
       challenge: "get::&kind::PromStateSupplier=>is_enabled"
       check_against: true
-    on_true: "get::id::app.view-spec.metrics-card.main"
+    on_true: 
+      - "get::id::app.view-spec.metrics-card.memory"
+      - "get::id::app.view-spec.metrics-card.cpu"
     on_false: "get::id::app.view-spec.metrics-card.disabled"
 
 ---
 
 kind: Supplier
-id: "app.view-spec.metrics-card.main"
+id: "app.view-spec.metrics-card.memory"
+depth: 100
 source:
-  - type: Block
-    elements:
-      - type: SmallHeader
-        action:
-          type: goto_detail_page
-        style:
-          mb: "12px"
-        title:
-          type: Block
-          orientation: horizontal
-          elements:
-            - type: Image
-              uri: "/services/prometheus/small.png"
-              style:
-                height: "18px"
-            - type: Text
-              text: Memory Consumption
-              style: [bold, fair]
-      - type: Timeseries
-        data: "get::id::nmachine.prom.supplier.deployment_memory_timeseries"
-        unit: "bytes"
-        keyTransforms:
-          value: "Application Total"
-        style:
-          height: "130px"
-  - type: Block
-    style:
-      mt: "40px"
-    elements:
-      - type: SmallHeader
-        style:
-          mb: "12px"
-        title:
-          type: Block
-          orientation: horizontal
-          elements:
-            - type: Image
-              uri: "/services/prometheus/small.png"
-              style:
-                height: "18px"
-            - type: Text
-              text: CPU Consumption
-              style: [bold, fair]
-      - type: Timeseries
-        data: "get::id::nmachine.prom.supplier.deployment_cpu_timeseries"
-        unit: cores
-        keyTransformations:
-          value: "CPU"
-        style:
-          height: "130px"
+  type: Block
+  elements:
+    - type: SmallHeader
+      action:
+        type: goto_detail_page
+      style:
+        mb: "12px"
+      title:
+        type: Block
+        orientation: horizontal
+        elements:
+          - type: Image
+            uri: "/services/prometheus/small.png"
+            style:
+              height: "18px"
+          - type: Text
+            text: Memory Consumption
+            style: [bold, fair]
+    - type: Timeseries
+      data: 
+        kind: Supplier
+        inherit: "nmachine.prom.supplier.deployment_memory_timeseries"
+        deployment_name: "get::parent>>deployment_name"
+      unit: "bytes"
+      keyTransforms:
+        value: "Application Total"
+      style:
+        height: "130px"
+
+---
+
+kind: Supplier
+id: "app.view-spec.metrics-card.cpu"
+depth: 100
+source:
+  type: Block
+  style:
+    mt: "40px"
+  elements:
+    - type: SmallHeader
+      style:
+        mb: "12px"
+      title:
+        type: Block
+        orientation: horizontal
+        elements:
+          - type: Image
+            uri: "/services/prometheus/small.png"
+            style:
+              height: "18px"
+          - type: Text
+            text: CPU Consumption
+            style: [bold, fair]
+    - type: Timeseries
+      data: "get::id::nmachine.prom.supplier.deployment_cpu_timeseries"
+      unit: cores
+      keyTransformations:
+        value: "CPU"
+      style:
+        height: "130px"
 
 ---
 
 kind: Supplier
 id: "app.view-spec.metrics-card.disabled"
+depth: 100
 source:
   - type: CallToAction
     title: "Prometheus is not Connected"
@@ -83,14 +97,17 @@ source:
     button:
       type: "ClearButton"
       text: "Setup"
+      action:
+        type: goto_operation        
+        kod: "nmachine.prom.operation.locate-existing"        
     style:
       mt: 150px
-
 
 ---
 
 kind: Supplier
 id: "app.view-spec.metrics-card.rescue"
+depth: 100
 source:
   type: Card
   width: 2

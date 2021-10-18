@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="310209e8-e17c-41f1-8e61-76c3685cd75a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../ice-kream/ice-kream-kama/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ice-kream/ice-kream-kama/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../platform-kama/configs/operations/update-db-creds-operation.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../platform-kama/configs/operations/update-db-creds-operation.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../platform-kama/configs/view-adapters/super-sets.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../platform-kama/configs/view-adapters/super-sets.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1wE9if6B3S7hyYDA22D1QxDcxyI" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="RubyRunConfigurationType" factoryName="Ruby" temporary="true">
+      <module name="desktop-client-releaser" />
+      <RUBY_RUN_CONFIG NAME="RUBY_ARGS" VALUE="" />
+      <RUBY_RUN_CONFIG NAME="WORK DIR" VALUE="$MODULE_DIR$" />
+      <RUBY_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RUBY_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="true" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" NailgunExecEnabled="false" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$MODULE_DIR$/main.rb" />
+      <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Ruby.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpringUtil" SPRING_PRE_LOADER_OPTION="true" RAKE_SPRING_PRE_LOADER_OPTION="true" RAILS_SPRING_PRE_LOADER_OPTION="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="310209e8-e17c-41f1-8e61-76c3685cd75a" name="Default Changelist" comment="" />
+      <created>1628013008210</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1628013008210</updated>
+      <workItem from="1628013009505" duration="5445000" />
+      <workItem from="1628027759132" duration="5479000" />
+      <workItem from="1628033843758" duration="139000" />
+      <workItem from="1628718231746" duration="454000" />
+    </task>
+    <task id="LOCAL-00001" summary="desktop-client-releaser first reun">
+      <created>1628026788295</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1628026788296</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="desktop-client-releaser first reun" />
+    <option name="LAST_COMMIT_MESSAGE" value="desktop-client-releaser first reun" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="484" y="257" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1628027487586">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="484" y="257" key="#com.intellij.fileTypes.FileTypeChooser/0.24.1600.876@0.24.1600.876" timestamp="1628027487586" />
+    <state x="283" y="24" key="CommitChangelistDialog2" timestamp="1628026787967">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="283" y="24" key="CommitChangelistDialog2/0.24.1600.876@0.24.1600.876" timestamp="1628026787967" />
+    <state width="639" height="827" key="GridCell.Tab.0.bottom" timestamp="1628033982105">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state width="639" height="827" key="GridCell.Tab.0.bottom/0.24.1600.876@0.24.1600.876" timestamp="1628033982105" />
+    <state width="639" height="827" key="GridCell.Tab.0.center" timestamp="1628033982104">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state width="639" height="827" key="GridCell.Tab.0.center/0.24.1600.876@0.24.1600.876" timestamp="1628033982104" />
+    <state width="639" height="827" key="GridCell.Tab.0.left" timestamp="1628033982104">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state width="639" height="827" key="GridCell.Tab.0.left/0.24.1600.876@0.24.1600.876" timestamp="1628033982104" />
+    <state width="639" height="827" key="GridCell.Tab.0.right" timestamp="1628033982104">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state width="639" height="827" key="GridCell.Tab.0.right/0.24.1600.876@0.24.1600.876" timestamp="1628033982104" />
+    <state width="639" height="827" key="GridCell.Tab.1.bottom" timestamp="1628033982105">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state width="639" height="827" key="GridCell.Tab.1.bottom/0.24.1600.876@0.24.1600.876" timestamp="1628033982105" />
+    <state width="639" height="827" key="GridCell.Tab.1.center" timestamp="1628033982105">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state width="639" height="827" key="GridCell.Tab.1.center/0.24.1600.876@0.24.1600.876" timestamp="1628033982105" />
+    <state width="639" height="827" key="GridCell.Tab.1.left" timestamp="1628033982105">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state width="639" height="827" key="GridCell.Tab.1.left/0.24.1600.876@0.24.1600.876" timestamp="1628033982105" />
+    <state width="639" height="827" key="GridCell.Tab.1.right" timestamp="1628033982105">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state width="639" height="827" key="GridCell.Tab.1.right/0.24.1600.876@0.24.1600.876" timestamp="1628033982105" />
+    <state x="293" y="90" key="SettingsEditor" timestamp="1628013338285">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="293" y="90" key="SettingsEditor/0.24.1600.876@0.24.1600.876" timestamp="1628013338285" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1628030683062">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/0.24.1600.876@0.24.1600.876" timestamp="1628030683062" />
+    <state x="399" y="191" key="Vcs.Push.Dialog.v2" timestamp="1628026789672">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="399" y="191" key="Vcs.Push.Dialog.v2/0.24.1600.876@0.24.1600.876" timestamp="1628026789672" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="ruby-line">
+          <url>file://$PROJECT_DIR$/main.rb</url>
+          <line>17</line>
+          <properties myBlockOrdinal="-1">
+            <option name="block-ordinal" value="-1" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/desktop_client_release_mover@main.rcov" NAME="main Coverage Results" MODIFIED="1628033870754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="desktop-client-releaser" />
+    <SUITE FILE_PATH="coverage/desktop_client_releaser@main.rcov" NAME="main Coverage Results" MODIFIED="1628024650661" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="desktop-client-releaser" />
+  </component>
+</project>

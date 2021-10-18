@@ -77,8 +77,8 @@ class PromClient:
       return self.get_prom_ext_url()
 
   def is_enabled(self) -> bool:
-    access_type = self.get_config_value(ACCESS_TYPE_KEY) or False
-    return access_type
+    access_type = self.get_config_value(ACCESS_TYPE_KEY) or None
+    return access_type in legal_access_types
 
   def is_prom_server_in_cluster(self) -> bool:
     return self.get_config_value(ACCESS_TYPE_KEY) == access_type_k8s
@@ -168,4 +168,4 @@ prom_client = PromClient()
 
 access_type_k8s = 'kubernetes'
 access_type_generic = 'generic'
-
+legal_access_types = [access_type_k8s, access_type_generic]

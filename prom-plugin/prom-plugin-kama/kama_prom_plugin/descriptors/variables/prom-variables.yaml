@@ -2,11 +2,17 @@ kind: ManifestVariable
 id: "prometheus.access_type"
 title: "Prometheus API Access type"
 input: "kind::LargeSelectInput"
+info: "Where the Prometheus API is located. If you need to quickly setup 
+Prometheus, grab it from the NMachine Marketplace."
 options:
   - id: "kubernetes"
     title: "Inside the cluster"
+    info: "The prometheus API workload is sitting inside your cluster, likely 
+    managed with NMachine or Helm."
   - id: "generic"
     title: "Outside the cluster"
+    info: "The prometheus API is hosted outside of your cluster, likely 
+    a paid SaaS or perhaps another clsuter you own."
 
 ---
 

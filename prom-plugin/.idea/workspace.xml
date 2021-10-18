@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3c32a27d-e664-493f-9e07-eeceaeb11545" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../ice-kream/ice-kream-kama/assets/seed-admin-synopsis.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ice-kream/ice-kream-kama/descriptors/operations/seed_admin/operation.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ice-kream/ice-kream-kama/descriptors/operations/seed_admin/shell_action.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/Pipfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/kaml.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/assets/locate-existing-grafana.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/assets/locate-existing-server.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/assets/plugin-intro.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/fix-me-later.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/operation/locate-existing-prom-operation.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/operation/locate-grafana-stage.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/operation/locate-prom-stage.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/utils/helpers.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/utils/predicates.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/utils/suppliers.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/variables/grafana-variables.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/variables/prom-variables.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/view-adapters/concern.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/view-adapters/detail-adapter.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/descriptors/view-adapters/header-descs.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/models/grafana_state_supplier.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/models/prom_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/models/prom_data_supplier.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/models/prom_matrix_to_timeseries_supplier.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/models/prom_state_supplier.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/models/prom_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/models/prom_vector_to_groups_provider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/models/types.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/tests/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/tests/prom_test_helper.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/tests/test_prom_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/tests/test_prom_data_group_supplier.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/tests/test_prom_data_supplier.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/prom_kaml/tests/test_prom_time_series_supplier.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-kama/setup.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-ktea/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-ktea/Gemfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-ktea/Gemfile.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-ktea/cloudbuild.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-ktea/main.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prom-plugin-ktea/values.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/app/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/app/cloudbuild.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/app/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/app/server.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/app/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/helm/Chart.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/helm/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/helm/cloudbuild.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/helm/templates/_helpers.tpl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/helm/templates/manifest.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/helm/values.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/.dockerignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/Pipfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/Pipfile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/cloudbuild.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/configs/mock-updates/mock-update.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/configs/operations/hpa-stuff.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/configs/operations/install-operation.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/configs/operations/predicates.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/configs/operations/prerequisites.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/configs/operations/uninstall-operation.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/configs/variables/resource-quota-vars.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/configs/variables/variables.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/configs/view-adapters/super-sets.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/configs/view-adapters/website-card-adapter.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/configs/view-adapters/website-card-provider.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/iterate.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/lib/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/lib/consts.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/lib/website_helper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kama/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi-v2/Gemfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi-v2/Gemfile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi-v2/local-eval.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi-v2/main.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi-v2/manifest.yaml.erb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi-v2/values.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi-v2/with-load-balancer.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi/Gemfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi/Gemfile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi/cloudbuild.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi/create-local-symlinks.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi/local-eval.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi/main.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi/manifest.yaml.erb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi/values.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi/with-high-limits.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-cream/kerbi/with-load-balancer.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ice-kream/ice-kream-kama/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ice-kream/ice-kream-kama/main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1x8MnM6PHamlXuLN8LAXjLK2Wtp" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../telem-plugin/telem-plugin-kama" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3c32a27d-e664-493f-9e07-eeceaeb11545" name="Default Changelist" comment="" />
+      <created>1629732427199</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1629732427199</updated>
+      <workItem from="1629732429234" duration="62000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="587" y="213" key="FileChooserDialogImpl" timestamp="1629732489069">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="587" y="213" key="FileChooserDialogImpl/0.24.1600.876@0.24.1600.876" timestamp="1629732489069" />
+    <state x="489" y="194" width="660" height="522" key="find.popup" timestamp="1629732465734">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="489" y="194" width="660" height="522" key="find.popup/0.24.1600.876@0.24.1600.876" timestamp="1629732465734" />
+  </component>
+</project>

@@ -1,0 +1,57 @@
+<% server = values[:server] || {} %>
+<% mongo = values[:mongo] || {} %>
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: <%= release_name %>
+  name: <%= name %>
+  labels:
+    managed_by: <%= org %>
+    app: <%= name %>
+spec:
+  replicas: <%= server[:replicas] %>
+  selector:
+    matchLabels:
+      managed_by: <%= org %>
+      app: <%= name %>
+  template:
+    metadata:
+      labels:
+        managed_by: <%= org %>
+        app: <%= name %>
+    spec:
+      restartPolicy: Always
+      containers:
+        - image: <%= server[:image] %>
+          imagePullPolicy: Always
+          name: server
+          ports:
+            - containerPort: 5000
+          env:
+            - name: STRATEGY
+              value: <%= values[:strategy] %>
+            - name: DB_HOST
+              value: "<%= final_host %>"
+            - name: DB_PORT
+              value: "<%= final_port %>"
+            - name: PORT
+              value: "<%= server[:port] %>"
+
+        <% if pvc? %>
+        - image: <%= mongo[:image] %>
+          name: mongodb
+          ports:
+            - containerPort: <%= mongo[:port] %>
+          resources:  {}
+          volumeMounts:
+            - mountPath: /data/db
+              name: <%= name %>-volume
+        <% end %>
+
+        <% if pvc? %>
+      volumes:
+        - name: <%= name %>-volume
+          persistentVolumeClaim:
+            claimName: <%= name %>-pvc
+        <% end %>

@@ -1,0 +1,890 @@
+Index: ../ice-kream/ice-kream-kama/configs/view-adapters/legacy.yaml
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/view-adapters/legacy.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/view-adapters/legacy.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,45 +0,0 @@
+-kind: Provider
+-id: card-adapter.website.memory
+-source:
+-  type: SeriesSummary
+-  first: graph
+-  style:
+-    mt: -10px
+-  data:
+-    kind: SeriesSummarySupplier
+-    humanizer: kind::BytesHumanizer
+-    source:
+-      kind: PromMatrixToSeriesSupplier
+-      source: get::props concern=>mem_dump
+-
+----
+-
+-kind: Provider
+-id: card-adapter.website.cpu
+-source:
+-  type: SeriesSummary
+-  first: graph
+-  style:
+-    width: 100%
+-  data:
+-    kind: SeriesSummarySupplier
+-    humanizer: kind::CoresHumanizer
+-    source:
+-      kind: PromMatrixToSeriesSupplier
+-      source: get::props concern=>cpu_dump
+-
+----
+-
+-kind: Provider
+-id: card-adapter.website.alerts
+-source:
+-  type: SeriesSummary
+-  first: graph
+-  style:
+-    width: 100%
+-  data:
+-    kind: SeriesSummarySupplier
+-    humanizer: kind::CoresHumanizer
+-    source:
+-      kind: PromMatrixToSeriesSupplier
+-      source: get::props concern=>cpu_dump
+Index: ../ice-kream/ice-kream-kama/configs/view-adapters/backend/website-card-provider.yaml
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/view-adapters/backend/website-card-provider.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/view-adapters/backend/website-card-provider.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,32 +0,0 @@
+-kind: Concern
+-id: provider.backend
+-cached:
+-  best_url:
+-    kind: BestSvcUrlSupplier
+-    source: get::props svc
+-
+-  deployment:
+-    kind: ResourcesSupplier
+-    many: false
+-    serializer: legacy
+-    selector:
+-      res_kind: Deployment
+-      name: backend
+-
+-  pod_statuses:
+-    kind: Supplier
+-    inherit: sdk.supplier.pods_in_dots_format
+-    pods: get::self>>deployment=>pods
+-
+-  mem_dump:
+-    kind: Supplier
+-    inherit: nmachine.prom.supplier.deployment_memory
+-    step: 10s
+-    resource_name: get::&kind::IceCreamConsts>>workload_name
+-
+-  cpu_dump:
+-    kind: Supplier
+-    inherit: nmachine.prom.supplier.deployment_cpu
+-    resource_name: get::&kind::IceCreamConsts>>workload_name
+-
+-  site: get::&id::best-site-endpoint.backend
+\ No newline at end of file
+Index: ../ice-kream/ice-kream-kama/configs/view-adapters/backend/detail-adapter.yaml
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/view-adapters/backend/detail-adapter.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/view-adapters/backend/detail-adapter.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,50 +0,0 @@
+-kind: ConcernDetailAdapter
+-id: detail-adapter.backend
+-title: Application Backend
+-page_adapters:
+-  - title: Overview
+-    id: overview
+-    panel_adapters:
+-      - id::panel-adapter.backend.health
+-
+-#  - title: Variables
+-#    id: variables
+-#    panel_adapters:
+-#      - id::panel_adapter.publisher_frontend.variables
+-
+-  - title: Action
+-    id: actions
+-    panel_adapters:
+-      - id::panel-adapter.backend.database-actions
+-
+----
+-
+-kind: AsyncPredicatesPanelAdapter
+-id: panel-adapter.backend.health
+-title: Health Checks
+-info: These predicates check for problems in the publisher frontend service
+-predicates:
+-  - id::predicate.db_secret_exists
+-  - id::predicate.auth0_secret_exists
+-
+----
+-
+-kind: ManifestVariablesPanelAdapter
+-id: panel_adapter.publisher_frontend.variables
+-title: Associated Variables
+-info: Changing a variable will lose the context
+-variables:
+-  id:
+-    - "publisher_frontend.*"
+-    - "ingress.routes.publisher_frontend.*"
+-
+----
+-
+-kind: ActionsPanelAdapter
+-id: panel-adapter.backend.database-actions
+-title: All Operations
+-info: "Operations related to the database and backups"
+-operations:
+-  - id::operation.update-db-creds
+-  - id::operation.update-auth0-creds
+-  - id::operation.seed_orgs
+\ No newline at end of file
+Index: ../ice-kream/ice-kream-kama/configs/view-adapters/publisher-frontend/card-adapter.yaml
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/view-adapters/publisher-frontend/card-adapter.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/view-adapters/publisher-frontend/card-adapter.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,77 +0,0 @@
+-kind: ConcernCardAdapter
+-id: card-adapter.publisher-frontend
+-title: Website
+-spec:
+-  type: Block
+-  title: Service Status
+-  elements:
+-    - type: Section
+-      width: 1
+-      elements:
+-        - get::id::three-stat1
+-        - get::id::fckem1
+-        - get::id::lalent1
+-
+----
+-
+-kind: Provider
+-id: lalent1
+-source:
+-  type: Line
+-  elements:
+-    - type: ClearTag
+-      text: "Health"
+-#      style: [bold, calm]
+-    - type: AsyncPredicateDots
+-      data:
+-        - id::predicate.publisher_frontend.all_green
+-        - id::predicate.publisher_frontend_enabled_resource_in_sync
+-        - id::predicate.publisher_frontend.redundant_exposure
+-
+----
+-
+-kind: Provider
+-id: three-stat1
+-source:
+-  type: ThreePartHeader
+-  title:
+-    type: Text
+-    text: Publisher Frontend
+-    style: [bold, calm]
+-    action:
+-      type: concern_detail
+-      uri:
+-        adapter_ref: detail-adapter.publisher-frontend
+-        concern_ref: provider.publisher-frontend
+-
+-  subtitle:
+-    type: Line
+-    elements:
+-      - type: Text
+-        text: Pods
+-        style: [calm]
+-      - type: StatusDots
+-        data: get::self>>concern=>pod_statuses
+-        shape: square
+-        spacing: 1.5px
+-  graphic:
+-    type: Icon
+-    name: personal_video
+-
+----
+-
+-kind: Provider
+-id: fckem1
+-source:
+-  type: Line
+-  elements:
+-    - type: ClearTag
+-      text: Access
+-    - type: Text
+-      text: get::self>>concern>>site>>resolved_url
+-      style: [hov_underline, hov_point]
+-      action: get::self>>concern>>site>>resolved_action_descriptor
+-    - type: Icon
+-      name: open_in_new
+-      style:
+-        emotion: pleasant
+Index: ../ice-kream/ice-kream-kama/configs/view-adapters/super-sets.yaml
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/view-adapters/super-sets.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/view-adapters/super-sets.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,28 +0,0 @@
+-kind: ConcernSuperSet
+-id: overview
+-sets:
+-  - id::org.concern-grid.main
+-  - id::sdk.concern.resource_tables.deployments
+-  - id::sdk.concern.resource_tables.pods
+-
+----
+-
+-kind: ConcernGridAdapter
+-title: Application
+-id: org.concern-grid.main
+-one_shot: false
+-concern_seeds:
+-  - concern_ref: id::provider.backend
+-    adapter_ref: id::org.concern-card-adapter.main-website
+-
+-  - concern_ref: id::provider.publisher-frontend
+-    adapter_ref: id::card-adapter.publisher-frontend
+-
+-  - concern_ref: id::org.concern.plugins
+-    adapter_ref: id::org.card-adapter.plugins
+-#
+-  - concern_ref: id::sdk.concern.memory
+-    adapter_ref: id::sdk.concern-card-adapter.memory
+-
+-  - concern_ref: id::sdk.concern.cpu
+-    adapter_ref: id::sdk.concern-card-adapter.cpu
+Index: ../ice-kream/ice-kream-kama/configs/variables/categories.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/variables/categories.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/variables/categories.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,29 +0,0 @@
+-kind: VariableCategory
+-id: variable-category.networking
+-title: Networking
+-info: HTTP, HTTPS, DNS, SSH settings
+-graphic: language
+-
+----
+-
+-kind: VariableCategory
+-id: variable-category.compute
+-title: Workloads
+-info: All things performance and functionality
+-graphic: build
+-
+----
+-
+-kind: VariableCategory
+-id: variable-category.security
+-title: Security
+-info: Network policies, RBAC and admin access
+-graphic: security
+-
+----
+-
+-kind: VariableCategory
+-id: variable-category.storage
+-title: Storage
+-info: PVCs, StorageClass, and backups
+-graphic: save
+Index: ../ice-kream/ice-kream-kama/configs/view-adapters/backend/predicates.yaml
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/view-adapters/backend/predicates.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/view-adapters/backend/predicates.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,47 +0,0 @@
+-kind: ResourcesSupplier
+-id: resources-supplier.secret.db-secret
+-selector:
+-  res_kind: Secret
+-  name: db-creds
+-many: false
+-serializer: legacy
+-
+----
+-
+-kind: ResourcesSupplier
+-id: resources-supplier.secret.auth0-secret
+-selector:
+-  res_kind: Secret
+-  name: auth0
+-many: false
+-serializer: legacy
+-
+----
+-
+-kind: Predicate
+-id: predicate.db_secret_exists
+-title: Database Credentials secret exists?
+-info: Checks that secrets/db-creds present in the application namespace
+-challenge: get::resources-supplier.secret.db-secret
+-operator: truthiness
+-tone: error
+-reason: "The Database Credentials secret (secrets/db-creds) does not exist.
+-This means the database cannot start, and the backend will fail to initialize."
+-
+----
+-
+-kind: Predicate
+-id: predicate.auth0_secret_exists
+-title: Auth0 Credentials secret exists?
+-info: Checks that secrets/auth0 present in application namespace
+-challenge: get::resources-supplier.secret.auth0-secret
+-operator: truthiness
+-tone: error
+-reason: "Auth0 Credentials secret (secrets/auth0) does not exist.
+-NMachine uses Auth0 to handle user authentication. Without credentials
+-pointing to a unique Auth0 account, you will not be able to make it
+-further than the splash screen."
+-
+----
+-
+-# TODO backups enabled?
+\ No newline at end of file
+Index: ../ice-kream/ice-kream-kama/configs/variables/preset.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/variables/preset.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/variables/preset.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,18 +0,0 @@
+-kind: ConfigurationPreset
+-id: provider.presets.default
+-title: Base Configuration Only
+-info: "Ships with an INSECURE database, no authentication provider,
+-no automation."
+-default: true
+-variables: get::kind::DefaultVariablesSupplier
+-
+----
+-
+-kind: ConfigurationPreset
+-id: provider.presets.high-limits
+-title: Starter pack
+-info: "Insecure database, no authentication provider."
+-requires_further_config: true
+-variables:
+-  kind: PresetAssignmentsSupplier
+-  source: unsafe-database
+Index: ../ice-kream/ice-kream-kama/configs/operations/install-operation.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/operations/install-operation.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/operations/install-operation.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,36 +0,0 @@
+-kind: Operation
+-id: installation
+-title: Installation
+-preflight_action: id::action.predicate.install-preflight
+-stages:
+-  - id: installation.flavor
+-    title: Simple Assignments
+-    info: "Chart and state assignments that end with a manifest-apply."
+-    steps:
+-      - id: deploy_step
+-        title: "Deployment"
+-        info: "Configures simple dep without applying."
+-        fields:
+-          - id: deployment.flavor
+-            variable: id::deployment.flavor
+-          - id: deployment.replicas
+-            variable: id::deployment.replicas
+-          - id: deployment.password
+-            title: Database Password
+-            info: "Keep this value safe, it will not be shown again."
+-            target: state
+-            default:
+-              kind: RandomStringSupplier
+-              symbols: [letters, numbers]
+-      - id: installation.networking
+-        title: "Service"
+-        info: "Commits simple config and applies the manifest"
+-        action: id::sdk.action.apply_application_manifest_e2e_action
+-        fields:
+-          - id: service.port
+-            variable: id::service.port
+-          - id: service.type
+-            variable: id::service.type
+-
+-  # - sdk.stages.telem-storage
+-  # - sdk.stages.monitoring
+\ No newline at end of file
+Index: ../ice-kream/ice-kream-kama/configs/view-adapters/backend/website-card-adapter.yaml
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/view-adapters/backend/website-card-adapter.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/view-adapters/backend/website-card-adapter.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,122 +0,0 @@
+-kind: ConcernCardAdapter
+-id: org.concern-card-adapter.main-website
+-title: Website
+-spec:
+-  type: Block
+-  title: Service Status
+-  elements:
+-    - type: Section
+-      width: 1
+-      elements:
+-        - get::id::three-stat
+-        - get::id::fckem
+-        - get::id::lalent
+-
+----
+-
+-kind: Provider
+-id: lalent
+-source:
+-  type: Line
+-  elements:
+-    - type: ClearTag
+-      text: Health
+-    - type: AsyncPredicateDots
+-      data:
+-        - id::predicate.db_secret_exists
+-        - id::predicate.auth0_secret_exists
+-
+----
+-
+-kind: Provider
+-id: three-stat
+-source:
+-  type: ThreePartHeader
+-  style:
+-    mt: -50px
+-  title:
+-    type: Text
+-    text: Application Backend
+-    style: [bold, calm]
+-    action:
+-      type: concern_detail
+-      uri:
+-        adapter_ref: detail-adapter.backend
+-        concern_ref: provider.backend
+-  subtitle:
+-    type: Line
+-    elements:
+-      - type: Text
+-        text: Workloads
+-      - type: StatusDots
+-        data: get::self>>concern=>pod_statuses
+-        shape: square
+-        spacing: 1.5px
+-  graphic:
+-    type: Icon
+-    name: api
+-
+----
+-
+-kind: Provider
+-id: nukem
+-source:
+-  type: StatusDots
+-  spacing: 1.99px
+-  data:
+-    - name: foo
+-      status: positive
+-    - name: foo
+-      status: positive
+-    - name: foo
+-      status: negative
+-    - name: foo
+-      status: positive
+-    - name: foo
+-      status: positive
+-
+----
+-
+-kind: Provider
+-id: fckem
+-source:
+-  type: Line
+-  elements:
+-    - type: ClearTag
+-      text: Access
+-    - type: Text
+-      text: get::self>>concern>>site>>resolved_url
+-      style: [hov_underline, hov_point]
+-      action: get::self>>concern>>site>>resolved_action_descriptor
+-    - type: Icon
+-      name: open_in_new
+-      style:
+-        emotion: pleasant
+-
+----
+-
+-kind: Provider
+-id: card-adapter.website.header
+-source:
+-  type: Line
+-  elements:
+-    - type: Text
+-      text: Pods
+-      style: [bold, calm]
+-    - type: StatusDots
+-      data: get::self>>concern=>pod_statuses
+-      shape: square
+-      spacing: 1.5px
+-
+-
+----
+-
+-kind: DeleteResourcesAction
+-id: "parent"
+-selectors:
+-  - kind: ResourceSelector
+-    id: "child-one"
+-    res_kind: ConfigMap
+-  - kind: ResourceSelector
+-    id: "child-two"
+-    res_kind: Secret
+\ No newline at end of file
+Index: ../ice-kream/ice-kream-kama/configs/view-adapters/publisher-frontend/detail-adapter.yaml
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/view-adapters/publisher-frontend/detail-adapter.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/view-adapters/publisher-frontend/detail-adapter.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,68 +0,0 @@
+-kind: ConcernDetailAdapter
+-id: detail-adapter.publisher-frontend
+-title: Publisher Frontend
+-page_adapters:
+-  - title: Overview
+-    id: overview
+-    panel_adapters:
+-      - id::panel_adapter.publisher_frontend.site_access
+-      - id::ligam
+-
+-  - title: Variables
+-    id: variables
+-    panel_adapters:
+-      - id::panel_adapter.publisher_frontend.variables
+-
+-  - title: Action
+-    id: actions
+-    panel_adapters:
+-      - id::foolham
+-
+----
+-
+-kind: ConcernValuePanelAdapter
+-id: panel_adapter.publisher_frontend.site_access
+-title: Website Access
+-info: Changing a variable will lose the context
+-value:
+-  type: AccessPoints
+-  data:
+-    kind: SiteAccessNodesSerializer
+-    site_access_nodes:
+-      - id::site-access-node.publisher-frontend.ingress
+-      - id::site-access-node.publisher-frontend.service
+-
+----
+-
+-kind: ManifestVariablesPanelAdapter
+-id: panel_adapter.publisher_frontend.variables
+-title: Associated Variables
+-info: Changing a variable will lose the context
+-variables:
+-  id:
+-    - "publisher_frontend.*"
+-    - "ingress.routes.publisher_frontend.*"
+-
+----
+-
+-kind: AsyncPredicatesPanelAdapter
+-id: ligam
+-title: Health Checks
+-info: These predicates check for problems in the publisher frontend service
+-predicates:
+-  - id::predicate.publisher_frontend.all_green
+-  - id::predicate.publisher_frontend_enabled_resource_in_sync
+-  - id::predicate.publisher_frontend.redundant_exposure
+-  - id::predicate.auth0_secret_exists
+-
+----
+-
+-kind: ActionsPanelAdapter
+-id: foolham
+-title: Actions & Operations
+-info: Run these things if you're brave
+-operations:
+-  - id::nmachine.telem.operation.storage
+-  - id::nmachine.telem.operation.delete-telem-pvc
+-actions:
+-  - id::nmachine.telem.action.perform_disable
+\ No newline at end of file
+Index: ../ice-kream/ice-kream-kama/configs/view-adapters/publisher-frontend/card-provider.yaml
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/view-adapters/publisher-frontend/card-provider.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/configs/view-adapters/publisher-frontend/card-provider.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
+@@ -1,37 +0,0 @@
+-kind: Concern
+-id: provider.publisher-frontend
+-cached:
+-  best_url:
+-    kind: BestSvcUrlSupplier
+-    source: get::props svc
+-
+-  deployment:
+-    kind: ResourcesSupplier
+-    many: false
+-    serializer: legacy
+-    selector:
+-      res_kind: Deployment
+-      name: publisher-frontend
+-
+-  site: get::&id::best-site-endpoint.publisher-frontend
+-
+-  pod_statuses:
+-    kind: Supplier
+-    inherit: sdk.supplier.pods_in_dots_format
+-    pods: get::self>>deployment=>pods
+-
+----
+-
+-kind: Predicate
+-id: predicate.publisher_frontend.all_green
+-title: All publisher-frontend pods running?
+-info: All publisher-frontend pods running?
+-challenge:
+-  kind: ResourcesSupplier
+-  selector:
+-    res_kind: Deployment
+-    name: publisher-frontend
+-  output: ternary_status
+-  serializer: legacy
+-operator: contains-only
+-check_against: ['positive', 'pending']
+Index: ../ice-kream/ice-kream-kama/.env
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ice-kream/ice-kream-kama/.env	(date 1627485073001)
++++ ../ice-kream/ice-kream-kama/.env	(date 1627485073001)
+@@ -0,0 +1,3 @@
++KAT_ENV=development
++FLASK_ENV=development
++DEVELOPMENT_CONNECT_TYPE=kube-config
+Index: ../ice-kream/ice-kream-kama/main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import os\n\nfrom kama_sdk import entrypoint\nfrom kama_sdk.model.base.model import models_man\nfrom kama_sdk.core.core import utils, kaml_man\n\n\ndef register_self():\n  root_dir = os.path.dirname(os.path.abspath(__file__))\n  yamls = utils.yamls_in_dir(f'{root_dir}/configs', recursive=True)\n  models_man.add_descriptors(yamls)\n  models_man.add_asset_dir_paths([f'{root_dir}/assets'])\n\ndef register_libraries():\n  kaml_man.register_kaml('telem_kaml')\n  kaml_man.register_kaml('prom_kaml')\n\n\nif __name__ == '__main__':\n  register_libraries()\n  register_self()\n  entrypoint.start()\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ice-kream/ice-kream-kama/main.py	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/main.py	(date 1627920241194)
+@@ -1,19 +1,20 @@
+ import os
+ 
+-from kama_sdk import entrypoint
++from kama_sdk.cli import entrypoint
+ from kama_sdk.model.base.model import models_man
+-from kama_sdk.core.core import utils, kaml_man
++from kama_sdk.utils import loading_utils
+ 
+ 
+ def register_self():
+   root_dir = os.path.dirname(os.path.abspath(__file__))
+-  yamls = utils.yamls_in_dir(f'{root_dir}/configs', recursive=True)
++  yamls = loading_utils.load_dir_yamls(f'{root_dir}/descriptors', recursive=True)
+   models_man.add_descriptors(yamls)
+   models_man.add_asset_dir_paths([f'{root_dir}/assets'])
+ 
+ def register_libraries():
+-  kaml_man.register_kaml('telem_kaml')
+-  kaml_man.register_kaml('prom_kaml')
++  pass
++  # kaml_man.register_kaml('telem_kaml')
++  # kaml_man.register_kaml('prom_kaml')
+ 
+ 
+ if __name__ == '__main__':
+Index: ../ice-kream/ice-kream-kama/configs/variables/cert-man-vars.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>kind: ManifestVariable\nid: cert_manager.enabled\ntitle: Certificate Manager enabled?\ninfo: On/off toggle for the certificate manager\ninput: {kind: OnOffInput}\ncategory: id::variable-category.security\nhealth_predicates:\n  - id::predicate.cert_man_enabled_if_ingress_enabled\n\n---\n\nkind: ManifestVariable\nid: cert_manager.email\ntitle: Email for Certificate Manager\ninfo: \"Any domains referenced by the ingress must be registered\nto this email address. Should not be nil if the certificate manager\nis nil.\"\ncategory: id::variable-category.security\nhealth_predicates:\n  - id::predicate.cert_email_defined_if_cert_enabled\nvalidators:\n  - kind: FormatPredicate\n    check_against: email\n\n---\n\nkind: ManifestVariable\nid: cert_manager.server\ntitle: Server URL for Certificate Manager\ninfo: \"Most likely a 'letsencrypt' endpoint. For the certificate\nmanager to consume.\"\nlevel: default_vars\ncategory: id::variable-category.security\nhealth_predicates:\n  - id::predicate.cert_manager_server_is_endpoint\n\n---\n\nkind: Predicate\nid: predicate.cert_man_enabled_if_ingress_enabled\ntitle: Certificates Manager enabled if ingress is enabled\ninfo: Ensure that Certificates Manager is enabled if ingress is enabled\nreason: Frontend to backend I/O will fail if the backend cannot use HTTPS.\nchallenge: get::kind::MergedVariablesSupplier->.cert_manager.enabled\noperator: truthiness\nearly_true_if:\n  kind: Predicate\n  operator: falsiness\n  challenge: get::kind::MergedVariablesSupplier->.ingress.enabled\n\n---\n\nkind: FormatPredicate\nid: predicate.cert_email_defined_if_cert_enabled\ntitle: Valid email address associated with Certificates Manager?\nreason: \"The variable 'cert_manager.email' must have a valid email address as\na value.\"\ncheck_against: email\nchallenge:  get::kind::MergedVariablesSupplier->.cert_manager.email\nearly_true_if:\n  kind: Predicate\n  operator: falsiness\n  challenge: get::kind::MergedVariablesSupplier->.cert_manager.enabled\n\n---\n\nkind: Predicate\nid: predicate.cert_manager_server_is_endpoint\ntitle: Valid server associated with Certificates Manager?\nreason: \"The variable 'cert_manager.server' must have a valid endpoint as\na value.\"\noperator: truthiness\nchallenge: get::kind::MergedVariablesSupplier->.cert_manager.server\n\n---\n\nkind: ResourcesSupplier\nid: cer\nmany: false\n#serializer: legacy\nselector:\n  res_kind: CertificateRequest\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/variables/cert-man-vars.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/descriptors/variables/cert-man-vars.yaml	(date 1627922476425)
+@@ -3,7 +3,7 @@
+ title: Certificate Manager enabled?
+ info: On/off toggle for the certificate manager
+ input: {kind: OnOffInput}
+-category: id::variable-category.security
++category: id::sdk.variable-category.security
+ health_predicates:
+   - id::predicate.cert_man_enabled_if_ingress_enabled
+ 
+@@ -15,7 +15,7 @@
+ info: "Any domains referenced by the ingress must be registered
+ to this email address. Should not be nil if the certificate manager
+ is nil."
+-category: id::variable-category.security
++category: id::sdk.variable-category.security
+ health_predicates:
+   - id::predicate.cert_email_defined_if_cert_enabled
+ validators:
+@@ -30,7 +30,7 @@
+ info: "Most likely a 'letsencrypt' endpoint. For the certificate
+ manager to consume."
+ level: default_vars
+-category: id::variable-category.security
++category: id::sdk.variable-category.security
+ health_predicates:
+   - id::predicate.cert_manager_server_is_endpoint
+ 
+Index: ../ice-kream/ice-kream-kama/configs/variables/ingress_vars.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>################## TEMPLATES ###################\n\nkind: ManifestVariable\nid: variable.template.ingress_route_host\ncasual_name: \"\"\ntitle: ${get::self>>casual_name} Ingress Host\ninfo: \"Routes requests from this domain to the ${get::self>>casual_name}. Has\nno effect if ingress.enabled is false/null Has no effect if\ncluster does not have an ingress backend.\"\ncategory: id::variable-category.networking\nvalidators:\n  - kind: FormatPredicate\n    check_against: domain\n\n---\n\nkind: ManifestVariable\nid: variable.template.ingress_route_path\ncategory: id::variable-category.networking\ncasual_name: \"\"\ntitle: ${get::self>>casual_name} Ingress Host\ninfo: \"Custom path prefix path for ${get::self>>casual_name}. It\nis not recommended to set a value other than '/' as it may create bugs.\"\nlevel: default_vars\nvalidators:\n  - kind: FormatPredicate\n    check_against: path\n\n\n################## ACTUAL ###################\n\n\n---\n\nkind: ManifestVariable\nid: ingress.enabled\ncategory: id::variable-category.networking\ntitle: Application Ingress Toggle\ninfo: \"If enabled, Ingress resource is provisioned to route out-of-cluster\ntraffic to the application's various services. Note that you must have\na DNS solution\"\ninput: {kind: OnOffInput}\nhealth_predicates:\n  - id::predicate.ingress_enabled_resource_in_sync\n\n---\n\nkind: ManifestVariable\nid: ingress.routes.publisher_frontend.host\ninherit: variable.template.ingress_route_host\ncasual_name: Publisher Dashboard\nhealth_predicates:\n  - id::predicate.publisher_frontend.redundant_exposure\n\n---\n\nkind: ManifestVariable\nid: ingress.routes.backend.path\ninherit: variable.template.ingress_route_path\ncasual_name: Backend\n\n---\n\nkind: ManifestVariable\nid: ingress.routes.publisher_frontend.path\ninherit: variable.template.ingress_route_path\ncasual_name: Publisher Dashboard\n\n---\n\nkind: ManifestVariable\nid: ingress.routes.backend.host\ninherit: variable.template.ingress_route_host\ncasual_name: Backend\n\n---\n\nkind: ManifestVariable\nid: ingress.class\ntitle: Ingress controller class\ninfo: \"Name of Ingress controller for consuming ingress resources. It\nmust exist in your Kubernetes cluster; it will not be created otherwise\"\n\n\n################## DEPENDENCIES ###################\n\n\n---\n\nkind: ManifestVariableDependency\nid: variable-dependency.when-ingress-is-disabled\ntitle: Value ignored when ingress.enabled is false\nfrom: [id::ingress.enabled]\nto: {id: [ingress.class, ingress.routes.*]}\nactive:\n  kind: Predicate\n  challenge: get::self>>from_variable>>current_value\n  operator: falsy\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/variables/ingress_vars.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/descriptors/variables/ingress_vars.yaml	(date 1627922476413)
+@@ -7,7 +7,7 @@
+ info: "Routes requests from this domain to the ${get::self>>casual_name}. Has
+ no effect if ingress.enabled is false/null Has no effect if
+ cluster does not have an ingress backend."
+-category: id::variable-category.networking
++category: id::sdk.variable-category.networking
+ validators:
+   - kind: FormatPredicate
+     check_against: domain
+@@ -16,7 +16,7 @@
+ 
+ kind: ManifestVariable
+ id: variable.template.ingress_route_path
+-category: id::variable-category.networking
++category: id::sdk.variable-category.networking
+ casual_name: ""
+ title: ${get::self>>casual_name} Ingress Host
+ info: "Custom path prefix path for ${get::self>>casual_name}. It
+@@ -34,7 +34,7 @@
+ 
+ kind: ManifestVariable
+ id: ingress.enabled
+-category: id::variable-category.networking
++category: id::sdk.variable-category.networking
+ title: Application Ingress Toggle
+ info: "If enabled, Ingress resource is provisioned to route out-of-cluster
+ traffic to the application's various services. Note that you must have
+Index: ../ice-kream/ice-kream-kama/descriptors/variables/preset.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ice-kream/ice-kream-kama/descriptors/variables/preset.yaml	(date 1627909429795)
++++ ../ice-kream/ice-kream-kama/descriptors/variables/preset.yaml	(date 1627909429795)
+@@ -0,0 +1,10 @@
++kind: ConfigurationPreset
++id: provider.presets.default
++title: Base Configuration Only
++info: "Ships with an INSECURE database, no authentication provider, no automation."
++default: true
++variables:
++  kind: MergeSupplier
++  source:
++    - get::kind::DefaultVariablesSupplier
++    - "secrets.standard.db_creds.db_password": "insecure-password"
+Index: ../ice-kream/ice-kream-kama/configs/variables/variables.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>kind: ManifestVariable\nid: backend.admin_email\ntitle: Admin Email\ninfo: \"Although not strictly necessary, it is a good idea to have this variable\ndefined. Without it, most 'god-mode' operations will not work.\"\ncategory: id::variable-category.security\nhealth_predicates:\n  - id::predicate.admin_email_defined\nvalidators:\n  - kind: FormatPredicate\n    check_against: email\n\n---\n\nkind: ManifestVariable\nid: global.auth0.domain\ntitle: Auth0 Domain\ninfo: \"'Domain' value obtained from your Auth0 account. Not treated as a secret.\"\ncategory: id::variable-category.security\nhealth_predicates:\n  - id::predicate.auth-domain-defined\nvalidators:\n  - operator: truthiness\n    reason: Cannot be nil\n\n---\n\nkind: ManifestVariable\nid: global.auth0.client_id\ntitle: Auth0 Domain\ninfo: \"'Client ID' value obtained from your Auth0 account. Not treated as a secret.\"\ncategory: id::variable-category.security\nhealth_predicates:\n  - id::predicate.auth-client-id-defined\nvalidators:\n  - operator: truthiness\n    reason: Cannot be nil\n\n---\n\nkind: FormatPredicate\nid: predicate.admin_email_defined\ntitle: Admin Email defined?\ninfo: Check whether the variable 'backend.admin_email' is defined and is a valid email.\ncheck_against: email\nreason: \"Several 'god-mode' operations, such as seeding will fail if undefined.\nNote that this value only points to a user and will not create it. You need\nto also log into the application with this email address.\"\ntone: warning\nchallenge: get::kind::MergedVariablesSupplier->.backend.admin_email\n\n---\n\nkind: Predicate\nid: predicate.auth-domain-defined\ntitle: Auth0 Domain defined?\ninfo: Check whether the variable global.auth0.domain is defined and non-empty.\noperator: truthiness\nreason: \"This variable should never be nil, otherwise user authentication\nwill not work.\"\nchallenge: get::kind::MergedVariablesSupplier->.global.auth0.domain\n\n---\n\nkind: Predicate\nid: predicate.auth-client-id-defined\ntitle: Auth0 ClientID defined?\ninfo: Check whether the variable global.auth0.client_id is defined and non-empty.\noperator: truthiness\nreason: \"This variable should never be nil, otherwise user authentication\nwill not work.\"\nchallenge: get::kind::MergedVariablesSupplier->.global.auth0.client_id
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ice-kream/ice-kream-kama/configs/variables/variables.yaml	(revision 41e3480c4633b051e1c3b066cbdb08e4e07db88b)
++++ ../ice-kream/ice-kream-kama/descriptors/variables/variables.yaml	(date 1627978951324)
+@@ -1,42 +1,3 @@
+-kind: ManifestVariable
+-id: backend.admin_email
+-title: Admin Email
+-info: "Although not strictly necessary, it is a good idea to have this variable
+-defined. Without it, most 'god-mode' operations will not work."
+-category: id::variable-category.security
+-health_predicates:
+-  - id::predicate.admin_email_defined
+-validators:
+-  - kind: FormatPredicate
+-    check_against: email
+-
+----
+-
+-kind: ManifestVariable
+-id: global.auth0.domain
+-title: Auth0 Domain
+-info: "'Domain' value obtained from your Auth0 account. Not treated as a secret."
+-category: id::variable-category.security
+-health_predicates:
+-  - id::predicate.auth-domain-defined
+-validators:
+-  - operator: truthiness
+-    reason: Cannot be nil
+-
+----
+-
+-kind: ManifestVariable
+-id: global.auth0.client_id
+-title: Auth0 Domain
+-info: "'Client ID' value obtained from your Auth0 account. Not treated as a secret."
+-category: id::variable-category.security
+-health_predicates:
+-  - id::predicate.auth-client-id-defined
+-validators:
+-  - operator: truthiness
+-    reason: Cannot be nil
+-
+----
+ 
+ kind: FormatPredicate
+ id: predicate.admin_email_defined
+diff --git ../ice-kream/ice-kream-kama/configs/full.yaml ../ice-kream/ice-kream-kama/descriptors/full.yaml
+rename from ../ice-kream/ice-kream-kama/configs/full.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/full.yaml
+diff --git ../ice-kream/ice-kream-kama/configs/misc/mock-update.yaml ../ice-kream/ice-kream-kama/descriptors/misc/mock-update.yaml
+rename from ../ice-kream/ice-kream-kama/configs/misc/mock-update.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/misc/mock-update.yaml
+diff --git ../ice-kream/ice-kream-kama/models/__init__.py ../ice-kream/ice-kream-kama/models/__init__.py
+new file mode 100644
+diff --git ../ice-kream/ice-kream-kama/configs/misc/predicates.yaml ../ice-kream/ice-kream-kama/descriptors/misc/predicates.yaml
+rename from ../ice-kream/ice-kream-kama/configs/misc/predicates.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/misc/predicates.yaml
+diff --git ../ice-kream/ice-kream-kama/configs/misc/remediation.yaml ../ice-kream/ice-kream-kama/descriptors/misc/remediation.yaml
+rename from ../ice-kream/ice-kream-kama/configs/misc/remediation.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/misc/remediation.yaml
+diff --git ../ice-kream/ice-kream-kama/configs/misc/resources-in-sync-inspections.yaml ../ice-kream/ice-kream-kama/descriptors/misc/resources-in-sync-inspections.yaml
+rename from ../ice-kream/ice-kream-kama/configs/misc/resources-in-sync-inspections.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/misc/resources-in-sync-inspections.yaml
+diff --git ../ice-kream/ice-kream-kama/configs/operations/hpa-stuff.yaml ../ice-kream/ice-kream-kama/descriptors/operations/hpa-stuff.yaml
+rename from ../ice-kream/ice-kream-kama/configs/operations/hpa-stuff.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/operations/hpa-stuff.yaml
+diff --git ../ice-kream/ice-kream-kama/configs/operations/predicates.yaml ../ice-kream/ice-kream-kama/descriptors/operations/predicates.yaml
+rename from ../ice-kream/ice-kream-kama/configs/operations/predicates.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/operations/predicates.yaml
+diff --git ../ice-kream/ice-kream-kama/configs/operations/prerequisites.yaml ../ice-kream/ice-kream-kama/descriptors/operations/prerequisites.yaml
+rename from ../ice-kream/ice-kream-kama/configs/operations/prerequisites.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/operations/prerequisites.yaml
+diff --git ../ice-kream/ice-kream-kama/configs/operations/seed-orgs-operation.yaml ../ice-kream/ice-kream-kama/descriptors/operations/seed-orgs-operation.yaml
+rename from ../ice-kream/ice-kream-kama/configs/operations/seed-orgs-operation.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/operations/seed-orgs-operation.yaml
+diff --git ../ice-kream/ice-kream-kama/configs/operations/uninstall-operation.yaml ../ice-kream/ice-kream-kama/descriptors/operations/uninstall-operation.yaml
+rename from ../ice-kream/ice-kream-kama/configs/operations/uninstall-operation.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/operations/uninstall-operation.yaml
+diff --git ../ice-kream/ice-kream-kama/configs/operations/update-db-creds-operation.yaml ../ice-kream/ice-kream-kama/descriptors/operations/update-db-creds-operation.yaml
+rename from ../ice-kream/ice-kream-kama/configs/operations/update-db-creds-operation.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/operations/update-db-creds-operation.yaml
+diff --git ../ice-kream/ice-kream-kama/configs/variables/publisher_frontend_variables.yaml ../ice-kream/ice-kream-kama/descriptors/variables/publisher_frontend_variables.yaml
+rename from ../ice-kream/ice-kream-kama/configs/variables/publisher_frontend_variables.yaml
+rename to ../ice-kream/ice-kream-kama/descriptors/variables/publisher_frontend_variables.yaml

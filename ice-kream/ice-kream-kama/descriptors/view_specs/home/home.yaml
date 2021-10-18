@@ -2,7 +2,7 @@ kind: CardGridViewSpec
 id: "app.card-grid.home"
 title: "Home"
 cell_specs:
-  - "id::app.view-spec.hello"
+  - "id::app.view-spec.card.site"
   - "id::app.view-spec.card.metrics"
   - "id::app.view-spec.three"
 labels:

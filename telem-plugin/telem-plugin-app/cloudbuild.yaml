@@ -1,0 +1,24 @@
+substitutions:
+  _IMG_FQDN: us-central1-docker.pkg.dev/nectar-bazaar/public/telem-server:1.0.0
+
+images:
+  - "${_IMG_FQDN}"
+
+steps:
+
+  - id: "Pull prior"
+    name: 'gcr.io/cloud-builders/docker'
+    args:
+      - "pull"
+      - "${_IMG_FQDN}"
+
+  - id: "Build Image"
+    waitFor: ["Pull prior"]
+    name: 'gcr.io/cloud-builders/docker'
+    args:
+      - "build"
+      - "."
+      - "--cache-from"
+      - "${_IMG_FQDN}"
+      - "-t"
+      - "${_IMG_FQDN}"

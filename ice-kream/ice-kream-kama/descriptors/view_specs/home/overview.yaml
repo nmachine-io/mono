@@ -1,4 +1,27 @@
 kind: ViewSpec
+id: "app.view-spec.card.site"
+title: "Store Website"
+deployment: "get::id::app.supplier.get_mono_dep"
+spec:
+  type: Card
+  width: 2
+  orientation: horizontal
+  elements:
+    - type: Block
+      elements:
+        - "get::app.view-supplier.header"
+        - "get::app.view-supplier.service-endpoint"
+        - "get::app.view-supplier.pod-statuses2"
+        - "get::app.view-supplier.pod-statuses2"
+        - "get::app.view-supplier.pod-statuses2"
+    - type: Block
+      elements:
+        - "get::app.view-supplier.gauges"
+        - "get::app.view-supplier.pod-statuses"
+
+---
+
+kind: ViewSpec
 id: "app.view-spec.three"
 title: "Store Website"
 spec:
@@ -27,7 +50,7 @@ spec:
                 elements:
                   - type: Icon
                     name: folder
-                    size: ".68"
+                    size: 0.68
                   - type: Text
                     text: Managed by Telem plugin
                     style: [calm]
@@ -58,27 +81,6 @@ spec:
 
 ---
 
-kind: ViewSpec
-id: app.view-spec.hello
-title: "Store Website"
-deployment: "get::id::app.supplier.get_mono_dep"
-spec:
-  type: Card
-  width: 2
-  orientation: horizontal
-  elements:
-    - type: Block
-      elements:
-        - "get::app.view-supplier.header"
-        - "get::app.view-supplier.service-endpoint"
-    - type: Block
-      elements:
-        - "get::app.view-supplier.gauges"
-        - "get::app.view-supplier.pod-statuses"
-        - "get::app.view-supplier.pod-statuses2"
-
----
-
 kind: Supplier
 id: "app.view-supplier.pod-statuses"
 depth: 100
@@ -106,17 +108,23 @@ id: "app.view-supplier.pod-statuses2"
 depth: 100
 source:
   type: AsyncPredicateDots
-  data: ["id::app.predicate.deployments-running"]
+  data: 
+    - "id::app.predicate.deployments-running"
+    - "id::app.predicate.deployments-running"
+    - "id::app.predicate.deployments-running"
+    - "id::app.predicate.deployments-running"
+    - "id::app.predicate.deployments-running"
+    - "id::app.predicate.deployments-running"
   shape: "square"
   shapeSize: "9px"
   title:
     type: Text
     text: "Health"
     style:
-      width: "50px"
+      width: "auto"
+      calm: true
   style:
-    ml: "14px"
-    mt: "7px"
+    mt: "2px"
 
 ---
 
@@ -135,7 +143,7 @@ cpu:
 source:
   type: Block
   style:
-    mt: "-15px"
+    mt: "-6px"
   elements:
     - type: Block
       orientation: horizontal
@@ -220,7 +228,8 @@ depth: 100
 source:
   type: AccessPointsBlock
   style:
-    mt: "2px"
+    mt: "-10px"
+    mb: "18px"
   data:
     kind: SiteAccessNodesSerializer
     site_access_nodes:

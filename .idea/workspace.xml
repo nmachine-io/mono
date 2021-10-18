@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ccdfcf72-c552-4094-aec7-14517b26837d" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1imycxbZMPW5NkEcHJc7rCyhwTa" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cert-manager/nmachine/cert-manager-ktea" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/hello-ktea" />
+      <recent name="$PROJECT_DIR$/ice-kream/ice-kream-ktea/monolith" />
+      <recent name="$PROJECT_DIR$/telem-server/helm" />
+      <recent name="$PROJECT_DIR$/telem-server/server" />
+      <recent name="$PROJECT_DIR$/telem-tami/templates" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cert-manager/nmachine/cert-manager-ktea" />
+      <recent name="$PROJECT_DIR$/cert-manager/nmachine/cert-manager-kama" />
+      <recent name="$PROJECT_DIR$/hello-ktea" />
+      <recent name="$PROJECT_DIR$/ice-kream/ice-kream-ktea" />
+      <recent name="$PROJECT_DIR$/ice-kream" />
+    </key>
+  </component>
+  <component name="SpringUtil" SPRING_PRE_LOADER_OPTION="true" RAKE_SPRING_PRE_LOADER_OPTION="true" RAILS_SPRING_PRE_LOADER_OPTION="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ccdfcf72-c552-4094-aec7-14517b26837d" name="Default Changelist" comment="" />
+      <created>1602527144704</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1602527144704</updated>
+      <workItem from="1602527146356" duration="646000" />
+      <workItem from="1603462471369" duration="1754000" />
+      <workItem from="1603466016317" duration="1223000" />
+      <workItem from="1606132708183" duration="1121000" />
+      <workItem from="1606166970224" duration="3032000" />
+      <workItem from="1606210434246" duration="4447000" />
+      <workItem from="1606466613016" duration="17000" />
+      <workItem from="1606746597127" duration="1181000" />
+      <workItem from="1606813223612" duration="23000" />
+      <workItem from="1606852919084" duration="1113000" />
+      <workItem from="1606854273317" duration="25000" />
+      <workItem from="1606925634721" duration="456000" />
+      <workItem from="1606926410487" duration="5976000" />
+      <workItem from="1606986158702" duration="14000" />
+      <workItem from="1612007744085" duration="1372000" />
+      <workItem from="1612278052290" duration="93000" />
+      <workItem from="1612284411987" duration="2432000" />
+      <workItem from="1612367889554" duration="13000" />
+      <workItem from="1613059143983" duration="2610000" />
+      <workItem from="1613078129272" duration="662000" />
+      <workItem from="1613312124448" duration="17073000" />
+      <workItem from="1613396998373" duration="933000" />
+      <workItem from="1613399048023" duration="103000" />
+      <workItem from="1614952507195" duration="1863000" />
+      <workItem from="1615327260913" duration="106000" />
+      <workItem from="1615548260954" duration="198000" />
+      <workItem from="1620825850460" duration="1586000" />
+      <workItem from="1620832379980" duration="479000" />
+      <workItem from="1621002017547" duration="50000" />
+      <workItem from="1621002403927" duration="123000" />
+      <workItem from="1621158393801" duration="26000" />
+      <workItem from="1621172447424" duration="1277000" />
+      <workItem from="1621423135993" duration="62000" />
+      <workItem from="1621601821664" duration="883000" />
+      <workItem from="1621608501732" duration="37000" />
+      <workItem from="1621952588825" duration="181000" />
+      <workItem from="1621976871318" duration="47000" />
+      <workItem from="1621977887279" duration="89000" />
+      <workItem from="1621978587129" duration="6683000" />
+      <workItem from="1622192199796" duration="8835000" />
+      <workItem from="1622275951097" duration="2056000" />
+      <workItem from="1622393599189" duration="40000" />
+      <workItem from="1622477368009" duration="981000" />
+      <workItem from="1623336152259" duration="11266000" />
+      <workItem from="1623402962986" duration="24000" />
+      <workItem from="1623839660855" duration="4995000" />
+      <workItem from="1623851864365" duration="12000" />
+      <workItem from="1623854897732" duration="906000" />
+      <workItem from="1624269486323" duration="47000" />
+      <workItem from="1627651750620" duration="6500000" />
+      <workItem from="1627836194118" duration="121000" />
+      <workItem from="1627836404856" duration="143000" />
+      <workItem from="1627851618832" duration="5772000" />
+      <workItem from="1628033244750" duration="591000" />
+      <workItem from="1628718689367" duration="1283000" />
+      <workItem from="1629101244829" duration="30000" />
+      <workItem from="1629106455344" duration="2731000" />
+      <workItem from="1629118851561" duration="382000" />
+      <workItem from="1629120609764" duration="36000" />
+      <workItem from="1633785155633" duration="105000" />
+      <workItem from="1633962059068" duration="15000" />
+      <workItem from="1634216726982" duration="991000" />
+      <workItem from="1634231936451" duration="4000" />
+      <workItem from="1634231979962" duration="22000" />
+      <workItem from="1634289315884" duration="682000" />
+      <workItem from="1634302935498" duration="1262000" />
+    </task>
+    <task id="LOCAL-00001" summary="migrate to monogodb success">
+      <created>1603464246801</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1603464246801</updated>
+    </task>
+    <task id="LOCAL-00002" summary="minor fixes">
+      <created>1603464352309</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1603464352309</updated>
+    </task>
+    <task id="LOCAL-00003" summary="key changes">
+      <created>1603468471361</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1603468471361</updated>
+    </task>
+    <task id="LOCAL-00004" summary="telem-tami as server">
+      <created>1606133490380</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1606133490380</updated>
+    </task>
+    <task id="LOCAL-00005" summary="wiz-ci helm and kerbi up">
+      <created>1606171165165</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1606171165165</updated>
+    </task>
+    <task id="LOCAL-00006" summary="local-eval.sh revolution">
+      <created>1606216360804</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1606216360804</updated>
+    </task>
+    <task id="LOCAL-00007" summary="helm2api working">
+      <created>1606747148991</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1606747148991</updated>
+    </task>
+    <task id="LOCAL-00008" summary="telem-db-helm using helm2api">
+      <created>1612286772824</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1612286772824</updated>
+    </task>
+    <task id="LOCAL-00009" summary="kerbi2api proto working">
+      <created>1613336973802</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1613336973802</updated>
+    </task>
+    <task id="LOCAL-00010" summary="publish.sh -&gt; cloudbuild.yaml">
+      <created>1613397792160</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1613397792160</updated>
+    </task>
+    <task id="LOCAL-00011" summary="most of everything out of gcr">
+      <created>1614954365128</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1614954365128</updated>
+    </task>
+    <task id="LOCAL-00012" summary="show values xxx working">
+      <created>1620828402856</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1620828402856</updated>
+    </task>
+    <task id="LOCAL-00013" summary="presets with v34">
+      <created>1621002521417</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1621002521417</updated>
+    </task>
+    <task id="LOCAL-00014" summary="weird stupid release_name confusion gone">
+      <created>1621602385922</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1621602385922</updated>
+    </task>
+    <task id="LOCAL-00015" summary="telem_server one happy dir">
+      <created>1622021347152</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1622021347152</updated>
+    </task>
+    <task id="LOCAL-00016" summary="kerbi for telem looking good">
+      <created>1622276566673</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1622276566673</updated>
+    </task>
+    <task id="LOCAL-00017" summary="int parsing drama solved">
+      <created>1622277400818</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1622277400818</updated>
+    </task>
+    <task id="LOCAL-00018" summary="lots of apparently uncommitted stuff">
+      <created>1623339283043</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1623339283043</updated>
+    </task>
+    <task id="LOCAL-00019" summary="pvc.yaml.erb better templating">
+      <created>1623400527093</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1623400527093</updated>
+    </task>
+    <task id="LOCAL-00020" summary="mover repo working">
+      <created>1628033312938</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1628033312938</updated>
+    </task>
+    <task id="LOCAL-00021" summary="hello ktea">
+      <created>1628719959331</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1628719959331</updated>
+    </task>
+    <task id="LOCAL-00022" summary="ruby-gcloud savin time">
+      <created>1629109430774</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1629109430774</updated>
+    </task>
+    <task id="LOCAL-00023" summary="ice kream service type typo fixed">
+      <created>1634304100013</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1634304100013</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_NEW_TODO" value="false" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/ice-kream" />
+      <path value="$PROJECT_DIR$/ice-kream/ice-kream-app" />
+    </ignored-roots>
+    <MESSAGE value="migrate to monogodb success" />
+    <MESSAGE value="minor fixes" />
+    <MESSAGE value="key changes" />
+    <MESSAGE value="telem-tami as server" />
+    <MESSAGE value="wiz-ci helm and kerbi up" />
+    <MESSAGE value="local-eval.sh revolution" />
+    <MESSAGE value="helm2api working" />
+    <MESSAGE value="telem-db-helm using helm2api" />
+    <MESSAGE value="kerbi2api proto working" />
+    <MESSAGE value="publish.sh -&gt; cloudbuild.yaml" />
+    <MESSAGE value="most of everything out of gcr" />
+    <MESSAGE value="show values xxx working" />
+    <MESSAGE value="presets with v34" />
+    <MESSAGE value="weird stupid release_name confusion gone" />
+    <MESSAGE value="telem_server one happy dir" />
+    <MESSAGE value="kerbi for telem looking good" />
+    <MESSAGE value="int parsing drama solved" />
+    <MESSAGE value="lots of apparently uncommitted stuff" />
+    <MESSAGE value="pvc.yaml.erb better templating" />
+    <MESSAGE value="mover repo working" />
+    <MESSAGE value="hello ktea" />
+    <MESSAGE value="ruby-gcloud savin time" />
+    <MESSAGE value="ice kream service type typo fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="ice kream service type typo fixed" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="537" y="198" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1627854771043">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="537" y="198" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.24.1600.876@0.24.1600.876" timestamp="1627854771043" />
+    <state x="452" y="37" width="863" height="863" key="CommitChangelistDialog2" timestamp="1634304099672">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="452" y="37" width="863" height="863" key="CommitChangelistDialog2/0.24.1600.876@0.24.1600.876" timestamp="1634304099672" />
+    <state x="100" y="110" width="1400" height="690" key="DiffContextDialog" timestamp="1628719949013">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="100" y="110" width="1400" height="690" key="DiffContextDialog/0.24.1600.876@0.24.1600.876" timestamp="1628719949013" />
+    <state x="587" y="213" width="426" height="483" key="FileChooserDialogImpl" timestamp="1629120644285">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="587" y="213" width="426" height="483" key="FileChooserDialogImpl/0.24.1600.876@0.24.1600.876" timestamp="1629120644285" />
+    <state x="293" y="90" key="SettingsEditor" timestamp="1628033266813">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="293" y="90" key="SettingsEditor/0.24.1600.876@0.24.1600.876" timestamp="1628033266813" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1634303022026">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/0.24.1600.876@0.24.1600.876" timestamp="1634303022026" />
+    <state x="399" y="191" key="Vcs.Push.Dialog.v2" timestamp="1634304101337">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="399" y="191" key="Vcs.Push.Dialog.v2/0.24.1600.876@0.24.1600.876" timestamp="1634304101337" />
+    <state x="489" y="194" width="690" height="522" key="find.popup" timestamp="1628719260103">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="489" y="194" width="690" height="522" key="find.popup/0.24.1600.876@0.24.1600.876" timestamp="1628719260103" />
+    <state x="464" y="208" key="run.anything.popup" timestamp="1627854389904">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="464" y="208" key="run.anything.popup/0.24.1600.876@0.24.1600.876" timestamp="1627854389904" />
+    <state x="463" y="191" width="672" height="678" key="search.everywhere.popup" timestamp="1634303063448">
+      <screen x="0" y="24" width="1600" height="876" />
+    </state>
+    <state x="463" y="191" width="672" height="678" key="search.everywhere.popup/0.24.1600.876@0.24.1600.876" timestamp="1634303063448" />
+  </component>
+</project>

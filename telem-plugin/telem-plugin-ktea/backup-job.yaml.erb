@@ -1,0 +1,41 @@
+<% backups = values[:backups] || {} %>
+<%# job = backups[:job] || {} %>
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: <%= release_name %>
+  name: <%= name %>
+  labels:
+    managed_by: <%= org %>
+    app: <%= name %>
+    role: backups
+spec:
+  ttlSecondsAfterFinished: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - image: mongo
+          name: runner
+          command: ["/bin/sh"]
+          args:
+            - "-c"
+            - "mongodump"
+            - "--host"
+            - "ice-cream-66d4795df4-x4nv5"
+            - "--out"
+            - /var/backups/backup-$(date +"%m-%d-%Y-%H-%M")
+          resources: {}
+          volumeMounts:
+#            - mountPath: /data/db
+#              name: <%#= name %>-volume
+            - mountPath: /var/backups
+              name: <%= name %>-backups-volume
+      volumes:
+#        - name: <%#= name %>-volume
+#          persistentVolumeClaim:
+#            claimName: <%#= name %>-pvc
+        - name: <%= name %>-backups-volume
+          persistentVolumeClaim:
+            claimName: <%= name %>-backups-pvc
