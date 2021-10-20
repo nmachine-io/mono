@@ -1,0 +1,31 @@
+substitutions:
+  _IMG_FQDN: "us-central1-docker.pkg.dev/nectar-bazaar/public/cmp-ktea"
+  _NEW_VER: 1.0.0
+
+images:
+  - "${_IMG_FQDN}:latest"
+  - "${_IMG_FQDN}:${_NEW_VER}"
+
+steps:
+  - id: "Pull previous"
+    name: gcr.io/cloud-builders/docker
+    waitFor: []
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |-
+        docker pull ${_IMG_FQDN}:latest || exit 0;
+
+  - id: "Build image"
+    name: gcr.io/cloud-builders/docker
+    waitFor:
+      - "Pull previous"
+    args:
+      - "build"
+      - "."
+      - "--cache-from"
+      - "${_IMG_FQDN}:latest"
+      - "-t"
+      - "${_IMG_FQDN}:latest"
+      - "-t"
+      - "${_IMG_FQDN}:${_NEW_VER}"

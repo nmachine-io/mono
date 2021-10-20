@@ -4,6 +4,6 @@ title: "Home"
 cell_specs:
   - "id::app.view-spec.card.site"
   - "id::app.view-spec.card.metrics"
-  - "id::app.view-spec.three"
+  - "id::app.view-spec.backups-card"
 labels:
   searchable: true

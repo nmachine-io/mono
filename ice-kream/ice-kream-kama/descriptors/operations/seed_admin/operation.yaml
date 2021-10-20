@@ -17,6 +17,8 @@ steps:
         id: "email"
         target: "state"
         title: "Admin Email"
+        info: "Unencrypted email you will use to login to the app.
+        Must exist."
         validators:
           - kind: FormatPredicate
             check_against: "email"

@@ -11,73 +11,13 @@ spec:
       elements:
         - "get::app.view-supplier.header"
         - "get::app.view-supplier.service-endpoint"
-        - "get::app.view-supplier.pod-statuses2"
-        - "get::app.view-supplier.pod-statuses2"
-        - "get::app.view-supplier.pod-statuses2"
+        - "get::app.view-supplier.site.health"
+        - "get::app.view-supplier.site.security"
+        - "get::app.view-supplier.site.correctness"
     - type: Block
       elements:
         - "get::app.view-supplier.gauges"
         - "get::app.view-supplier.pod-statuses"
-
----
-
-kind: ViewSpec
-id: "app.view-spec.three"
-title: "Store Website"
-spec:
-  type: Card
-  width: 2
-  height: 1
-  elements:
-    - type: Block
-      orientation: horizontal
-      elements:
-        - type: Block
-          elements:
-            - type: SmallHeader
-              style:
-                mt: "0px"
-                mb: "5px"
-              title:
-                type: Text
-                text: "Configuration Backups"
-                style:
-                  bold: true
-                  fair: true
-              subtitle:
-                type: Block
-                orientation: horizontal
-                elements:
-                  - type: Icon
-                    name: folder
-                    size: 0.68
-                  - type: Text
-                    text: Managed by Telem plugin
-                    style: [calm]
-            - type: Calendar
-        - type: Block
-          elements:
-            - type: SmallHeader
-              style:
-                mt: "0px"
-                mb: "5px"
-              title:
-                type: Text
-                text: "Database Backups"
-                style:
-                  bold: true
-                  fair: true
-              subtitle:
-                type: Block
-                orientation: horizontal
-                elements:
-                  - type: Icon
-                    name: folder
-                    size: ".68"
-                  - type: Text
-                    text: Managed by Telem plugin
-                    style: [calm]
-            - type: Calendar
 
 ---
 
@@ -91,8 +31,6 @@ source:
   title:
     type: Text
     text: "Pods"
-    style:
-      width: "50px"
   style:
     ml: "14px"
     mt: "16px"
@@ -102,6 +40,105 @@ source:
     pods: "get::self>>deployment=>pods"
 
 ---
+
+kind: Supplier
+id: "app.view-supplier.site.health"
+depth: 100
+source:
+  type: AsyncPredicateDots
+  data: 
+    - kind: RandomPredicate
+      id: "app.predicate.site.health.one"
+    - kind: RandomPredicate
+      id: "app.predicate.site.health.two"
+    - kind: RandomPredicate
+      id: "app.predicate.site.health.three"
+    - kind: RandomPredicate
+      id: "app.predicate.site.health.four"
+    - kind: RandomPredicate
+      id: "app.predicate.site.health.five"
+    - kind: RandomPredicate
+      id: "app.predicate.site.health.six"
+
+  shape: "square"
+  shapeSize: "9px"
+  title:
+    type: Text
+    text: "Health"
+    style:
+      width: "auto"
+      calm: true
+  style:
+    mt: "6px"
+
+---
+
+kind: Supplier
+id: "app.view-supplier.site.correctness"
+depth: 100
+source:
+  type: AsyncPredicateDots
+  data: 
+    - kind: RandomPredicate
+      id: "app.predicate.site.correctness.one"
+    - kind: RandomPredicate
+      id: "app.predicate.site.correctness.two"
+    - kind: RandomPredicate
+      id: "app.predicate.site.correctness.three"
+    - kind: RandomPredicate
+      id: "app.predicate.site.correctness.four"
+    - kind: RandomPredicate
+      id: "app.predicate.site.correctness.five"
+    - kind: RandomPredicate
+      id: "app.predicate.site.correctness.six"
+
+  shape: "square"
+  shapeSize: "9px"
+  title:
+    type: Text
+    text: "Correctness"
+    style:
+      width: "auto"
+      calm: true
+  style:
+    mt: "6px"
+
+---
+
+
+kind: Supplier
+id: "app.view-supplier.site.security"
+depth: 100
+source:
+  type: AsyncPredicateDots
+  data: 
+    - kind: RandomPredicate
+      id: "app.predicate.site.security.one"
+    - kind: RandomPredicate
+      id: "app.predicate.site.security.two"
+    - kind: RandomPredicate
+      id: "app.predicate.site.security.three"
+    - kind: RandomPredicate
+      id: "app.predicate.site.security.four"
+    - kind: RandomPredicate
+      id: "app.predicate.site.security.five"
+    - kind: RandomPredicate
+      id: "app.predicate.site.security.six"
+
+  shape: "square"
+  shapeSize: "9px"
+  title:
+    type: Text
+    text: "Security"
+    style:
+      width: "auto"
+      calm: true
+  style:
+    mt: "6px"
+
+
+---
+
 
 kind: Supplier
 id: "app.view-supplier.pod-statuses2"
@@ -119,12 +156,12 @@ source:
   shapeSize: "9px"
   title:
     type: Text
-    text: "Health"
+    text: "Unclear"
     style:
       width: "auto"
       calm: true
   style:
-    mt: "2px"
+    mt: "6px"
 
 ---
 

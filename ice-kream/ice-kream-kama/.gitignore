@@ -2,6 +2,7 @@ kama_sdk
 kama_telem_plugin
 kama_prom_plugin
 reqlib-metadata
+cert_manager_plugin
 .idea
 .venv
 .env

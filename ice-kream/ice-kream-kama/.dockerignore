@@ -1,6 +1,7 @@
 kama_sdk
 kama_telem_plugin
 kama_prom_plugin
+cert_manager_plugin
 reqlib-metadata
 .idea
 .idea

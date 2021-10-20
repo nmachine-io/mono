@@ -9,6 +9,7 @@ from kama_sdk.model.base.model import models_manager
 from kama_sdk.utils.descriptor_utils import load_dir_yamls
 from kama_telem_plugin import plugin as telem_plugin
 from kama_prom_plugin import plugin as prom_plugin
+from cert_manager_plugin import plugin as cert_manager_plugin
 from kama_telem_plugin.nmachine_telem_backend import NMachineTelemBackend
 
 
@@ -31,6 +32,7 @@ def register_examples():
 def register_plugins():
   plugins_manager.register(manifest=telem_plugin.get_manifest())
   plugins_manager.register(manifest=prom_plugin.get_manifest())
+  plugins_manager.register(manifest=cert_manager_plugin.get_manifest())
 
 
 def register_delegates():

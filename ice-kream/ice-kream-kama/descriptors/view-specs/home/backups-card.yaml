@@ -1,0 +1,60 @@
+kind: ViewSpec
+id: "app.view-spec.backups-card"
+title: "Store Website"
+spec:
+  type: Card
+  width: 2
+  height: 1
+  elements:
+    kind: IfThenElseSupplier
+    predicate:
+      kind: Predicate
+      challenge: "get::&kind::TelemStateHelper>>is_online"
+      operator: truthiness
+    on_true:
+      - "get::id::app.view-spec.home.backups.header"
+      - "get::id::app.view-spec.home.backups.content"
+    on_false: "get::id::app.view-spec.backups.disabled"
+---
+
+kind: Supplier
+id: "app.view-spec.home.backups.header"
+source:
+  type: SmallHeader
+  style:
+    mt: "0px"
+    mb: "5px"
+  title:
+    type: Text
+    text: "Snapshots & Audits"
+    style:
+      bold: true
+      fair: true
+
+---
+
+kind: Supplier
+id: "app.view-spec.home.backups.content"
+source:
+  type: Calendar
+  style:
+    mt: "19px"
+
+
+---
+
+kind: Supplier
+id: "app.view-spec.backups.disabled"
+depth: 100
+source:
+  - type: CallToAction
+    title: "Telemetry is not Enabled"
+    subtitle: "Use the Telemetry plugin for snapshots and audits."
+    button:
+      type: "ClearButton"
+      text: "Setup"
+      action:
+        type: goto_operation
+        kod: "nmachine.telem.operation.storage"
+    style:
+      mt: 35px

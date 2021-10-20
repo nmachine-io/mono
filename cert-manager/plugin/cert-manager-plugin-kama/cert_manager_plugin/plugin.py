@@ -11,7 +11,7 @@ def get_manifest():
   return PluginManifest(
     id=PLUGIN_ID,
     publisher_identifier='nmachine',
-    app_identifier='cert_manager_plugin',
+    app_identifier='cert-manager-plugin',
     model_descriptors=gather_model_descriptors(),
     asset_paths=[assets_path],
     model_classes=gather_custom_models(),

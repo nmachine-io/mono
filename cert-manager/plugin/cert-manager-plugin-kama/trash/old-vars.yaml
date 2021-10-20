@@ -1,0 +1,15 @@
+kind: Field
+id: f2
+title: "Target Kubernetes Namespace"
+info: "Choose where the resulting Issuer and Secret resources
+should be created. If you wanted to create cluster-wide issuer instead,
+choose the 'Create Cluster Issuer' operation instead."
+target: "state"
+input:
+  kind: SelectInput
+  options:
+    kind: ResourcesSupplier
+    resource_selector: "expr::Namespace:*"
+    many: true
+    output: "options_format"
+    serializer: "native"

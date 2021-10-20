@@ -1,0 +1,11 @@
+kind: ResourceGroup
+id: sdk.uninstall-spec.something
+title: "Outside Monitoring Resources"
+mandatory: true
+labels:
+  victim: true
+resource_selectors:
+  - kind: ResourceSelector
+    res_kind: pod
+    namespace: monitoring
+    version: v1

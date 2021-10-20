@@ -1,0 +1,15 @@
+kind: Predicate
+id: "app.predicate.cert-manager-installed"
+title: "Certificate Manager installed?"
+info: "The Kubernetes-native cert-manager is required by the application for ingress."
+challenge: zero
+check_against: one
+
+---
+
+kind: Predicate
+id: "app.predicate.ingress-installed"
+title: "Ingress Controller installed?"
+info: "The Kubernetes-native cert-manager is required by the application for ingress."
+challenge: zero
+check_against: zero

@@ -5,109 +5,31 @@ info: "Setup a namespace-bound Issuer and Certificate"
 labels:
   searchable: true
 steps:
-  - kind: Step
-    id: "nmachine.cmp.step.create.type"
-    title: "Choose a Backend"
-    info: "We're just looking here"
-    synopsis: "assets::choose-issuer-synopsis.md"
-    fields: [id::f1]
-
-  - kind: Step
-    id: "nmachine.cmp.step.create.configure"
-    title: "Configure your Backend"
-    info: "We're just looking here"
-    synopsis: "assets::acme-synopsis.md"
-    fields:
-      - id::f2
-      - id::f3
-      - id::f4
+  - "nmachine.cmp.step.create.type"
+  - "nmachine.cmp.step.create.configure"
 
 ---
 
-kind: Field
-id: f2
-title: "Target Kubernetes Namespace"
-info: "Choose where the resulting Issuer and Secret resources
-should be created. If you wanted to create cluster-wide issuer instead,
-choose the 'Create Cluster Issuer' operation instead."
-target: "state"
-input:
-  kind: SelectInput
-  options:
-    kind: ResourcesSupplier
-    resource_selector: "expr::Namespace:*"
-    many: true
-    output: "options_format"
-    serializer: "native"
-
+kind: Step
+id: "nmachine.cmp.step.create.type"
+title: "Choose a Backend"
+info: "We're just looking here"
+synopsis: "assets::choose-issuer-synopsis.md"
+fields:
+  - variable: "id::nmachine.cmp.issuer.type"
+    target: "state"
 
 ---
 
-kind: Field
-id: f3
-title: "Domain owner Email"
-info: "The email address you registered your domain with. Make sure it is
-correct as a mismatch will cause key signing to fail."
-target: "state"
+kind: Step
+id: "nmachine.cmp.step.create.configure"
+title: "Configure your Backend"
+info: "We're just looking here"
+synopsis: "assets::acme-synopsis.md"
+fields:
 
+  - variable: "id::nmachine.cmp.acme.email"
+    target: "state"
 
----
-
-kind: Field
-id: f4
-title: "ACME Server"
-info: "Key signing authority. Leave the default if you are unsure."
-target: "state"
-default: "https://acme-staging-v02.api.letsencrypt.org/directory"
-
----
-
-kind: Field
-id: f1
-title: "Backend type"
-info: "Cert-manager supports the following authentication backends. If
-you're not sure which to choose, use ACME."
-target: "state"
-input:
-  kind: ViewSpecSelectInput
-  options:
-    - type: OptionCard
-      option_key: "vault"
-      title: "HashiCorp Vault"
-      subtitle: "Default Provider"
-      info: "Cert-manager supports the following authentication backends. If
-             you're not sure which to choose, use ACME."
-      graphic:
-        type: Image
-        src: services/hashicorp/small.png
-      tags: []
-    - type: OptionCard
-      option_key: "acme"
-      title: "Let's Encrypt ACME"
-      subtitle: "Open Source"
-      info: "Cert-manager supports the following authentication backends. If
-             you're not sure which to choose, use ACME."
-      graphic:
-        type: Image
-        src: services/lets_encrypt/lets_encrypt.svg
-      tags: []
-    - type: OptionCard
-      option_key: "venafi"
-      title: "Venafi"
-      subtitle: "Open Source"
-      info: "Cert-manager supports the following authentication backends. If
-             you're not sure which to choose, use ACME."
-      graphic:
-        type: Image
-        src: "services/venafi/small.png"
-      tags: []
-    - type: OptionCard
-      option_key: "gcp"
-      title: "Google CAS Issuer"
-      subtitle: "Open Source"
-      info: "Cert-manager supports the following authentication backends. If
-             you're not sure which to choose, use ACME."
-      graphic:
-        type: Image
-        src: "services/gcp/small.png"
-      tags: []
+  - variable: "id::nmachine.cmp.acme.server"
+    target: "state"
