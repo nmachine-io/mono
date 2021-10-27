@@ -1,0 +1,11 @@
+kind: ActionErrorRemediationOption
+id: "app.remediation.ingress.create-issuer"
+title: "Create the missing Issuer"
+info: "If your intention was to have Ingress disabled, you can keep
+the variable set to 'false' and just delete the lingering Ingress resource."
+match:
+  type: "negative_predicate"
+  extras.predicate_id: "app.predicate.issuer-exists"
+button_action:
+  type: goto_operation
+  uri: "nmachine.cmp.operation.create"

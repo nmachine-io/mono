@@ -29,7 +29,7 @@ class Constants
     end
 
     def issuer_name
-      "letsencrypt"
+      "issuer"
     end
   end
 end

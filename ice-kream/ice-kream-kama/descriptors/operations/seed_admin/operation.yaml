@@ -32,7 +32,7 @@ steps:
         validators:
           - kind: FormatPredicate
             check_against: "password"
-            tone: "warning"
+            severity: "warning"
 
     action:
       inherit: "app.action.seed_admin_shell_exec"

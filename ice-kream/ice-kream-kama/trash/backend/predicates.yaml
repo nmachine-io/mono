@@ -24,7 +24,7 @@ title: Database Credentials secret exists?
 info: Checks that secrets/db-creds present in the application namespace
 challenge: get::resources-supplier.secret.db-secret
 operator: truthiness
-tone: error
+severity: error
 reason: "The Database Credentials secret (secrets/db-creds) does not exist.
 This means the database cannot start, and the backend will fail to initialize."
 
@@ -36,7 +36,7 @@ title: Auth0 Credentials secret exists?
 info: Checks that secrets/auth0 present in application namespace
 challenge: get::resources-supplier.secret.auth0-secret
 operator: truthiness
-tone: error
+severity: error
 reason: "Auth0 Credentials secret (secrets/auth0) does not exist.
 NMachine uses Auth0 to handle user authentication. Without credentials
 pointing to a unique Auth0 account, you will not be able to make it

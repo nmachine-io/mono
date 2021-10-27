@@ -6,6 +6,9 @@ spec:
   type: Card
   width: 2
   orientation: horizontal
+  action:
+    type: goto_view_spec
+    group_id: "app.view-group.site"
   elements:
     - type: Block
       elements:
@@ -263,20 +266,19 @@ kind: Supplier
 id: "app.view-supplier.service-endpoint"
 depth: 100
 source:
-  type: AccessPointsBlock
+  type: MinimalAccessPoint
   style:
     mt: "-10px"
     mb: "18px"
-  data:
-    kind: SiteAccessNodesSerializer
-    site_access_nodes:
-      - kind: SimpleIngressSiteAccessNode
-        id: "ingress-node"
-        ingress_selector: "expr::Ingress:ice-kream-ingress"
-
-      - kind: SimpleServiceSiteAccessNode
-        id: "service-node"
-        service_selector: "expr::Service:monolith"
+  endpoints:
+    kind: AccessNodeSerializer
+    access_node:
+      kind: SimpleIngressSiteAccessNode
+      id: "ingress-node"
+      ingress_selector: "expr::Ingress:ice-kream-ingress"
+  offline_action:
+    type: goto_operation
+    uri: "app.operation.enable-ingress"
 
 ---
 

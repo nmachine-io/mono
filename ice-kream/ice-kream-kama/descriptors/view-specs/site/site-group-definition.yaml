@@ -1,0 +1,55 @@
+kind: ViewGroup
+id: "app.view-group.site"
+mode: "bound"
+title: "Ice Kream"
+collection_specs:
+  - "id::app.grid-view-spec.site.overview"
+  - "id::app.grid-view-spec.site.storage"
+  - "id::app.grid-view-spec.site.monitoring"
+  - "id::app.grid-view-spec.site.audits"
+  - "id::app.grid-view-spec.site.deployments"
+  - "id::app.grid-view-spec.site.pods"
+
+---
+
+kind: GridViewSpec
+id: "app.grid-view-spec.site.overview"
+title: "Overview"
+display: "sequence"
+cell_specs:
+  - "id::app.card-spec.site.site.main.access"
+
+---
+
+kind: GridViewSpec
+id: "app.grid-view-spec.site.storage"
+title: "Storage"
+cell_specs: []
+
+---
+
+kind: GridViewSpec
+id: "app.grid-view-spec.site.monitoring"
+title: "Monitoring"
+cell_specs: []
+
+---
+
+kind: GridViewSpec
+id: "app.grid-view-spec.site.audits"
+title: "Audits"
+cell_specs: []
+
+---
+
+kind: GridViewSpec
+id: "app.grid-view-spec.site.deployments"
+title: "Deployments"
+cell_specs: []
+
+---
+
+kind: GridViewSpec
+id: "app.grid-view-spec.site.pods"
+title: "Pods"
+cell_specs: []

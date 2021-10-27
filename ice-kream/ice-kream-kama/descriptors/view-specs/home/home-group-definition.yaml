@@ -1,0 +1,68 @@
+kind: ViewGroup
+id: "app.view-group.home"
+mode: "free"
+collection_specs:
+  - "id::app.card-grid.home"
+  - "id::sdk.table_view_spec.deployment"
+  - "id::app.mock.page-spec.pods"
+  - "id::app.mock.page-spec.services"
+  - "id::app.mock.page-spec.ingresses"
+  - "id::app.mock.page-spec.config-maps"
+  - "id::app.mock.page-spec.secrets"
+  - "id::app.mock.page-spec.pvcs"
+
+---
+
+kind: GridViewSpec
+id: "app.card-grid.home"
+title: "Home"
+display: "grid"
+cell_specs:
+  - "id::app.view-spec.card.site"
+  - "id::app.view-spec.card.metrics"
+  - "id::app.view-spec.backups-card"
+  - "id::app.view-spec.card.res-utilization"
+  - "id::app.view-spec.card.security-practices"
+  - "id::app.view-spec.card.cert-issuer"
+
+---
+
+kind: GridViewSpec
+id: "app.mock.page-spec.pods"
+title: "Overview"
+cell_specs: []
+
+---
+
+kind: GridViewSpec
+id: "app.mock.page-spec.services"
+title: "Services"
+cell_specs: []
+
+---
+
+kind: GridViewSpec
+id: "app.mock.page-spec.ingresses"
+title: "Ingresses"
+cell_specs: []
+
+---
+
+kind: GridViewSpec
+id: "app.mock.page-spec.config-maps"
+title: "ConfigMaps"
+cell_specs: []
+
+---
+
+kind: GridViewSpec
+id: "app.mock.page-spec.secrets"
+title: "Secrets"
+cell_specs: []
+
+---
+
+kind: GridViewSpec
+id: "app.mock.page-spec.pvcs"
+title: "PVCs"
+cell_specs: []

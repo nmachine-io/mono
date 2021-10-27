@@ -5,7 +5,7 @@ class NetworkMixer < Kerbi::Mixer
 
   def run
     super do |t|
-      t.yaml 'certs' if ingress_enabled?
+      # t.yaml 'certs' if ingress_enabled? TODO kill when certain
       t.yaml 'ingress' if ingress_enabled?
     end
   end

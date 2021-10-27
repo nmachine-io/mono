@@ -31,12 +31,7 @@ monolith:
 ingress:
   enabled: false
   class: nginx
-  cert_issuer_name: ""
   routes:
     monolith:
       host: ""
       path: "/"
-
-cert_manager:
-  email: ''
-  server: 'https://acme-v02.api.letsencrypt.org/directory'

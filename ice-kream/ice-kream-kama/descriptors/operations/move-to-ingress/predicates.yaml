@@ -3,7 +3,7 @@ id: "app.predicate.cert-manager-installed"
 title: "Certificate Manager installed?"
 info: "The Kubernetes-native cert-manager is required by the application for ingress."
 challenge: zero
-check_against: one
+check_against: zero
 
 ---
 
@@ -13,3 +13,19 @@ title: "Ingress Controller installed?"
 info: "The Kubernetes-native cert-manager is required by the application for ingress."
 challenge: zero
 check_against: zero
+
+---
+
+kind: Predicate
+id: "app.predicate.issuer-exists"
+title: "Issuer exists in Namespace?"
+info: "One or more issuers must exist in this application's namespace"
+challenge:
+  kind: ResourcesSupplier
+  resource_selector: "expr::Issuer:*"
+operator: "any"
+severity: "error"
+reason: "Could not find an Issuer resource in the application
+namespace. This means that whatever ingress you configure
+will NOT work with SSL, i.e https: will fail all web pages.
+"

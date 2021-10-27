@@ -2,17 +2,17 @@ kind: Operation
 id: "app.operation.enable-ingress"
 synopsis: "assets::enable-ingress-synopsis.md"
 title: Enable Ingress
-info: "Configure the application to be accessible at a specific web address."
+info: "Configure the application to be accessible on the world wide web
+at an address of your choosing e.g https:ice-kream.my-domain.com"
 labels:
   searchable: true
+preflight_predicates:
+  - "id::app.predicate.cert-manager-installed"
+  - "id::app.predicate.ingress-installed"
+  - "id::app.predicate.issuer-exists"
+
 steps:
-  - inherit: nmachine.cmp.step.create.type
-    title: "Cert Manager Backend"
-
-  - inherit: nmachine.cmp.step.create.configure
-    title: "Cert Manager Config"
-
-  - id::app.step.enable-ingress.main.main
+  - "id::app.step.enable-ingress.main.main"
 
 ---
 
@@ -27,7 +27,7 @@ commit:
   standard:
     kind: MergeSupplier
     source:
-      - "get::parent>>default_commit"
+      - "get::parent>>default_commit->.standard"
       - "get::id::app.supplier.enable-ingress.vars-patch"
 
 ---
@@ -40,5 +40,3 @@ source:
   monolith:
     service:
       type: "ClusterIP"
-  cert_manager:
-    enabled: false

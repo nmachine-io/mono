@@ -1,0 +1,65 @@
+kind: ViewSpec
+id: "app.view-spec.card.res-utilization"
+spec:
+  type: Card
+  width: 1
+  height: 1
+  elements:
+    - type: ReportCard
+      header:
+        type: SmallHeader
+        title: Resource Utilization
+        subtitle: Report Card
+      info: Memory, CPU, and disk allotted versus consumption
+      score:
+        type: Text
+        text: B+
+
+---
+
+kind: ViewSpec
+id: "app.view-spec.card.security-practices"
+spec:
+  type: Card
+  width: 1
+  height: 1
+  elements:
+    - type: ReportCard
+      header:
+        type: SmallHeader
+        title: Security Practices
+        subtitle: Report Card
+      info: Measured via static manifest analysis and port scans.
+      score:
+        type: Text
+        text: D
+        style:
+          emotion: nectar
+
+---
+
+kind: ViewSpec
+id: "app.view-spec.card.cert-issuer"
+spec:
+  type: Card
+  width: 1
+  height: 1
+  elements:
+    - type: ImageCard
+      header:
+        type: SmallHeader
+        title: SSL Issuer
+        subtitle:
+          type: Block
+          orientation: horizontal
+          elements:
+            - type: Text
+              text: Via cert-manager plugin
+              style:
+                calm: true
+            - type: Image
+              src: https://avatars.githubusercontent.com/u/39950598?s=280&v=4
+      info: "Open source SSL certificate issuer by cert-manager"
+      image:
+        type: Image
+        src: https://storage.googleapis.com/nectar-mosaic-public/images/kama/services/lets_encrypt/lets_encrypt.svg

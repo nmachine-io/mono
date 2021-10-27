@@ -1,0 +1,9 @@
+kind: ViewSpec
+id: "app.card-spec.site.site.main.access"
+spec:
+  type: Panel
+  width: 4
+  height: 1
+  elements:
+    - type: Text
+      text: "Yellow Access"

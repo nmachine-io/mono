@@ -46,7 +46,7 @@ check_against: email
 reason: "Several 'god-mode' operations, such as seeding will fail if undefined.
 Note that this value only points to a user and will not create it. You need
 to also log into the application with this email address."
-tone: warning
+severity: warning
 challenge: get::kind::MergedVariablesSupplier->.backend.admin_email
 
 ---
