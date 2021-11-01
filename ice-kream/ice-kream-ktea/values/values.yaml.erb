@@ -15,6 +15,7 @@ storage:
 monolith:
   deployment:
     image: "<%= img_base %>/ice-kream-app:<%= semver %>"
+    ice_kream_ver: <%= semver %>
     image_pull_policy: Always
     admin_email: "admin@admin.com"
     replicas: 1

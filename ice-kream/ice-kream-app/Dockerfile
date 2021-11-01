@@ -1,8 +1,14 @@
-FROM ruby:2.6.3
+FROM ruby:2.6.3-alpine3.10
 
-RUN apt-get update -qq && \
-    apt-get install -y \
-    nodejs postgresql-client
+RUN apk update && \
+     apk upgrade && \
+     apk add --update --no-cache \
+          build-base curl-dev git postgresql-dev \
+          yaml-dev zlib-dev nodejs yarn tzdata
+
+#RUN apt-get update -qq && \
+#    apt-get install -y \
+#    nodejs postgresql-client
 
 WORKDIR /app
 
@@ -17,4 +23,4 @@ COPY . .
 
 RUN bundle exec rails SECRET_KEY_BASE=dummyvalue assets:precompile
 
-EXPOSE 3000y
+EXPOSE 3000

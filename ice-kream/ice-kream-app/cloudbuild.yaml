@@ -1,10 +1,12 @@
 substitutions:
   _IMG_FQDN: "us-central1-docker.pkg.dev/nectar-bazaar/public/ice-kream-app"
-  _NEW_VER: 1.0.4
+  _V1_TAG: 1.0.0
+  _V2_TAG: 2.0.0
 
 images:
   - "${_IMG_FQDN}:latest"
-  - "${_IMG_FQDN}:${_NEW_VER}"
+  - "${_IMG_FQDN}:${_V1_TAG}"
+  - "${_IMG_FQDN}:${_V2_TAG}"
 
 steps:
   - id: "Pull previous"
@@ -28,4 +30,6 @@ steps:
       - "-t"
       - "${_IMG_FQDN}:latest"
       - "-t"
-      - "${_IMG_FQDN}:${_NEW_VER}"
+      - "${_IMG_FQDN}:${_V1_TAG}"
+      - "-t"
+      - "${_IMG_FQDN}:${_V2_TAG}"

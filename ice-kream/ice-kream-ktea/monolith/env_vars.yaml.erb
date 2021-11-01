@@ -4,8 +4,11 @@ value: <%= values[:env] || 'production' %>
 name: RAILS_LOG_TO_STDOUT
 value: "true"
 ---
+name: ICE_KREAM_VER
+value: <%= values.dig(:monolith, :deployment, :ice_kream_ver) %>
+---
 name: ADMIN_EMAIL
-value: <%= values.dig(consts.backend_name.to_sym, :admin_email) %>
+value: <%= values.dig(:monolith, :deployment, :admin_email) %>
 ---
 name: DATABASE_USER
 value: "postgres"
