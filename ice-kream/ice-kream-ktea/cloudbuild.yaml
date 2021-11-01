@@ -1,10 +1,12 @@
 substitutions:
   _IMG_FQDN: "us-central1-docker.pkg.dev/nectar-bazaar/public/ice-kream-ktea"
-  _NEW_VER: 1.0.1
+  _V1_TAG: 1.0.0
+  _V2_TAG: 2.0.0
 
 images:
   - "${_IMG_FQDN}:latest"
-  - "${_IMG_FQDN}:${_NEW_VER}"
+  - "${_IMG_FQDN}:${_V1_TAG}"
+  - "${_IMG_FQDN}:${_V2_TAG}"
 
 steps:
   - id: "Pull previous"
@@ -16,7 +18,7 @@ steps:
       - |-
         docker pull ${_IMG_FQDN}:latest || exit 0;
 
-  - id: "Build image"
+  - id: "Build V1"
     name: gcr.io/cloud-builders/docker
     waitFor:
       - "Pull previous"
@@ -25,7 +27,23 @@ steps:
       - "."
       - "--cache-from"
       - "${_IMG_FQDN}:latest"
+      - "--build-arg"
+      - "ICE_KREAM_VER=1.0.0"
       - "-t"
       - "${_IMG_FQDN}:latest"
       - "-t"
-      - "${_IMG_FQDN}:${_NEW_VER}"
+      - "${_IMG_FQDN}:${_V1_TAG}"
+
+  - id: "Build V2"
+    name: gcr.io/cloud-builders/docker
+    waitFor:
+      - "Pull previous"
+    args:
+      - "build"
+      - "."
+      - "--cache-from"
+      - "${_IMG_FQDN}:latest"
+      - "--build-arg"
+      - "ICE_KREAM_VER=2.0.0"
+      - "-t"
+      - "${_IMG_FQDN}:${_V2_TAG}"

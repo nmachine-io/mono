@@ -1,4 +1,5 @@
 <% img_base = 'us-central1-docker.pkg.dev/nectar-bazaar/public' %>
+<% semver = ENV['ICE_KREAM_VER'] || '1.0.0' %>
 
 env: production
 
@@ -13,9 +14,9 @@ storage:
 
 monolith:
   deployment:
-    image: "<%= img_base %>/ice-kream-app:1.0.4"
+    image: "<%= img_base %>/ice-kream-app:<%= semver %>"
     image_pull_policy: Always
-    admin_email: admin@admin.com
+    admin_email: "admin@admin.com"
     replicas: 1
     resources:
       requests:
@@ -23,7 +24,7 @@ monolith:
         memory: "250M"
       limits:
         memory: "500M"
-        cpu: 1
+        cpu: <%= semver[0] rescue '1' %>
   service:
     port: 3000
     type: ClusterIP
