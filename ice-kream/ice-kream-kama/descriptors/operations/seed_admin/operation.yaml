@@ -19,6 +19,7 @@ steps:
         title: "Admin Email"
         info: "Unencrypted email you will use to login to the app.
         Must exist."
+        default: "admin@company.com"
         validators:
           - kind: FormatPredicate
             check_against: "email"
@@ -29,6 +30,7 @@ steps:
         title: Admin Password
         info: "This password will be encrypted in the application database;
         it will not be saved by NMachine; you are responsible for it."
+        default: "Example_123"
         validators:
           - kind: FormatPredicate
             check_against: "password"

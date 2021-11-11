@@ -1,0 +1,13 @@
+kind: PodShellExecAction
+id: "app.action.seed-products.shell-exec"
+params: "${get::self>>cones},${get::self>>creams},${get::self>>combos}"
+command: "bundle exec rake seed:products[${get::self>>params}]"
+pod:
+  kind: ResourcesSupplier
+  many: false
+  serializer: "native"
+  resource_selector:
+    kind: ResourceSelector
+    res_kind: "Pod"
+    label_selector:
+      microservice: "monolith"

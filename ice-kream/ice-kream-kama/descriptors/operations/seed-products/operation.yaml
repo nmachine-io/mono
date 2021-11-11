@@ -1,0 +1,63 @@
+kind: Operation
+id: "app.operation.seed-products"
+title: "Seed Ice Cream Products"
+synopsis: "assets::seed-products-synopsis.md"
+info: "Add a credentialed Admin user to the database."
+tags: ["Seeding"]
+labels:
+  searchable: true
+steps:
+  - kind: Step
+    id: "app.step.seed-products.main"
+    title: "Choose Seed Amounts"
+    info: "Choose the number of sub-products for the backend to seed."
+    synopsis: "assets::seed-products-synopsis.md"
+    fields:
+      - kind: Field
+        id: "cones"
+        target: "state"
+        title: "Cones"
+        info: "Number of ice cream cones to seed"
+        validators: ["id::app.predicate.utils.int-or-err"]
+        default: 3
+        input:
+          kind: SliderInput
+          min: 1
+          max: 10
+
+      - kind: Field
+        id: "creams"
+        target: "state"
+        title: "Creams"
+        info: "Number of ice cream flavors to seed"
+        validators: ["id::app.predicate.utils.int-or-err"]
+        default: 2
+        input:
+          kind: SliderInput
+          min: 1
+          max: 10
+
+      - kind: Field
+        id: "combos"
+        target: "state"
+        title: "Combo Percentage"
+        info: "For each cone-cream pair, turn this percentage into combo products."
+        validators: ["id::app.predicate.utils.int-or-err"]
+        default: 75
+        input:
+          kind: SliderInput
+          min: 0
+          max: 100
+
+    action:
+      inherit: "app.action.seed-products.shell-exec"
+      cones: "get::self>>op_state->.cones"
+      creams: "get::self>>op_state->.creams"
+      combos: "get::self>>op_state->.combos"
+
+---
+
+kind: FormatPredicate
+id: "app.predicate.utils.int-or-err"
+check_against: "positive-integer"
+severity: "error"

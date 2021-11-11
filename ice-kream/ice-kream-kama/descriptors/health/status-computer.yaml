@@ -11,7 +11,8 @@ challenge:
   kind: ResourcesSupplier
   serializer: "native"
   output: "ternary_status"
-  selector:
+  resource_selector:
+    kind: ResourceSelector
     res_kind: "Deployment"
     label_selector:
       microservice: ["monolith", "postgres"]

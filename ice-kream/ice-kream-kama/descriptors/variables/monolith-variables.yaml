@@ -31,6 +31,72 @@ input: {kind: OnOffInput}
 
 ---
 
+kind: ManifestVariable
+id: "monolith.deployment.image"
+category: id::sdk.variable-category.compute
+title: "Application Image"
+info: "URI of the application image. This is a private variable
+that you should avoid changing manually. If you want to change 
+the application's version, change the KTEA version instead."
+owner: "default_vars"
+
+---
+
+kind: ManifestVariable
+id: "monolith.deployment.ice_kream_ver"
+category: id::sdk.variable-category.compute
+title: "Display Version"
+info: "Application-level variable used to display the version on 
+the dashboard. Should not be changed manually."
+owner: "default_vars"
+
+---
+
+kind: ManifestVariable
+id: "monolith.deployment.resources.requests.cpu"
+category: "id::sdk.variable-category.compute"
+title: "Per-pod CPU Request"
+info: "Minimum CPU requested by each site pod, expressed 
+in cores or millicores. A pod will fill to initialize if the 
+cluster nodes have less than this amount free."
+health_predicates:
+  - "id::app.predicate.variables.cpu-req-less-than-lim"
+
+---
+
+kind: ManifestVariable
+id: "monolith.deployment.resources.requests.memory"
+category: "id::sdk.variable-category.compute"
+title: "Per-pod Memory Request"
+info: "Minimum Memory requested by each site pod, usually expressed in Megabytes."
+health_predicates:
+  - "id::app.predicate.variables.mem-req-less-than-lim"
+
+---
+
+kind: ManifestVariable
+id: "monolith.deployment.resources.limits.cpu"
+category: "id::sdk.variable-category.compute"
+title: "Per-pod CPU Limit"
+info: "Maximum CPU allowed for each site pod, expressed in cores or millicores."
+health_predicates:
+  - "id::app.predicate.variables.cpu-req-less-than-lim"
+
+---
+
+kind: ManifestVariable
+id: "monolith.deployment.resources.limits.memory"
+category: "id::sdk.variable-category.compute"
+title: "Per-pod Memory Limit"
+info: "Maximum memory allowed for each site pod, usually expressed in Megabytes."
+health_predicates:
+  - "id::app.predicate.variables.mem-req-less-than-lim"
+
+---
+
+
+#------------------------------- HELPERS -------------------------------------
+
 kind: Predicate
 id: app.predicate.mono-replicas-non-zero
 reason: "Zero replicas will take the website down. Make sure this is temporary."
@@ -38,7 +104,39 @@ operator: "greater-than"
 challenge: get::self>>value
 check_against: 0
 
+
 ---
+
+kind: Predicate
+id: "app.predicate.variables.cpu-req-less-than-lim"
+title: "CPU Request < Limit?"
+info: "Ensure the per-pod memory requested is less than the correspondding limit."
+reason: "get::self>>info"
+operator: "less-than"
+challenge: 
+  kind: "UnitConverter"
+  source: "get::kind::MergedVarsSupplier->.monolith.deployment.resources.requests.cpu"
+check_against: 
+  kind: "UnitConverter"
+  source: "get::kind::MergedVarsSupplier->.monolith.deployment.resources.limits.cpu"
+
+---
+
+kind: Predicate
+id: "app.predicate.variables.mem-req-less-than-lim"
+title: "Memory Request < Limit?"
+info: "Ensure the per-pod memory requested is less than the correspondding limit."
+reason: "get::self>>info"
+operator: "less-than"
+challenge: 
+  kind: "UnitConverter"
+  source: "get::kind::MergedVarsSupplier->.monolith.deployment.resources.requests.memory"
+check_against: 
+  kind: "UnitConverter"
+  source: "get::kind::MergedVarsSupplier->.monolith.deployment.resources.limits.memory"
+
+---
+
 
 kind: ManifestVariableDependency
 id: "app.variable-dep.hpa_true_prevents_read_replicas"
@@ -52,13 +150,3 @@ active_condition:
   challenge: "get::self>>from_variable>>value"
   check_against: true
 
-#---
-#
-#kind: ManifestVariable
-#id: "ingress.enabled"
-#category: id::sdk.variable-category.compute
-#title: "Ingress Toggle"
-#info: "Number of Kubernetes Pod replicas the Ice-Kream store should have.
-#Each replica can cost up to 80Mb of memory and 200 CPU millicores. One
-#replica is enough for ~200 concurent users. If you expect traffic to
-#fluctuate, you may want to consider enabling the Pod AutoScaler."
