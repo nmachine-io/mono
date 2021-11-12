@@ -20,7 +20,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
   name="kama-telem-plugin",
-  version="0.0.6",
+  version="0.0.7",
   author="NMachine",
   author_email="xavier@nmachine.io",
   description="Telemetry plugin for the kama-sdk-py",

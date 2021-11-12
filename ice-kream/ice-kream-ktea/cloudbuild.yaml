@@ -8,6 +8,8 @@ images:
   - "${_IMG_FQDN}:${_V1_TAG}"
   - "${_IMG_FQDN}:${_V2_TAG}"
 
+timeout: 900s
+
 steps:
   - id: "Pull previous"
     name: gcr.io/cloud-builders/docker

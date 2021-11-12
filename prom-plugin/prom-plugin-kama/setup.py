@@ -18,7 +18,7 @@ asset_files = package_files('kama_prom_plugin/assets')
 
 setuptools.setup(
   name="kama-prom-plugin",
-  version="0.0.3",
+  version="0.0.4",
   author="NMachine",
   author_email="xavier@nmachine.io",
   description="Prometheus plugin for KAMA",

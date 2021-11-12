@@ -1,14 +1,5 @@
-require "kerbi"
+require 'kerbi'
+require_relative 'mixers/root_mixer'
 
-class MainMixer < Kerbi::Mixer
-	def run
-		super do |bucket|
-			bucket.http manifest
-		end
-	end
-end
-
-
-cli.go
-
-manifest = "https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml"
+kerbi.generators = [RootMixer]
+kerbi.cli_exec

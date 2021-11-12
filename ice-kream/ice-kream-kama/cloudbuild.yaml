@@ -1,5 +1,5 @@
 substitutions:
-  _IMG_BASE: us-central1-docker.pkg.dev/nectar-bazaar/public/ice-cream-kama
+  _IMG_BASE: us-central1-docker.pkg.dev/nectar-bazaar/public/ice-kream-kama
 
 images:
   - "${_IMG_BASE}:latest"

@@ -7,6 +7,7 @@ name = "pypi"
 cert-manager-plugin = {editable = true, path = "."}
 
 [dev-packages]
+kama-sdk-py = {editable = true, path = "/home/xavier/workspace/kama-sdk-py"}
 
 [requires]
 python_version = "3.8"

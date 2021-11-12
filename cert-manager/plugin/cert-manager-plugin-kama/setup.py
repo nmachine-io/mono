@@ -1,22 +1,34 @@
+import os
+
 import setuptools
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+def package_files(directory):
+  paths = []
+  for (path, directories, filenames) in os.walk(directory):
+    for filename in filenames:
+      paths.append(os.path.join('..', path, filename))
+  return paths
+
+
+descriptor_files = package_files('cert_manager_plugin/descriptors')
+asset_files = package_files('cert_manager_plugin/assets')
+
+
 setuptools.setup(
-  name="cert_manager_plugin",
-  version="0.0.1",
+  name="cert-manager-plugin",
+  version="0.0.5",
   author="NMachine",
   author_email="xavier@nmachine.io",
   description="Cert-manager plugin for the kama-sdk-py",
   long_description=long_description,
   long_description_content_type="text/markdown",
   url="https://github.com/nmachine-io/kama-sdk-py",
+  packages=setuptools.find_packages(exclude=['test', 'test.*']),
   package_data={
-    'cert_manager_plugin': [
-      'assets/*.*',
-      'descriptors/**'
-    ]
+    '': descriptor_files + asset_files
   },
   include_package_data=True,
   install_requires=[

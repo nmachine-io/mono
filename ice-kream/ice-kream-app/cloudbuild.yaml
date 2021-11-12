@@ -3,6 +3,8 @@ substitutions:
   _V1_TAG: 1.0.0
   _V2_TAG: 2.0.0
 
+timeout: 900s
+
 images:
   - "${_IMG_FQDN}:latest"
   - "${_IMG_FQDN}:${_V1_TAG}"
