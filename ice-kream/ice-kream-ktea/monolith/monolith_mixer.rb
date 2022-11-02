@@ -8,6 +8,7 @@ class MonolithMixer < Kerbi::Mixer
     push file('pg-deployment', extras: postgres_extras)
     push file(generic("service"), extras: postgres_extras)
     push file(generic("deployment"), extras: deployment_extras)
+    push file(generic("service"), extras: service_extras)
     # t.yaml generic('service'), extras: postgres_extras
     # t.yaml generic('deployment'), extras: deployment_extras
     # t.yaml generic('service'), extras: service_extras
