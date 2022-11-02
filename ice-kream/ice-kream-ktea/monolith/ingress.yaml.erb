@@ -4,12 +4,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   namespace: <%= release_name %>
-  name: <%= consts.app_name %>-ingress
+  name: <%= Constants.app_name %>-ingress
   annotations:
     kubernetes.io/ingress.class: <%= root[:class] %>
-    cert-manager.io/issuer: <%= consts.issuer_name %>
+    cert-manager.io/issuer: <%= Constants.issuer_name %>
   labels:
-    app: <%= app_name %>
+    app: <%= Constants.app_name %>
 spec:
   tls:
   - hosts:

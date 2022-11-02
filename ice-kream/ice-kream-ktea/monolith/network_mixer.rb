@@ -1,18 +1,14 @@
 class NetworkMixer < Kerbi::Mixer
-  include Common
 
   locate_self __dir__
 
-  def run
-    super do |t|
-      # t.yaml 'certs' if ingress_enabled? TODO kill when certain
-      t.yaml 'ingress' if ingress_enabled?
-    end
+  def mix
+    push file('ingress') if ingress_enabled?
   end
 
   def translate(name)
-    if name.to_s == consts.backend_name
-      port = values.dig(consts.backend_name, :service_port) || '3000'
+    if name.to_s == Constants.backend_name
+      port = values.dig(Constants.backend_name, :service_port) || '3000'
       { name: name,  port: port }
     else
       port = (values.dig(name.to_sym) || {})[:port]

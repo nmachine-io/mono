@@ -3,11 +3,11 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: <%= consts.pvc_name %>
+  name: <%= Constants.pvc_name %>
   namespace: <%= release_name %>
   finalizers: []
   labels:
-    app: <%= app_name %>
+    app: <%= Constants.app_name %>
 spec:
   accessModes:
     - ReadWriteOnce

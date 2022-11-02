@@ -7,9 +7,9 @@ name: <%= extras[:name] %>
 image: <%= root[:image] %>
 imagePullPolicy: <%= root[:image_pull_policy] %>
 command:
-  <%= embed_in_yaml(command_parts, 1) %>
+  <%= embed_array(command_parts) %>
 ports:
   - containerPort: <%= svc_root[:port] %>
 resources:
-    <%= embed_in_yaml(root[:resources], 1) %>
-env: <%= embed_in_yaml(extras[:env_vars], 1) %>
+    <%= embed(root[:resources]) %>
+env: <%= embed_array(extras[:env_vars]) %>

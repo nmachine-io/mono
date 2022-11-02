@@ -14,7 +14,7 @@ name: DATABASE_USER
 value: "postgres"
 ---
 name: DATABASE_HOST
-value: <%= consts.postgres_name %>
+value: <%= Constants.postgres_name %>
 ---
 name: DATABASE_PORT
 value: "5432"
@@ -25,7 +25,7 @@ value: "true"
 name: DATABASE_PASSWORD
 valueFrom:
   secretKeyRef:
-    name: <%= consts.db_creds_secret_name %>
+    name: <%= Constants.db_creds_secret_name %>
     key: db_password
     optional: true
 ---

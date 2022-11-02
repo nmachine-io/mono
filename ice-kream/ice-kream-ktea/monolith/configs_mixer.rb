@@ -1,13 +1,10 @@
 class ConfigsMixer < Kerbi::Mixer
-  include Common
 
   locate_self __dir__
 
-  def run(&block)
-    super do |t|
-      standard_secret_bundles.each do |bundle|
-        t.yaml 'generic-secret', extras: bundle
-      end
+  def mix
+    standard_secret_bundles.each do |bundle|
+      push file('generic-secret', extras: bundle)
     end
   end
 

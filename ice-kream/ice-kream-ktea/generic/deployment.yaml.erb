@@ -7,22 +7,22 @@ metadata:
   namespace: <%= release_name %>
   name: <%= microservice %>
   labels:
-    app: <%= app_name %>
+    app: <%= Constants.app_name %>
     microservice: <%= microservice %>
 spec:
 
   replicas: <%= root[:replicas] %>
   selector:
     matchLabels:
-      app: <%= app_name %>
+      app: <%= Constants.app_name %>
       microservice: <%= microservice %>
   template:
     metadata:
       labels:
-        app: <%= app_name %>
+        app: <%= Constants.app_name %>
         microservice: <%= microservice %>
     spec:
       initContainers:
-        <%= embed_in_yaml(extras[:init_containers], 7) %>
+        <%= embed_array(extras[:init_containers]) %>
       containers:
-        <%= embed_in_yaml(extras[:containers], 7) %>
+        <%= embed_array(extras[:containers]) %>
